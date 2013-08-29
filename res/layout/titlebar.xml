@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:orientation="horizontal">
+
+    <ImageButton android:src="@drawable/nav_button"
+                 android:background="@null"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:scaleType="centerInside"
+                 android:layout_centerVertical="true"
+                 android:id="@+id/toggle_button"
+                 android:layout_alignParentLeft="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:clickable="false"
+        android:scaleType="centerInside"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:src="@drawable/branding"/>
+
+</RelativeLayout>
