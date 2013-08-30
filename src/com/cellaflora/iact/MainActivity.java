@@ -26,7 +26,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.PushService;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends Activity
@@ -105,6 +108,51 @@ public class MainActivity extends Activity
         conference_listener.getConferenceStatus();
 
     }
+
+    private long getDirSize()
+    {
+        long size = 0;
+        File[] files = getFilesDir().listFiles();
+
+        for(File f : files)
+        {
+            size += f.length();
+        }
+
+        return size;
+    }
+
+    protected void onDestroy()
+    {
+        super.onDestroy();
+
+        try
+        {
+            if(getDirSize() >= (Constants.MAX_CACHE_SIZE * 1000000))
+            {
+                ArrayList<File> files = new ArrayList(Arrays.asList(getFilesDir().listFiles()));
+                Collections.sort(files, new fileComparator());
+                int i = 0;
+
+                //Log.d("err", "Size before: " + getDirSize());
+                while(getDirSize() >= ((Constants.MAX_CACHE_SIZE * 1000000) - (Constants.CACHE_DECREASE_AMOUNT * 1000000)) && i < files.size())
+                {
+                    if(!(files.get(i).getName().contains("iact_saved")))
+                    {
+                        //Log.d("err", "Deleting " + files.get(i).getName() + " to free " + files.get(i).length());
+                        files.get(i).delete();
+                    }
+                    i++;
+                }
+                //Log.d("err", "Size after: " + getDirSize());
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
 
     private void selectItem(int position)

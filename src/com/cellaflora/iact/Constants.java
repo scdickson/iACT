@@ -8,6 +8,8 @@ public class Constants
     //Constants for Main Activity
     public static final String PARSE_APPLICATION_ID = "OcdeNhJmP223YS7RTjp9CU6GR9Q1leSLSdPZK1hP";
     public static final String PARSE_CLIENT_KEY = "5c0vZKDhCoxMyJZo0ZqobQBcYwmdLddKURvsYbTb";
+    public static final int MAX_CACHE_SIZE = 30; //In Megabytes!
+    public static final int CACHE_DECREASE_AMOUNT = 15; //In Megabytes!
 
     //Constants for Web Views
     public static final String CALENDAR_OF_EVENTS_URL = "http://www.google.com";

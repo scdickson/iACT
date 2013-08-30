@@ -2,9 +2,11 @@ package com.cellaflora.iact;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -41,12 +43,9 @@ public class LegislativeSummary extends Activity
     private ArrayList<Post> posts = null;
 
     private PullToRefreshListView lsList;
-    private ProgressDialog progressDialog;
+    private ProgressDialog progressDialog, pdfProgress;
     private Context context;
-    public static final boolean TRY_EXTERNAL = false;
-    public static final int TYPE_PDF = 0;
-    public static final int TYPE_DOC = 1;
-    public static final String GOOGLE_DOCS_URL = "http://docs.google.com/viewer?embedded=true&url=";
+    private loadPdf lp;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -56,6 +55,14 @@ public class LegislativeSummary extends Activity
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("");
         progressDialog.setMessage("Loading...");
+        pdfProgress = new ProgressDialog(this);
+        pdfProgress.setTitle("");
+        pdfProgress.setMessage("Loading PDF...");
+        pdfProgress.setIndeterminate(false);
+        pdfProgress.setMax(100);
+        pdfProgress.setProgressNumberFormat(null);
+        pdfProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
@@ -117,7 +124,7 @@ public class LegislativeSummary extends Activity
         posts = new ArrayList<Post>();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Weeklies");
-        query.addDescendingOrder("updatedAt");
+        query.addDescendingOrder("createdAt");
 
         query.findInBackground(new FindCallback<ParseObject>()
         {
@@ -130,7 +137,7 @@ public class LegislativeSummary extends Activity
                     tmp.description = parse.getString("Post_Description");
                     tmp.caption = parse.getString("Caption");
                     tmp.headline = parse.getString("Post_Headline");
-                    tmp.objectId = parse.getString("objectId");
+                    tmp.objectId = parse.getObjectId();
                     tmp.update_time = parse.getString("updatedAt");
 
                     ParseFile image = null;//(ParseFile) parse.get("Photo");
@@ -185,11 +192,69 @@ public class LegislativeSummary extends Activity
         {
             if(posts.get(position).doc_url.endsWith(".pdf"))
             {
-                new downloadResource().execute(position, TYPE_PDF);
+                try
+                {
+                    File f = new File(Environment.getExternalStorageDirectory() + "/" + posts.get(position).objectId);
+                    if(f == null || !f.exists())
+                    {
+                        lp = new loadPdf();
+                        lp.execute(posts.get(position));
+                    }
+                    else
+                    {
+                        Uri path = Uri.fromFile(f);
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(path, "application/pdf");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        try
+                        {
+                            startActivity(intent);
+                        }
+                        catch(ActivityNotFoundException e)
+                        {
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                            alertDialogBuilder.setTitle("No PDF Viewer Found");
+                            alertDialogBuilder
+                                    .setMessage("You do not have an application that allows you to view PDF files. To view this file, please download Adobe Reader from the Android Market.")
+                                    .setCancelable(false)
+                                    .setPositiveButton("Download",new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,int id)
+                                        {
+                                            try
+                                            {
+                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.adobe.reader")));
+                                            }
+                                            catch(ActivityNotFoundException ex)
+                                            {
+                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.adobe.reader")));
+                                            }
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,int id)
+                                        {
+                                            dialog.cancel();
+                                        }
+                                    });
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+                        }
+                        catch(Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                catch(Exception e)
+                {
+                    lp = new loadPdf();
+                    lp.execute(posts.get(position));
+                }
             }
             else
             {
-                new downloadResource().execute(position, TYPE_DOC);
+                //new downloadResource().execute(position, TYPE_DOC);
             }
         }
     }
@@ -203,105 +268,118 @@ public class LegislativeSummary extends Activity
         }
     }
 
-    private class downloadResource extends AsyncTask<Integer, Integer, Void>
+    private class loadPdf extends AsyncTask<Object, Integer, Void>
     {
-        File f = null;
-        int position;
-        int dataType;
+        File file;
+        Post post;
 
         protected void onPreExecute()
         {
-            progressDialog.show();
+            super.onPreExecute();
+            pdfProgress.setCanceledOnTouchOutside(false);
+            pdfProgress.setCancelable(true);
+            pdfProgress.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface)
+                {
+                    lp.cancel(true);
+                    publishProgress(0);
+                }
+            });
+            pdfProgress.show();
         }
 
-        protected Void doInBackground(Integer... arg0)
+        protected void onProgressUpdate(Integer... progress)
         {
-            position = arg0[0];
-            dataType = arg0[1];
+            super.onProgressUpdate(progress);
+            pdfProgress.setProgress(progress[0]);
+        }
 
+        protected Void doInBackground(Object... arg0)
+        {
             try
             {
-                File directory = Environment.getExternalStorageDirectory();
+                post = (Post) arg0[0];
+                URL url = new URL(post.doc_url);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                int fileLength = connection.getContentLength();
+                InputStream is = connection.getInputStream();
 
-                if(dataType == TYPE_PDF)
+                file = new File(Environment.getExternalStorageDirectory() + "/" + post.objectId);
+                FileOutputStream fos = new FileOutputStream(file);
+                byte data[] = new byte[1024];
+                long total = 0;
+                int bytesRead = 0;
+
+                while(((bytesRead = is.read(data, 0, data.length)) >= 0) && !isCancelled())
                 {
-                    f = new File(directory + "/iact_tmp.pdf");
+                    total += bytesRead;
+                    publishProgress((int) (total * 100 / fileLength));
+                    fos.write(data, 0, bytesRead);
+                    fos.flush();
                 }
-                else if(dataType == TYPE_DOC)
-                {
-                    f = new File(directory + "/iact_tmp.doc");
-                }
 
-                URL u = new URL(posts.get(position).doc_url);
-                HttpURLConnection c = (HttpURLConnection) u.openConnection();
-                c.setRequestMethod("GET");
-                //c.setDoOutput(true);
-                c.connect();
-                FileOutputStream out = new FileOutputStream(f);
+                fos.close();
+                is.close();
 
-
-                InputStream in = c.getInputStream();
-
-                byte[] buffer = new byte[1024];
-                int len1 = 0;
-                while ( (len1 = in.read(buffer)) > 0 ) {
-                    out.write(buffer,0, len1);
-                    //out.flush();
-                }
-                out.close();
             }
             catch(Exception e)
             {
-                //e.printStackTrace();
-                Intent load_web = new Intent().setClass(getApplicationContext(), WebContentView.class);
-                load_web.putExtra("URL", GOOGLE_DOCS_URL + posts.get(position).doc_url);
-                load_web.putExtra("BACK_ENABLED", true);
-                if(load_web != null)
-                {
-                    startActivity(load_web);
-                }
+                e.printStackTrace();
             }
+
             return null;
         }
 
         protected void onPostExecute(Void v)
         {
-            progressDialog.dismiss();
-            Uri path = Uri.fromFile(f);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            if(TRY_EXTERNAL)
+            pdfProgress.dismiss();
+            if(file != null && !isCancelled())
             {
-                if(dataType == TYPE_PDF)
-                {
-                    intent.setDataAndType(path, "application/pdf");
-                }
-                else if(dataType == TYPE_DOC)
-                {
-                    intent.setDataAndType(path, "application/msword");
-                }
+                Uri path = Uri.fromFile(file);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(path, "application/pdf");
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            }
-            else
-            {
-                intent = null; //Intentionally generate a null pointer exception....jumps to catch block.
-            }
-            try
-            {
-                startActivity(intent);
-            }
-            catch(Exception e)
-            {
-                //e.printStackTrace();
-                Intent load_web = new Intent().setClass(getApplicationContext(), WebContentView.class);
-                load_web.putExtra("URL", GOOGLE_DOCS_URL + posts.get(position).doc_url);
-                load_web.putExtra("BACK_ENABLED", true);
-                if(load_web != null)
+
+                try
                 {
-                    startActivity(load_web);
+                    startActivity(intent);
+                }
+                catch(ActivityNotFoundException e)
+                {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("No PDF Viewer Found");
+                    alertDialogBuilder
+                            .setMessage("You do not have an application that allows you to view PDF files. To view this file, please download Adobe Reader from the Android Market.")
+                            .setCancelable(false)
+                            .setPositiveButton("Download",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id)
+                                {
+                                    try
+                                    {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.adobe.reader")));
+                                    }
+                                    catch(ActivityNotFoundException ex)
+                                    {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.adobe.reader")));
+                                    }
+                                }
+                            })
+                            .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id)
+                                {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
                 }
             }
         }
     }
-
-
 }

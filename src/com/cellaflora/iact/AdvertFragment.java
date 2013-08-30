@@ -154,7 +154,10 @@ public class AdvertFragment extends Fragment
                 clear.setAnimationListener(new Animation.AnimationListener()
                 {
                     public void onAnimationRepeat(Animation animation) {}
-                    public void onAnimationStart(Animation animation){}
+                    public void onAnimationStart(Animation animation)
+                    {
+
+                    }
                     public void onAnimationEnd(Animation animation)
                     {
                         ad.setImageBitmap(image);

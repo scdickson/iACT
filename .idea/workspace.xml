@@ -94,24 +94,25 @@
       <file leaf-file-name="LegislativeSummary.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/LegislativeSummary.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="171" column="0" selection-start="6030" selection-end="6030" vertical-scroll-proportion="1.7447916" vertical-offset="1035" max-vertical-offset="4155">
+            <state line="47" column="23" selection-start="1304" selection-end="1304" vertical-scroll-proportion="-7.7388988" vertical-offset="4567" max-vertical-offset="5295">
               <folding>
-                <element signature="e#2161#2506#0" expanded="true" />
-                <element signature="e#2495#2496#0" expanded="true" />
-                <element signature="e#3271#3508#0" expanded="true" />
-                <element signature="e#3489#3490#0" expanded="true" />
-                <element signature="e#5790#6027#0" expanded="true" />
-                <element signature="e#6008#6009#0" expanded="true" />
+                <element signature="e#2364#2709#0" expanded="true" />
+                <element signature="e#2698#2699#0" expanded="true" />
+                <element signature="e#3474#3711#0" expanded="true" />
+                <element signature="e#3692#3693#0" expanded="true" />
+                <element signature="e#5985#6222#0" expanded="true" />
+                <element signature="e#6203#6204#0" expanded="true" />
+                <element signature="e#8072#8953#0" expanded="true" />
+                <element signature="e#8914#8915#0" expanded="true" />
+                <element signature="e#9019#9332#0" expanded="true" />
+                <element signature="e#9293#9294#0" expanded="true" />
+                <element signature="e#10578#10841#0" expanded="true" />
+                <element signature="e#10826#10827#0" expanded="true" />
+                <element signature="e#13365#14150#0" expanded="true" />
+                <element signature="e#14119#14120#0" expanded="true" />
+                <element signature="e#14208#14481#0" expanded="true" />
+                <element signature="e#14450#14451#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Constants.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="32" selection-start="846" selection-end="846" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -139,17 +140,17 @@
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Conference.java" />
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceListener.java" />
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/MenuAdapter.java" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/advert_fragment.xml" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/AdvertFragment.java" />
         <option value="$PROJECT_DIR$/res/layout/ls_list_item.xml" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/res/layout/legislative_summary_activity.xml" />
         <option value="$PROJECT_DIR$/res/drawable-mdpi/rectangle_shape.xml" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/LegislativeSummary.java" />
         <option value="$PROJECT_DIR$/res/anim/slide_right.xml" />
         <option value="$PROJECT_DIR$/res/anim/slide_left.xml" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/AdvertFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/LegislativeSummary.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -399,8 +400,8 @@
       <recent name="$PROJECT_DIR$/res/layout-land" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/res/values" />
       <recent name="$PROJECT_DIR$/src/com/cellaflora/iact" />
+      <recent name="$PROJECT_DIR$/res/values" />
       <recent name="$PROJECT_DIR$/res/layout" />
       <recent name="$PROJECT_DIR$/res/drawable-mdpi" />
       <recent name="$PROJECT_DIR$/res/drawable-xhdpi" />
@@ -574,7 +575,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283046" sideWeight="0.67241377" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283046" sideWeight="0.80106103" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -660,46 +661,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MenuAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="26" selection-start="1895" selection-end="1895" vertical-scroll-proportion="0.0" vertical-offset="646" max-vertical-offset="1590">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="34" selection-start="3848" selection-end="3848" vertical-scroll-proportion="0.0" vertical-offset="2249" max-vertical-offset="3345">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2711#3062#0" expanded="true" />
-            <element signature="e#3051#3052#0" expanded="true" />
-            <element signature="e#3169#3337#0" expanded="true" />
-            <element signature="e#3326#3327#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/Advertisement.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="13" selection-start="87" selection-end="87" vertical-scroll-proportion="0.15625" vertical-offset="0" max-vertical-offset="576">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/AdvertFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="16" selection-start="5128" selection-end="5128" vertical-scroll-proportion="0.6614583" vertical-offset="1644" max-vertical-offset="2235">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/advert_fragment.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="32" selection-start="395" selection-end="395" vertical-scroll-proportion="0.25186568" vertical-offset="0" max-vertical-offset="536">
           <folding />
         </state>
       </provider>
@@ -752,13 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="32" selection-start="846" selection-end="846" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/ptr_header.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -783,16 +740,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/Post.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="13" selection-start="116" selection-end="116" vertical-scroll-proportion="0.18650089" vertical-offset="0" max-vertical-offset="563">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/advert_fragment.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="32" selection-start="395" selection-end="395" vertical-scroll-proportion="0.25186568" vertical-offset="0" max-vertical-offset="536">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/AdvertFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="158" column="24" selection-start="4883" selection-end="4883" vertical-scroll-proportion="0.6059028" vertical-offset="1586" max-vertical-offset="2280">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="71" selection-start="460" selection-end="460" vertical-scroll-proportion="0.28645834" vertical-offset="0" max-vertical-offset="576">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="142" column="46" selection-start="4743" selection-end="4743" vertical-scroll-proportion="0.7069272" vertical-offset="1582" max-vertical-offset="3915">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/LegislativeSummary.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="171" column="0" selection-start="6030" selection-end="6030" vertical-scroll-proportion="1.7447916" vertical-offset="1035" max-vertical-offset="4155">
+        <state line="47" column="23" selection-start="1304" selection-end="1304" vertical-scroll-proportion="-7.7388988" vertical-offset="4567" max-vertical-offset="5295">
           <folding>
-            <element signature="e#2161#2506#0" expanded="true" />
-            <element signature="e#2495#2496#0" expanded="true" />
-            <element signature="e#3271#3508#0" expanded="true" />
-            <element signature="e#3489#3490#0" expanded="true" />
-            <element signature="e#5790#6027#0" expanded="true" />
-            <element signature="e#6008#6009#0" expanded="true" />
+            <element signature="e#2364#2709#0" expanded="true" />
+            <element signature="e#2698#2699#0" expanded="true" />
+            <element signature="e#3474#3711#0" expanded="true" />
+            <element signature="e#3692#3693#0" expanded="true" />
+            <element signature="e#5985#6222#0" expanded="true" />
+            <element signature="e#6203#6204#0" expanded="true" />
+            <element signature="e#8072#8953#0" expanded="true" />
+            <element signature="e#8914#8915#0" expanded="true" />
+            <element signature="e#9019#9332#0" expanded="true" />
+            <element signature="e#9293#9294#0" expanded="true" />
+            <element signature="e#10578#10841#0" expanded="true" />
+            <element signature="e#10826#10827#0" expanded="true" />
+            <element signature="e#13365#14150#0" expanded="true" />
+            <element signature="e#14119#14120#0" expanded="true" />
+            <element signature="e#14208#14481#0" expanded="true" />
+            <element signature="e#14450#14451#0" expanded="true" />
           </folding>
         </state>
       </provider>
