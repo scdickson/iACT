@@ -13,9 +13,13 @@
               android:layout_alignParentBottom="true"
             />
 
-    <ListView
+    <com.cellaflora.iact.PullToRefreshListView
+            android:clipToPadding="false"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
+            android:padding="15dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="15dp"
             android:choiceMode="singleChoice"
             android:layout_above="@id/advert_banner"
             android:id="@+id/lsList"/>

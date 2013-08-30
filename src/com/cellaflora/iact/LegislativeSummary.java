@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -38,12 +39,10 @@ import java.util.List;
 public class LegislativeSummary extends Activity
 {
     private ArrayList<Post> posts = null;
-    public static final String POSTS_KEY = "POSTS";
-    public static final int POST_UPDATE_INTERVAL = 60; //In minutes!
 
-    private ListView lsList;
+    private PullToRefreshListView lsList;
     private ProgressDialog progressDialog;
-
+    private Context context;
     public static final boolean TRY_EXTERNAL = false;
     public static final int TYPE_PDF = 0;
     public static final int TYPE_DOC = 1;
@@ -53,80 +52,10 @@ public class LegislativeSummary extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.legislative_summary_activity);
+        context = this;
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("");
         progressDialog.setMessage("Loading...");
-
-        try
-        {
-            File f = new File(getFilesDir(), POSTS_KEY);
-            if((f.lastModified() + (POST_UPDATE_INTERVAL * 60 * 1000)) >= System.currentTimeMillis())
-            {
-                posts = (ArrayList<Post>) PersistenceManager.readObject(this, POSTS_KEY);
-            }
-            else
-            {
-                int i = 1/0; //Not elegant....but generates an exception so execution can jump to catch block below.
-            }
-        }
-        catch(Exception e)
-        {
-            posts = new ArrayList<Post>();
-
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Weeklies");
-            query.addDescendingOrder("updatedAt");
-
-            progressDialog.show();
-
-            query.findInBackground(new FindCallback<ParseObject>()
-            {
-                @Override
-                public void done(List<ParseObject> result, com.parse.ParseException e)
-                {
-                    for(ParseObject parse : result)
-                    {
-                        Post tmp = new Post();
-                        tmp.description = parse.getString("Post_Description");
-                        tmp.caption = parse.getString("Caption");
-                        tmp.headline = parse.getString("Post_Headline");
-                        tmp.objectId = parse.getString("objectId");
-                        tmp.update_time = parse.getString("updatedAt");
-
-                        ParseFile image = null;//(ParseFile) parse.get("Photo");
-                        ParseFile document = (ParseFile) parse.get("DOC");
-
-                        if(image != null)
-                        {
-                            tmp.photo_url = image.getUrl();
-                        }
-
-                        if(document != null)
-                        {
-                            tmp.doc_url = document.getUrl();
-                        }
-
-                        posts.add(tmp);
-                    }
-                    try
-                    {
-                        PersistenceManager.writeObject(getApplicationContext(), POSTS_KEY, posts);
-                    }
-                    catch(Exception ex)
-                    {
-                        ex.printStackTrace();
-                    }
-                    progressDialog.dismiss();
-                }
-            });
-        }
-
-        lsList = (ListView) findViewById(R.id.lsList);
-        LSAdapter adapter = new LSAdapter(this, posts);
-        lsList.setAdapter(adapter);
-        MenuItemClickListener menuListener = new MenuItemClickListener();
-        lsList.setOnItemClickListener(menuListener);
-
-
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
@@ -142,6 +71,109 @@ public class LegislativeSummary extends Activity
                 if(intent != null)
                 {
                     startActivity(intent);
+                }
+            }
+        });
+    }
+
+    public void onResume()
+    {
+        super.onResume();
+        try
+        {
+            File f = new File(getFilesDir(), Constants.NEWS_FILE_NAME);
+            if((f.lastModified() + (Constants.NEWS_UPDATE_INTERVAL * 60 * 1000)) >= System.currentTimeMillis())
+            {
+                posts = (ArrayList<Post>) PersistenceManager.readObject(this, Constants.NEWS_FILE_NAME);
+                lsList = (PullToRefreshListView) findViewById(R.id.lsList);
+                LSAdapter adapter = new LSAdapter(this, posts);
+                lsList.setAdapter(adapter);
+                MenuItemClickListener menuListener = new MenuItemClickListener();
+                lsList.setOnItemClickListener(menuListener);
+                lsList.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+                    @Override
+                    public void onRefresh()
+                    {
+                        loadNewsAndLegislativeData();
+                    }
+                });
+            }
+            else
+            {
+                progressDialog.show();
+                loadNewsAndLegislativeData();
+            }
+        }
+        catch(Exception e)
+        {
+            progressDialog.show();
+            loadNewsAndLegislativeData();
+        }
+    }
+
+
+    private void loadNewsAndLegislativeData()
+    {
+        posts = new ArrayList<Post>();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Weeklies");
+        query.addDescendingOrder("updatedAt");
+
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
+            @Override
+            public void done(List<ParseObject> result, com.parse.ParseException e)
+            {
+                for(ParseObject parse : result)
+                {
+                    Post tmp = new Post();
+                    tmp.description = parse.getString("Post_Description");
+                    tmp.caption = parse.getString("Caption");
+                    tmp.headline = parse.getString("Post_Headline");
+                    tmp.objectId = parse.getString("objectId");
+                    tmp.update_time = parse.getString("updatedAt");
+
+                    ParseFile image = null;//(ParseFile) parse.get("Photo");
+                    ParseFile document = (ParseFile) parse.get("DOC");
+
+                    if(image != null)
+                    {
+                        tmp.photo_url = image.getUrl();
+                    }
+
+                    if(document != null)
+                    {
+                        tmp.doc_url = document.getUrl();
+                    }
+
+                    posts.add(tmp);
+                }
+                try
+                {
+                    PersistenceManager.writeObject(getApplicationContext(), Constants.NEWS_FILE_NAME, posts);
+                }
+                catch(Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+
+                lsList = (PullToRefreshListView) findViewById(R.id.lsList);
+                LSAdapter adapter = new LSAdapter(context, posts);
+                lsList.setAdapter(adapter);
+                MenuItemClickListener menuListener = new MenuItemClickListener();
+                lsList.setOnItemClickListener(menuListener);
+                lsList.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+                    @Override
+                    public void onRefresh()
+                    {
+                        loadNewsAndLegislativeData();
+                    }
+                });
+
+                lsList.onRefreshComplete();
+                if(progressDialog.isShowing())
+                {
+                    progressDialog.dismiss();
                 }
             }
         });

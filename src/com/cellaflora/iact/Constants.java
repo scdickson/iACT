@@ -14,7 +14,11 @@ public class Constants
     public static final String LEGISLATIVE_HUB_URL = "http://www.yahoo.com";
     public static final String TWITTER_URL = "https://www.twitter.com/INCitiesTowns";
 
-    //Constants for Banner Ad Fragment
-    public static final int AD_ROTATE_FREQUENCY = 10; //In seconds!
+    //Constants for Banner Ad
+    public static final int AD_ROTATE_FREQUENCY = 30; //In seconds!
+
+    //Constants for News and Legislative Summary
+    public static final String NEWS_FILE_NAME = "IACT_NEWS_DATA";
+    public static final int NEWS_UPDATE_INTERVAL = 60; //In minutes!
 
 }

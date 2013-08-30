@@ -162,6 +162,7 @@ public class AdvertFragment extends Fragment
                     }
                 });
                 ad.startAnimation(clear);
+
             }
         }
     }

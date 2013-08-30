@@ -91,14 +91,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="advert_fragment.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/advert_fragment.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="LegislativeSummary.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/LegislativeSummary.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="32" selection-start="395" selection-end="395" vertical-scroll-proportion="-5.0" vertical-offset="0" max-vertical-offset="300">
-              <folding />
+            <state line="171" column="0" selection-start="6030" selection-end="6030" vertical-scroll-proportion="1.7447916" vertical-offset="1035" max-vertical-offset="4155">
+              <folding>
+                <element signature="e#2161#2506#0" expanded="true" />
+                <element signature="e#2495#2496#0" expanded="true" />
+                <element signature="e#3271#3508#0" expanded="true" />
+                <element signature="e#3489#3490#0" expanded="true" />
+                <element signature="e#5790#6027#0" expanded="true" />
+                <element signature="e#6008#6009#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,16 +110,7 @@
       <file leaf-file-name="Constants.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="52" selection-start="691" selection-end="691" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AdvertFragment.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/AdvertFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="165" column="9" selection-start="5135" selection-end="5135" vertical-scroll-proportion="0.6875" vertical-offset="1644" max-vertical-offset="2220">
+            <state line="21" column="32" selection-start="846" selection-end="846" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
               <folding />
             </state>
           </provider>
@@ -139,11 +134,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Post.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/LegislativeSummary.java" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Splash.java" />
         <option value="$PROJECT_DIR$/res/layout/menu_list_item.xml" />
         <option value="$PROJECT_DIR$/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Conference.java" />
@@ -151,10 +141,15 @@
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/MenuAdapter.java" />
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/advert_fragment.xml" />
-        <option value="$PROJECT_DIR$/res/anim/slide_left.xml" />
-        <option value="$PROJECT_DIR$/res/anim/slide_right.xml" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java" />
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/AdvertFragment.java" />
+        <option value="$PROJECT_DIR$/res/layout/ls_list_item.xml" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/res/layout/legislative_summary_activity.xml" />
+        <option value="$PROJECT_DIR$/res/drawable-mdpi/rectangle_shape.xml" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/LegislativeSummary.java" />
+        <option value="$PROJECT_DIR$/res/anim/slide_right.xml" />
+        <option value="$PROJECT_DIR$/res/anim/slide_left.xml" />
       </list>
     </option>
   </component>
@@ -404,11 +399,11 @@
       <recent name="$PROJECT_DIR$/res/layout-land" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/res/values" />
+      <recent name="$PROJECT_DIR$/src/com/cellaflora/iact" />
+      <recent name="$PROJECT_DIR$/res/layout" />
       <recent name="$PROJECT_DIR$/res/drawable-mdpi" />
       <recent name="$PROJECT_DIR$/res/drawable-xhdpi" />
-      <recent name="$PROJECT_DIR$/assets" />
-      <recent name="$PROJECT_DIR$/libs" />
-      <recent name="$PROJECT_DIR$/res/drawable-hdpi" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.IACT">
@@ -579,7 +574,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283046" sideWeight="0.80106103" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283046" sideWeight="0.67241377" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -665,66 +660,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="65" selection-start="743" selection-end="743" vertical-scroll-proportion="0.020604396" vertical-offset="210" max-vertical-offset="1035">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MainMenu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="86" selection-end="86" vertical-scroll-proportion="0.10302198" vertical-offset="0" max-vertical-offset="728">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/menu_list_item.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="432" selection-end="432" vertical-scroll-proportion="0.27985075" vertical-offset="0" max-vertical-offset="536">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="38" selection-start="817" selection-end="817" vertical-scroll-proportion="0.64365673" vertical-offset="0" max-vertical-offset="536">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/LSAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="0" selection-start="1367" selection-end="1367" vertical-scroll-proportion="0.33854166" vertical-offset="450" max-vertical-offset="1065">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/Conference.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="502" selection-end="502" vertical-scroll-proportion="0.54389316" vertical-offset="0" max-vertical-offset="524">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="49" selection-start="2099" selection-end="2099" vertical-scroll-proportion="0.77290076" vertical-offset="210" max-vertical-offset="840">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable-mdpi/day_off.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MenuAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="65" column="26" selection-start="1895" selection-end="1895" vertical-scroll-proportion="0.0" vertical-offset="646" max-vertical-offset="1590">
@@ -752,41 +687,113 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/AdvertFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="164" column="16" selection-start="5128" selection-end="5128" vertical-scroll-proportion="0.6614583" vertical-offset="1644" max-vertical-offset="2235">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/advert_fragment.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="32" selection-start="395" selection-end="395" vertical-scroll-proportion="-5.0" vertical-offset="0" max-vertical-offset="300">
+        <state line="9" column="32" selection-start="395" selection-end="395" vertical-scroll-proportion="0.25186568" vertical-offset="0" max-vertical-offset="536">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/anim/slide_left.xml">
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="6" selection-start="321" selection-end="321" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+        <state line="8" column="58" selection-start="394" selection-end="394" vertical-scroll-proportion="0.20833333" vertical-offset="0" max-vertical-offset="576">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/anim/slide_right.xml">
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/PullToRefreshListView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="40" selection-end="40" vertical-scroll-proportion="0.052083332" vertical-offset="0" max-vertical-offset="576">
+        <state line="240" column="64" selection-start="8583" selection-end="8583" vertical-scroll-proportion="0.3587922" vertical-offset="3248" max-vertical-offset="7815">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/legislative_summary_activity.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="46" selection-start="589" selection-end="589" vertical-scroll-proportion="0.4197761" vertical-offset="0" max-vertical-offset="536">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/ls_list_item.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="74" selection-start="114" selection-end="114" vertical-scroll-proportion="0.05597015" vertical-offset="0" max-vertical-offset="615">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable-mdpi/rectangle_shape.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="54" selection-start="160" selection-end="160" vertical-scroll-proportion="0.052083332" vertical-offset="0" max-vertical-offset="576">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/PersistenceManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="13" selection-start="282" selection-end="282" vertical-scroll-proportion="0.18229167" vertical-offset="0" max-vertical-offset="576">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="52" selection-start="691" selection-end="691" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+        <state line="21" column="32" selection-start="846" selection-end="846" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/AdvertFragment.java">
+    <entry file="file://$PROJECT_DIR$/res/layout/ptr_header.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="165" column="9" selection-start="5135" selection-end="5135" vertical-scroll-proportion="0.6875" vertical-offset="1644" max-vertical-offset="2220">
+        <state line="1" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.034168564" vertical-offset="0" max-vertical-offset="439">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/anim/slide_right.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="34" selection-start="303" selection-end="303" vertical-scroll-proportion="0.15625" vertical-offset="0" max-vertical-offset="576">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/anim/slide_left.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="31" selection-start="308" selection-end="308" vertical-scroll-proportion="0.18229167" vertical-offset="0" max-vertical-offset="576">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/LegislativeSummary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="171" column="0" selection-start="6030" selection-end="6030" vertical-scroll-proportion="1.7447916" vertical-offset="1035" max-vertical-offset="4155">
+          <folding>
+            <element signature="e#2161#2506#0" expanded="true" />
+            <element signature="e#2495#2496#0" expanded="true" />
+            <element signature="e#3271#3508#0" expanded="true" />
+            <element signature="e#3489#3490#0" expanded="true" />
+            <element signature="e#5790#6027#0" expanded="true" />
+            <element signature="e#6008#6009#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
