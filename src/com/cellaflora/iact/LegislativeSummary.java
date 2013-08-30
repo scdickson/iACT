@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,12 +41,15 @@ import java.util.List;
  */
 public class LegislativeSummary extends Activity
 {
-    private ArrayList<Post> posts = null;
+    public static final int TYPE_PDF = 0;
+    public static final int TYPE_DOC = 1;
 
+    private ArrayList<Post> posts = null;
     private PullToRefreshListView lsList;
     private ProgressDialog progressDialog, pdfProgress;
     private Context context;
-    private loadPdf lp;
+    private loadDocument lp;
+    private Parcelable state;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -83,39 +87,57 @@ public class LegislativeSummary extends Activity
         });
     }
 
+    public void onPause()
+    {
+        super.onPause();
+
+        if(lsList != null)
+        {
+            state = lsList.onSaveInstanceState();
+        }
+    }
+
     public void onResume()
     {
         super.onResume();
-        try
+
+        if(state != null)
         {
-            File f = new File(getFilesDir(), Constants.NEWS_FILE_NAME);
-            if((f.lastModified() + (Constants.NEWS_UPDATE_INTERVAL * 60 * 1000)) >= System.currentTimeMillis())
+            lsList.onRestoreInstanceState(state);
+            return;
+        }
+
+            try
             {
-                posts = (ArrayList<Post>) PersistenceManager.readObject(this, Constants.NEWS_FILE_NAME);
-                lsList = (PullToRefreshListView) findViewById(R.id.lsList);
-                LSAdapter adapter = new LSAdapter(this, posts);
-                lsList.setAdapter(adapter);
-                MenuItemClickListener menuListener = new MenuItemClickListener();
-                lsList.setOnItemClickListener(menuListener);
-                lsList.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-                    @Override
-                    public void onRefresh()
-                    {
-                        loadNewsAndLegislativeData();
-                    }
-                });
+                File f = new File(getFilesDir(), Constants.NEWS_FILE_NAME);
+                if((f.lastModified() + (Constants.NEWS_UPDATE_INTERVAL * 60 * 1000)) >= System.currentTimeMillis())
+                {
+                    posts = (ArrayList<Post>) PersistenceManager.readObject(this, Constants.NEWS_FILE_NAME);
+                    lsList = (PullToRefreshListView) findViewById(R.id.lsList);
+                    LSAdapter adapter = new LSAdapter(this, posts);
+                    lsList.setAdapter(adapter);
+                    MenuItemClickListener menuListener = new MenuItemClickListener();
+                    lsList.setOnItemClickListener(menuListener);
+                    lsList.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+                        @Override
+                        public void onRefresh()
+                        {
+                            loadNewsAndLegislativeData();
+                        }
+                    });
+                }
+                else
+                {
+                    progressDialog.show();
+                    loadNewsAndLegislativeData();
+                }
             }
-            else
+            catch(Exception e)
             {
                 progressDialog.show();
                 loadNewsAndLegislativeData();
             }
-        }
-        catch(Exception e)
-        {
-            progressDialog.show();
-            loadNewsAndLegislativeData();
-        }
+
     }
 
 
@@ -190,15 +212,15 @@ public class LegislativeSummary extends Activity
     {
         if(posts.get(position) != null && posts.get(position).doc_url != null)
         {
-            if(posts.get(position).doc_url.endsWith(".pdf"))
+            if(posts.get(position).doc_url.toUpperCase().endsWith(".PDF"))
             {
                 try
                 {
                     File f = new File(Environment.getExternalStorageDirectory() + "/" + posts.get(position).objectId);
                     if(f == null || !f.exists())
                     {
-                        lp = new loadPdf();
-                        lp.execute(posts.get(position));
+                        lp = new loadDocument();
+                        lp.execute(posts.get(position), TYPE_PDF);
                     }
                     else
                     {
@@ -248,13 +270,66 @@ public class LegislativeSummary extends Activity
                 }
                 catch(Exception e)
                 {
-                    lp = new loadPdf();
-                    lp.execute(posts.get(position));
+                    lp = new loadDocument();
+                    lp.execute(posts.get(position), TYPE_PDF);
                 }
             }
             else
             {
-                //new downloadResource().execute(position, TYPE_DOC);
+                try
+                {
+                    File f = new File(Environment.getExternalStorageDirectory() + "/" + posts.get(position).objectId);
+                    if(f == null || !f.exists())
+                    {
+                        lp = new loadDocument();
+                        lp.execute(posts.get(position), TYPE_DOC);
+                    }
+                    else
+                    {
+                        Uri path = Uri.fromFile(f);
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(path, "application/msword");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        try
+                        {
+                            startActivity(intent);
+                        }
+                        catch(ActivityNotFoundException e)
+                        {
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                            alertDialogBuilder.setTitle("No Microsoft Word Viewer Found");
+                            alertDialogBuilder
+                                    .setMessage("You do not have an application that allows you to view .doc files. To view this file, please download OpenDocument Reader from the Android Market.")
+                                    .setCancelable(false)
+                                    .setPositiveButton("Download", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            try {
+                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=at.tomtasche.reader")));
+                                            } catch (ActivityNotFoundException ex) {
+                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=at.tomtasche.reader")));
+                                            }
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+                        }
+                        catch(Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                catch(Exception e)
+                {
+                    lp = new loadDocument();
+                    lp.execute(posts.get(position), TYPE_DOC);
+                }
             }
         }
     }
@@ -268,10 +343,11 @@ public class LegislativeSummary extends Activity
         }
     }
 
-    private class loadPdf extends AsyncTask<Object, Integer, Void>
+    private class loadDocument extends AsyncTask<Object, Integer, Void>
     {
         File file;
         Post post;
+        Integer file_type_flag;
 
         protected void onPreExecute()
         {
@@ -300,6 +376,7 @@ public class LegislativeSummary extends Activity
             try
             {
                 post = (Post) arg0[0];
+                file_type_flag = (Integer) arg0[1];
                 URL url = new URL(post.doc_url);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
@@ -339,7 +416,14 @@ public class LegislativeSummary extends Activity
             {
                 Uri path = Uri.fromFile(file);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(path, "application/pdf");
+                if(file_type_flag.intValue() == TYPE_PDF)
+                {
+                    intent.setDataAndType(path, "application/pdf");
+                }
+                else
+                {
+                    intent.setDataAndType(path, "application/msword");
+                }
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                 try
@@ -348,32 +432,59 @@ public class LegislativeSummary extends Activity
                 }
                 catch(ActivityNotFoundException e)
                 {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                    alertDialogBuilder.setTitle("No PDF Viewer Found");
-                    alertDialogBuilder
-                            .setMessage("You do not have an application that allows you to view PDF files. To view this file, please download Adobe Reader from the Android Market.")
-                            .setCancelable(false)
-                            .setPositiveButton("Download",new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id)
-                                {
-                                    try
-                                    {
-                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.adobe.reader")));
+                    if(file_type_flag.intValue() == TYPE_PDF)
+                    {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        alertDialogBuilder.setTitle("No PDF Viewer Found");
+                        alertDialogBuilder
+                                .setMessage("You do not have an application that allows you to view PDF files. To view this file, please download Adobe Reader from the Android Market.")
+                                .setCancelable(false)
+                                .setPositiveButton("Download", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        try {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.adobe.reader")));
+                                        } catch (ActivityNotFoundException ex) {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.adobe.reader")));
+                                        }
                                     }
-                                    catch(ActivityNotFoundException ex)
-                                    {
-                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.adobe.reader")));
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
                                     }
-                                }
-                            })
-                            .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id)
-                                {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
+                                });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
+                    else
+                    {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        alertDialogBuilder.setTitle("No Microsoft Word Viewer Found");
+                        alertDialogBuilder
+                                .setMessage("You do not have an application that allows you to view .doc files. To view this file, please download OpenDocument Reader from the Android Market.")
+                                .setCancelable(false)
+                                .setPositiveButton("Download",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id)
+                                    {
+                                        try
+                                        {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=at.tomtasche.reader")));
+                                        }
+                                        catch(ActivityNotFoundException ex)
+                                        {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=at.tomtasche.reader")));
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id)
+                                    {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
                 }
                 catch(Exception e)
                 {
