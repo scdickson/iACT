@@ -10,13 +10,11 @@ public class Constants
     public static final String PARSE_CLIENT_KEY = "5c0vZKDhCoxMyJZo0ZqobQBcYwmdLddKURvsYbTb";
 
     //Constants for Web Views
-    public static final boolean LOAD_EXTERNAL = false;
-    public static final String LEGISLATIVE_TEAM_URL = "http://www.citiesandtowns.org/topic/subtopic.php?fDD=6-64";
-    public static final String LEGISLATIVE_INITIATIVES_URL = "http://www.citiesandtowns.org/egov/docs/1355232614_871398.pdf";
-    public static final String LEGISLATOR_FIND_URL = "http://district.iga.in.gov/DistrictLookup/";
-    public static final String LEGISLATIVE_DAY_URL = "http://www.citiesandtowns.org/egov/apps/services/index.egov?path=details&action=i&id=125";
+    public static final String CALENDAR_OF_EVENTS_URL = "http://www.google.com";
+    public static final String LEGISLATIVE_HUB_URL = "http://www.yahoo.com";
+    public static final String TWITTER_URL = "https://www.twitter.com/INCitiesTowns";
 
-    //Constants for Conference Listener
-    public static int CONFERENCE_CHECK_INTERVAL = 5; //In seconds!
+    //Constants for Banner Ad Fragment
+    public static final int AD_ROTATE_FREQUENCY = 10; //In seconds!
 
 }

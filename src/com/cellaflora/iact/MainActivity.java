@@ -55,10 +55,9 @@ public class MainActivity extends Activity
 
         menuItems = new ArrayList<String>();
         menuItems.add("News and Legislative Summary");
-        menuItems.add("Legislative Team");
-        menuItems.add("Find Your Legislator");
-        menuItems.add("IACT Legislative Day");
-        menuItems.add("IACT Twitter Feed");
+        menuItems.add("Calendar of Events");
+        menuItems.add("IACT Legislative Hub");
+        menuItems.add("Twitter");
         mainMenu = (ListView) findViewById(R.id.main_menu);
         adapter = new MenuAdapter(this, menuItems);
         mainMenu.setAdapter(adapter);
@@ -94,34 +93,17 @@ public class MainActivity extends Activity
         });
 	}
 
-    public void onPause()
-    {
-        super.onPause();
-
-        if(conference_listener != null)
-        {
-            conference_listener.setRunning(false);
-        }
-    }
-
     public void onResume()
     {
         super.onResume();
 
-        if(conference_listener != null)
+        if(conference_listener == null)
         {
-            conference_listener.setRunning(true);
+            conference_listener = new ConferenceListener(new ConferenceHandler());
         }
-        else
-        {
 
-                if(conference == null)
-                {
-                    conference = new Conference();
-                }
+        conference_listener.getConferenceStatus();
 
-                conference_listener = new ConferenceListener(conference, new ConferenceHandler());
-        }
     }
 
 
@@ -129,57 +111,50 @@ public class MainActivity extends Activity
     {
         Intent intent = null;
 
-        switch(position)
+        if(conference_enabled)
         {
-            case 0:
-                intent = new Intent(this, LegislativeSummary.class);
-                break;
-            case 1:
-                if(Constants.LOAD_EXTERNAL)
-                {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.LEGISLATIVE_TEAM_URL));
-                }
-                else
-                {
+            switch(position)
+            {
+                case 0: //Conference Pages
+                    intent = null;
+                    break;
+                case 1: //News and Legislative Summary
+                    intent = new Intent(this, LegislativeSummary.class);
+                    break;
+                case 2: //Calendar of Events
                     intent = new Intent(this, WebContentView.class);
-                    intent.putExtra("URL", Constants.LEGISLATIVE_TEAM_URL);
-                }
-                break;
-            case 2:
-                if(Constants.LOAD_EXTERNAL)
-                {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.LEGISLATIVE_INITIATIVES_URL));
-                }
-                else
-                {
+                    intent.putExtra("URL", Constants.CALENDAR_OF_EVENTS_URL);
+                    break;
+                case 3: //IACT Legislative Hub
                     intent = new Intent(this, WebContentView.class);
-                    intent.putExtra("URL", Constants.LEGISLATIVE_INITIATIVES_URL);
-                }
-                break;
-            case 3:
-                if(Constants.LOAD_EXTERNAL)
-                {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.LEGISLATOR_FIND_URL));
-                }
-                else
-                {
+                    intent.putExtra("URL", Constants.LEGISLATIVE_HUB_URL);
+                    break;
+                case 4: //Twitter
                     intent = new Intent(this, WebContentView.class);
-                    intent.putExtra("URL", Constants.LEGISLATOR_FIND_URL);
-                }
-                break;
-            case 4:
-                if(Constants.LOAD_EXTERNAL)
-                {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.LEGISLATIVE_DAY_URL));
-                }
-                else
-                {
+                    intent.putExtra("URL", Constants.TWITTER_URL);
+                    break;
+            }
+        }
+        else
+        {
+            switch(position)
+            {
+                case 0: //News and Legislative Summary
+                    intent = new Intent(this, LegislativeSummary.class);
+                    break;
+                case 1: //Calendar of Events
                     intent = new Intent(this, WebContentView.class);
-                    intent.putExtra("URL", Constants.LEGISLATIVE_DAY_URL);
-                }
-                break;
-            case 5:
-                break;
+                    intent.putExtra("URL", Constants.CALENDAR_OF_EVENTS_URL);
+                    break;
+                case 2: //IACT Legislative Hub
+                    intent = new Intent(this, WebContentView.class);
+                    intent.putExtra("URL", Constants.LEGISLATIVE_HUB_URL);
+                    break;
+                case 3: //Twitter
+                    intent = new Intent(this, WebContentView.class);
+                    intent.putExtra("URL", Constants.TWITTER_URL);
+                    break;
+            }
         }
 
         if(intent != null)
@@ -198,35 +173,45 @@ public class MainActivity extends Activity
         }
     }
 
+    private void setupMenu()
+    {
+        menuItems.add("News and Legislative Summary");
+        menuItems.add("Calendar of Events");
+        menuItems.add("IACT Legislative Hub");
+        menuItems.add("Twitter");
+        mainMenu = (ListView) findViewById(R.id.main_menu);
+        adapter = new MenuAdapter(this, menuItems);
+        mainMenu.setAdapter(adapter);
+        MenuItemClickListener menuListener = new MenuItemClickListener();
+        mainMenu.setOnItemClickListener(menuListener);
+    }
+
     private class ConferenceHandler extends Handler
     {
         public void handleMessage(Message msg)
         {
-            //final Animation in = new AlphaAnimation(0.0f, 1.0f);
-            //in.setDuration(1200);
+            conference = (Conference) msg.getData().getSerializable("CONFERENCE_DATA");
 
-            if(msg.getData().getInt("CONFERENCE_STATUS") == ConferenceListener.CONFERENCE_ENABLED)
+            if(conference != null && conference.enabled && !conference.name.isEmpty())
             {
-                if(conference != null)
+                if(!conference_enabled)
                 {
                     conference_enabled = true;
+                    menuItems = new ArrayList<String>();
                     menuItems.add(conference.name);
-                    adapter.notifyDataSetChanged();
-                    mainMenu.invalidateViews();
-                    //mainMenu.startAnimation(in);
+                    setupMenu();
                 }
             }
             else
             {
-                if(conference != null)
+                if(conference_enabled)
                 {
                     conference_enabled = false;
-                    menuItems.remove(conference.name);
-                    adapter.notifyDataSetChanged();
-                    mainMenu.invalidateViews();
-                    //mainMenu.startAnimation(in);
+                    menuItems = new ArrayList<String>();
+                    setupMenu();
                 }
             }
         }
     }
+
 }

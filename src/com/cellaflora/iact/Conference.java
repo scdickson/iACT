@@ -1,9 +1,11 @@
 package com.cellaflora.iact;
 
+import java.io.Serializable;
+
 /**
  * Created by sdickson on 8/29/13.
  */
-public class Conference
+public class Conference implements Serializable
 {
     public String name;
     public String highlights_link;

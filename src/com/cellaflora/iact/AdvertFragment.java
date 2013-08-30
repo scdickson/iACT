@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.parse.FindCallback;
@@ -31,13 +33,16 @@ import java.util.Random;
  */
 public class AdvertFragment extends Fragment
 {
-    public static final int AD_ROTATE_FREQUENCY = 30; //In seconds!
+    View view;
     public ArrayList<Advertisement> ads = new ArrayList<Advertisement>();
     public AdvertTimer adt = null;
+    Animation clear, load;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.advert_fragment, container, false);
+        view = inflater.inflate(R.layout.advert_fragment, container, false);
+        clear = AnimationUtils.loadAnimation(view.getContext(), R.anim.slide_left);
+        load = AnimationUtils.loadAnimation(view.getContext(), R.anim.slide_right);
         return view;
     }
 
@@ -101,7 +106,7 @@ public class AdvertFragment extends Fragment
                 new loadAd().execute(adBanner);
                 try
                 {
-                    sleep(AdvertFragment.AD_ROTATE_FREQUENCY * 1000);
+                    sleep(Constants.AD_ROTATE_FREQUENCY * 1000);
                 }
                 catch(Exception e){}
             }
@@ -146,8 +151,17 @@ public class AdvertFragment extends Fragment
         {
             if(image != null)
             {
-
-                ad.setImageBitmap(image);
+                clear.setAnimationListener(new Animation.AnimationListener()
+                {
+                    public void onAnimationRepeat(Animation animation) {}
+                    public void onAnimationStart(Animation animation){}
+                    public void onAnimationEnd(Animation animation)
+                    {
+                        ad.setImageBitmap(image);
+                        ad.startAnimation(load);
+                    }
+                });
+                ad.startAnimation(clear);
             }
         }
     }
