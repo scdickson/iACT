@@ -27,6 +27,7 @@ import com.parse.ParseQuery;
 import com.parse.PushService;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,14 +37,13 @@ public class MainActivity extends Activity
 {
 
     private ListView mainMenu;
-    private ImageView infoButton;
+    public static ImageView infoButton;
     public static ArrayList<String> menuItems;
     //public static final String[] menuItems = {"News and Legislative Summary", "Legislative Team", "Find Your Legislator", "IACT Legislative Day", "IACT Twitter Feed", null};
     public static Conference conference;
     public static ConferenceListener conference_listener = null;
     private MenuAdapter adapter;
     public static boolean conference_enabled = false;
-
 
     @Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -54,7 +54,6 @@ public class MainActivity extends Activity
         PushService.setDefaultPushCallback(this, LegislativeSummary.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
         setContentView(R.layout.activity_main);
-
 
         menuItems = new ArrayList<String>();
         menuItems.add("News and Legislative Summary");
@@ -96,17 +95,18 @@ public class MainActivity extends Activity
         });
 	}
 
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
     public void onResume()
     {
         super.onResume();
-
-        if(conference_listener == null)
-        {
-            conference_listener = new ConferenceListener(new ConferenceHandler());
-        }
-
+        conference_listener = new ConferenceListener(new ConferenceHandler());
         conference_listener.getConferenceStatus();
-
+        infoButton.setVisibility(View.VISIBLE);
     }
 
     private long getDirSize()
@@ -164,7 +164,7 @@ public class MainActivity extends Activity
             switch(position)
             {
                 case 0: //Conference Pages
-                    intent = null;
+                    intent = new Intent(this, ConferenceLanding.class);
                     break;
                 case 1: //News and Legislative Summary
                     intent = new Intent(this, LegislativeSummary.class);
