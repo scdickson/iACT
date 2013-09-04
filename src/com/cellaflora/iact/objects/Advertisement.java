@@ -1,4 +1,4 @@
-package com.cellaflora.iact;
+package com.cellaflora.iact.objects;
 
 /**
  * Created by sdickson on 7/17/13.

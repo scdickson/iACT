@@ -1,4 +1,4 @@
-package com.cellaflora.iact;
+package com.cellaflora.iact.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -11,6 +11,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cellaflora.iact.MainActivity;
+import com.cellaflora.iact.R;
 
 import java.util.ArrayList;
 

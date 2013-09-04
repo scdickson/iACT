@@ -1,11 +1,10 @@
-package com.cellaflora.iact;
+package com.cellaflora.iact.support;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
+import com.cellaflora.iact.objects.Conference;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

@@ -2,36 +2,29 @@ package com.cellaflora.iact;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.parse.FindCallback;
+import com.cellaflora.iact.adapters.MenuAdapter;
+import com.cellaflora.iact.objects.Conference;
+import com.cellaflora.iact.support.ConferenceListener;
+import com.cellaflora.iact.support.FileComparator;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
-import com.parse.ParseException;
 import com.parse.ParseInstallation;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.PushService;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 public class MainActivity extends Activity
 {
@@ -131,7 +124,7 @@ public class MainActivity extends Activity
             if(getDirSize() >= (Constants.MAX_CACHE_SIZE * 1000000))
             {
                 ArrayList<File> files = new ArrayList(Arrays.asList(getFilesDir().listFiles()));
-                Collections.sort(files, new fileComparator());
+                Collections.sort(files, new FileComparator());
                 int i = 0;
 
                 //Log.d("err", "Size before: " + getDirSize());

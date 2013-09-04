@@ -9,11 +9,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.cellaflora.iact.adapters.ConferenceMenuAdapter;
+import com.cellaflora.iact.objects.Conference;
+import com.cellaflora.iact.support.ConferenceListener;
 
 import java.util.ArrayList;
 
@@ -66,7 +68,7 @@ public class ConferenceLanding extends Activity
 
         if(conferenceMenuItems.get(position).equalsIgnoreCase("Daily Schedule"))
         {
-
+            intent = new Intent(this, ConferenceSchedule.class);
         }
         else if(conferenceMenuItems.get(position).equalsIgnoreCase("Sponsors"))
         {

@@ -1,4 +1,4 @@
-package com.cellaflora.iact;
+package com.cellaflora.iact.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cellaflora.iact.objects.Post;
+import com.cellaflora.iact.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

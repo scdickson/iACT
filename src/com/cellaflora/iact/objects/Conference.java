@@ -1,4 +1,4 @@
-package com.cellaflora.iact;
+package com.cellaflora.iact.objects;
 
 import java.io.Serializable;
 

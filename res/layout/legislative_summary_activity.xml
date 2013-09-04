@@ -14,7 +14,7 @@
               android:layout_alignParentBottom="true"
             />
 
-    <com.cellaflora.iact.PullToRefreshListView
+    <com.cellaflora.iact.support.PullToRefreshListView
             android:clipToPadding="false"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"

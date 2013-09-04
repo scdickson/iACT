@@ -1,4 +1,4 @@
-package com.cellaflora.iact;
+package com.cellaflora.iact.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,31 +7,34 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.cellaflora.iact.R;
+import com.cellaflora.iact.objects.Event;
+
 import java.util.ArrayList;
 
 /**
- * Created by sdickson on 9/3/13.
+ * Created by sdickson on 9/4/13.
  */
-public class ConferenceMenuAdapter extends BaseAdapter
+public class ConferenceScheduleAdapter extends BaseAdapter
 {
     Context context;
     LayoutInflater inflater;
-    ArrayList<String> menuItems;
+    ArrayList<Event> events;
 
-    public ConferenceMenuAdapter(Context context, ArrayList<String> menuItems)
+    public ConferenceScheduleAdapter(Context context, ArrayList<Event> events)
     {
         this.context = context;
-        this.menuItems = menuItems;
+        this.events = events;
     }
 
     public int getCount()
     {
-        return menuItems.size();
+        return events.size();
     }
 
     public Object getItem(int position)
     {
-        return menuItems.get(position);
+        return events.get(position);
     }
 
     public long getItemId(int position)
@@ -42,10 +45,7 @@ public class ConferenceMenuAdapter extends BaseAdapter
     public View getView(int position, View convertView, ViewGroup parent)
     {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate(R.layout.conference_list_row, parent, false);
-        TextView txtMenuItem = (TextView) itemView.findViewById(R.id.conference_menu_item);
-        txtMenuItem.setText(menuItems.get(position));
+        View itemView = inflater.inflate(R.layout.conference_schedule_list_row, parent, false);
         return itemView;
     }
-
 }

@@ -1,4 +1,4 @@
-package com.cellaflora.iact;
+package com.cellaflora.iact.support;
 
 import java.io.File;
 import java.util.Comparator;
@@ -6,7 +6,7 @@ import java.util.Comparator;
 /**
  * Created by sdickson on 7/28/13.
  */
-public class fileComparator implements Comparator<File>
+public class FileComparator implements Comparator<File>
 {
     //Sorts from largest files to smallest files.
     public int compare(File f1, File f2)

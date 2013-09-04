@@ -1,4 +1,4 @@
-package com.cellaflora.iact;
+package com.cellaflora.iact.support;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,6 +8,8 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.*;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.*;
+
+import com.cellaflora.iact.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

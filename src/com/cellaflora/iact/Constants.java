@@ -16,16 +16,20 @@ public class Constants
     public static final String LEGISLATIVE_HUB_URL = "http://www.yahoo.com";
     public static final String TWITTER_URL = "https://www.twitter.com/INCitiesTowns";
 
-    //Constants for Banner Ad
-    public static final int AD_ROTATE_FREQUENCY = 30; //In seconds!
-
-    //Constants for News and Legislative Summary
-    public static final String NEWS_FILE_NAME = "IACT_NEWS_DATA";
-    public static final int NEWS_UPDATE_INTERVAL = 60; //In minutes!
-
     //Constants for Conference Page
     public static final String CONFERENCE_SPONSORS_URL = "http://www.google.com";
     public static final String CONFERENCE_MAPS_URL = "http://www.yahoo.com";
     public static final String CONFERENCE_HIGHLIGHTS_URL = "http://www.bing.com";
+
+    //Constants for Conference Schedule
+    public static final String CONFERENCE_EVENT_FILE_NAME = "iact_saved_events";
+    public static final String CONFERENCE_MY_SCHEDULE_FILE_NAME = "iact_saved_my_schedule";
+
+    //Constants for Banner Ad
+    public static final int AD_ROTATE_FREQUENCY = 30; //In seconds!
+
+    //Constants for News and Legislative Summary
+    public static final String NEWS_FILE_NAME = "iact_saved_news";
+    public static final int NEWS_UPDATE_INTERVAL = 60; //In minutes!
 
 }
