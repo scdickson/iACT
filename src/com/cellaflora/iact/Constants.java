@@ -23,4 +23,9 @@ public class Constants
     public static final String NEWS_FILE_NAME = "IACT_NEWS_DATA";
     public static final int NEWS_UPDATE_INTERVAL = 60; //In minutes!
 
+    //Constants for Conference Page
+    public static final String CONFERENCE_SPONSORS_URL = "http://www.google.com";
+    public static final String CONFERENCE_MAPS_URL = "http://www.yahoo.com";
+    public static final String CONFERENCE_HIGHLIGHTS_URL = "http://www.bing.com";
+
 }

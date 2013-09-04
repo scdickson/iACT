@@ -34,7 +34,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by sdickson on 7/21/13.
@@ -140,6 +142,23 @@ public class LegislativeSummary extends Activity
 
     }
 
+    private Date fixDate(Date date)
+    {
+        TimeZone tz = TimeZone.getDefault();
+        Date fixed = new Date(date.getTime() - tz.getRawOffset());
+
+        if(tz.inDaylightTime(fixed))
+        {
+            Date dst = new Date(fixed.getTime() - tz.getDSTSavings());
+
+            if(tz.inDaylightTime(dst))
+            {
+                fixed = dst;
+            }
+        }
+
+        return fixed;
+    }
 
     private void loadNewsAndLegislativeData()
     {
@@ -147,7 +166,6 @@ public class LegislativeSummary extends Activity
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Weeklies");
         query.addDescendingOrder("createdAt");
-
         query.findInBackground(new FindCallback<ParseObject>()
         {
             @Override
@@ -160,7 +178,7 @@ public class LegislativeSummary extends Activity
                     tmp.caption = parse.getString("Caption");
                     tmp.headline = parse.getString("Post_Headline");
                     tmp.objectId = parse.getObjectId();
-                    tmp.update_time = parse.getString("updatedAt");
+                    tmp.update_time = fixDate(parse.getUpdatedAt());
 
                     ParseFile image = null;//(ParseFile) parse.get("Photo");
                     ParseFile document = (ParseFile) parse.get("DOC");

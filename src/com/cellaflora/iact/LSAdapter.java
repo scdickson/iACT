@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by sdickson on 7/21/13.
@@ -47,8 +49,19 @@ public class LSAdapter extends BaseAdapter
         ImageView ls_image = (ImageView) itemView.findViewById(R.id.ls_image);
         TextView ls_headline = (TextView) itemView.findViewById(R.id.ls_headline);
         TextView ls_desc = (TextView) itemView.findViewById(R.id.ls_desc);
+        TextView ls_date = (TextView) itemView.findViewById(R.id.ls_date);
 
         Post tmp = LSItems.get(position);
+
+        if(tmp.update_time != null)
+        {
+            SimpleDateFormat start = new SimpleDateFormat("MMMM d", Locale.US);
+            ls_date.setText("-" + start.format(tmp.update_time) + "-");
+        }
+        else
+        {
+            ls_date.setVisibility(View.GONE);
+        }
 
         if(tmp.headline != null)
         {

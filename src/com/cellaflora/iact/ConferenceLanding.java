@@ -7,10 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -25,6 +28,7 @@ public class ConferenceLanding extends Activity
     private ListView conferenceList;
     private Context context;
     private ConferenceListener conference_listener = null;
+    private TextView conferenceTitle;
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -36,15 +40,16 @@ public class ConferenceLanding extends Activity
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
-        conferenceMenuItems = new ArrayList<String>();
         context = this;
         MainActivity.infoButton.setVisibility(View.GONE);
+        conferenceTitle = (TextView) findViewById(R.id.conference_title);
     }
 
     public void onResume()
     {
         super.onResume();
 
+        conferenceMenuItems = new ArrayList<String>();
         conference_listener = new ConferenceListener(new ConferenceHandler());
         conference_listener.getConferenceStatus();
     }
@@ -55,6 +60,46 @@ public class ConferenceLanding extends Activity
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
+    private void selectItem(int position)
+    {
+        Intent intent = null;
+
+        if(conferenceMenuItems.get(position).equalsIgnoreCase("Daily Schedule"))
+        {
+
+        }
+        else if(conferenceMenuItems.get(position).equalsIgnoreCase("Sponsors"))
+        {
+            intent = new Intent(this, WebContentView.class);
+            intent.putExtra("URL", Constants.CONFERENCE_SPONSORS_URL);
+        }
+        else if(conferenceMenuItems.get(position).equalsIgnoreCase("Event Highlights"))
+        {
+            intent = new Intent(this, WebContentView.class);
+            intent.putExtra("URL", Constants.CONFERENCE_HIGHLIGHTS_URL);
+        }
+        else if(conferenceMenuItems.get(position).equalsIgnoreCase("Maps and Directions"))
+        {
+            intent = new Intent(this, WebContentView.class);
+            intent.putExtra("URL", Constants.CONFERENCE_MAPS_URL);
+        }
+
+        if(intent != null)
+        {
+            intent.putExtra("BACK_ENABLED", false);
+            startActivity(intent);
+        }
+    }
+
+    private class MenuItemClickListener implements ListView.OnItemClickListener
+    {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id)
+        {
+            selectItem(position);
+        }
+    }
+
     private class ConferenceHandler extends Handler
     {
         public void handleMessage(Message msg)
@@ -63,6 +108,8 @@ public class ConferenceLanding extends Activity
 
             if(conference != null && conference.enabled && !conference.name.isEmpty())
             {
+                conferenceTitle.setText(Html.fromHtml(conference.name + "\n<font color=\"#825957\">Indianapolis</font>"));
+
                 if(conference.show_daily_schedule)
                 {
                     conferenceMenuItems.add("Daily Schedule");
@@ -86,10 +133,10 @@ public class ConferenceLanding extends Activity
                 adapter = new ConferenceMenuAdapter(context, conferenceMenuItems);
                 conferenceList = (ListView) findViewById(R.id.conference_list_view);
                 conferenceList.setAdapter(adapter);
+                conferenceList.setOnItemClickListener(new MenuItemClickListener());
             }
             else
             {
-                //MainActivity.conference_enabled = false;
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
             }

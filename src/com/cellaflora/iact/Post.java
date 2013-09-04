@@ -1,6 +1,7 @@
 package com.cellaflora.iact;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by sdickson on 7/21/13.
@@ -13,10 +14,5 @@ public class Post implements Serializable
     public String photo_url;
     public String description;
     public String headline;
-    public String update_time;
-
-    public String toString()
-    {
-        return (objectId + ", " + headline + ", " + caption + ", " + description + ", " + update_time + ", " + doc_url + ", " + photo_url);
-    }
+    public Date update_time;
 }

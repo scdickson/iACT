@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,6 +63,8 @@ public class MenuAdapter extends BaseAdapter
                     case 0:
                         //CONFERENCE IMAGE
                         //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/home", null, null);
+                        Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_right);
+                        itemView.startAnimation(animation);
                         break;
                     case 1:
                         //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/home_off", null, null);
