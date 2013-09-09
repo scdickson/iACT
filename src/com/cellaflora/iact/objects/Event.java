@@ -14,4 +14,5 @@ public class Event implements Serializable
     public Date start_time, end_time;
     public String location;
     public String speakers;
+    public boolean isInPersonalSchedule = false;
 }

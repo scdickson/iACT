@@ -2,18 +2,43 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              android:background="#EDEEF2"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/schedule_prev_day"
+            android:layout_height="40dp"
+            android:src="@drawable/arrow_left"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="40dp"/>
+        <TextView
+            android:id="@+id/schedule_current_day"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <ImageView
+                android:id="@+id/schedule_next_day"
+                android:layout_centerVertical="true"
+                android:src="@drawable/arrow_right"
+                android:layout_alignParentRight="true"
+                android:layout_height="40dp"
+                android:layout_width="40dp"/>
 
-    <ListView
-            android:id="@+id/conference_event_list_view"
-            android:layout_height="fill_parent"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:dividerHeight="15dp"
-            android:divider="@android:color/transparent"
-            android:layout_width="fill_parent"/>
+        </RelativeLayout>
+
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/schedule_pager"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="9"/>
 
 </LinearLayout>

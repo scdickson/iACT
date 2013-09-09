@@ -24,6 +24,7 @@ public class Constants
     //Constants for Conference Schedule
     public static final String CONFERENCE_EVENT_FILE_NAME = "iact_saved_events";
     public static final String CONFERENCE_MY_SCHEDULE_FILE_NAME = "iact_saved_my_schedule";
+    public static final int CONFERENCE_EVENTS_REPLACE_INTERVAL = 60;
 
     //Constants for Banner Ad
     public static final int AD_ROTATE_FREQUENCY = 30; //In seconds!

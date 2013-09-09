@@ -2,35 +2,66 @@ package com.cellaflora.iact;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cellaflora.iact.adapters.ConferenceScheduleAdapter;
+import com.cellaflora.iact.adapters.SchedulePageAdapter;
 import com.cellaflora.iact.objects.Event;
 import com.cellaflora.iact.support.PersistenceManager;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
  * Created by sdickson on 9/4/13.
  */
-public class ConferenceSchedule extends Activity
+public class ConferenceSchedule extends FragmentActivity
 {
-    private Context context;
-    private ConferenceScheduleAdapter adapter;
-    private ListView eventList;
-    private ArrayList<Event> events;
-    private ArrayList<Event> mySchedule;
-    private ScheduleEventClickListener scheduleListener;
+    public static final int EVENTS_ALL = 0;
+    public static final int EVENTS_PERSONAL = 1;
+    public static final int SELECTED = Color.parseColor("#E8BD3B");
+    public static final int UNSELECTED = Color.parseColor("#ffffff");
+
+    LinearLayout eventSelector;
+    TextView eventSelectorAll, eventSelectorPersonal, txtPageDate;
+    ImageView iactLogo, prevPage, nextPage;
+    ProgressDialog progressDialog;
+    Context context;
+    EventSelectorListener selector;
+    SchedulePageAdapter adapter;
+    SchedulePageClickListener pageClickListener;
+    ViewPager pager;
+    ConferenceSchedule cs;
+    SimpleDateFormat timeFormat;
+
+    public static ArrayList<Event> events;
+    public static ArrayList<Event> mySchedule;
+    public static ArrayList<Fragment> days;
+    public static int event_selector = EVENTS_ALL;
+    public static int current_page = 0;
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -42,13 +73,24 @@ public class ConferenceSchedule extends Activity
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+        selector = new EventSelectorListener();
+        pageClickListener = new SchedulePageClickListener();
+        eventSelector = (LinearLayout) findViewById(R.id.event_selector_layout);
+        eventSelectorAll = (TextView) findViewById(R.id.event_selector_all);
+        eventSelectorPersonal = (TextView) findViewById(R.id.event_selector_personal);
+        iactLogo = (ImageView) findViewById(R.id.menubar_logo);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("");
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Loading...");
         context = this;
-    }
-
-    public void onBackPressed()
-    {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        cs = this;
+        timeFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
+        txtPageDate = (TextView) findViewById(R.id.schedule_current_day);
+        prevPage = (ImageView) findViewById(R.id.schedule_prev_day);
+        prevPage.setOnClickListener(pageClickListener);
+        nextPage = (ImageView) findViewById(R.id.schedule_next_day);
+        nextPage.setOnClickListener(pageClickListener);
     }
 
     private Date fixDate(Date date)
@@ -69,13 +111,27 @@ public class ConferenceSchedule extends Activity
         return fixed;
     }
 
+    public void onPause()
+    {
+        try
+        {
+            PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME, events);
+            PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME, mySchedule);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     public void loadEvents()
     {
         events = new ArrayList<Event>();
         mySchedule = new ArrayList<Event>();
+        days = new ArrayList<Fragment>();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Conference_Schedule");
-        query.addDescendingOrder("p3_Start_Time");
+        query.addAscendingOrder("p3_Start_Time");
         query.findInBackground(new FindCallback<ParseObject>()
         {
             @Override
@@ -112,30 +168,231 @@ public class ConferenceSchedule extends Activity
                     ex.printStackTrace();
                 }
 
-                eventList = (ListView) findViewById(R.id.conference_event_list_view);
-                adapter = new ConferenceScheduleAdapter(context, events);
-                eventList.setAdapter(adapter);
-                scheduleListener = new ScheduleEventClickListener();
-                eventList.setOnItemClickListener(scheduleListener);
+                days = getDayFragments();
+                txtPageDate.setText("Day 1, " + timeFormat.format(events.get(0).start_time));
+                adapter = new SchedulePageAdapter(getSupportFragmentManager(), days);
+                pager = (ViewPager) findViewById(R.id.schedule_pager);
+                pager.setAdapter(adapter);
+                pager.setOnPageChangeListener(new SchedulePageListener(cs));
+
+
+                if(progressDialog.isShowing())
+                {
+                    progressDialog.dismiss();
+                }
             }
         });
     }
 
+    public ArrayList<Fragment> getDayFragments()
+    {
+        ArrayList<Fragment> days = new ArrayList<Fragment>();
+        Date prev = null;
+
+        for(Event evt : events)
+        {
+            if(prev != null)
+            {
+                if(prev.getDay() != evt.start_time.getDay())
+                {
+                    days.add(new ConferenceSchedulePage(evt.start_time, cs));
+                }
+            }
+            else
+            {
+                days.add(new ConferenceSchedulePage(evt.start_time, cs));
+            }
+
+            prev = evt.start_time;
+        }
+
+        return days;
+    }
+
+
     public void onResume()
     {
         super.onResume();
-    }
+        iactLogo.setVisibility(View.GONE);
+        eventSelector.setVisibility(View.VISIBLE);
+        eventSelectorAll.setOnClickListener(selector);
+        eventSelectorPersonal.setOnClickListener(selector);
 
-    private void selectItem(int position)
-    {
-
-    }
-
-    private class ScheduleEventClickListener implements ListView.OnItemClickListener
-    {
-        public void onItemClick(AdapterView parent, View view, int position, long id)
+        if(events == null)
         {
-            selectItem(position);
+            try
+            {
+                File f = getFileStreamPath(Constants.CONFERENCE_EVENT_FILE_NAME);
+                if((f.lastModified() + (Constants.CONFERENCE_EVENTS_REPLACE_INTERVAL * 60 * 1000)) >= System.currentTimeMillis())
+                {
+                    events = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME);
+
+                    try
+                    {
+                        mySchedule = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME);
+                    }
+                    catch(Exception ex)
+                    {
+                        mySchedule = new ArrayList<Event>();
+                    }
+
+                    days = getDayFragments();
+                    txtPageDate.setText("Day 1, " + timeFormat.format(events.get(0).start_time));
+                    adapter = new SchedulePageAdapter(getSupportFragmentManager(), days);
+                    pager = (ViewPager) findViewById(R.id.schedule_pager);
+                    pager.setAdapter(adapter);
+                    pager.setOnPageChangeListener(new SchedulePageListener(cs));
+                }
+                else
+                {
+                    progressDialog.show();
+                    loadEvents();
+                }
+            }
+            catch(Exception e)
+            {
+                progressDialog.show();
+                loadEvents();
+            }
+        }
+        else
+        {
+            txtPageDate.setText("Day 1, " + timeFormat.format(events.get(0).start_time));
+            adapter = new SchedulePageAdapter(getSupportFragmentManager(), days);
+            pager = (ViewPager) findViewById(R.id.schedule_pager);
+            pager.setAdapter(adapter);
+            pager.setOnPageChangeListener(new SchedulePageListener(cs));
+
+            switch(event_selector)
+            {
+                case EVENTS_ALL:
+                    setSelector(EVENTS_ALL);
+                    break;
+                case EVENTS_PERSONAL:
+                    setSelector(EVENTS_PERSONAL);
+                    break;
+            }
+        }
+
+
+    }
+
+    public void setSelector(int selectorState)
+    {
+        ConferenceSchedulePage csp = (ConferenceSchedulePage) days.get(pager.getCurrentItem());
+
+        switch(selectorState)
+        {
+            case EVENTS_ALL:
+                if(event_selector == EVENTS_PERSONAL)
+                {
+                    event_selector = EVENTS_ALL;
+                    eventSelectorAll.setTextColor(SELECTED);
+                    eventSelectorPersonal.setTextColor(UNSELECTED);
+                    if(csp != null && csp.getState() != event_selector)
+                        csp.setState(EVENTS_ALL);
+                }
+                break;
+            case EVENTS_PERSONAL:
+                if(event_selector == EVENTS_ALL)
+                {
+                    event_selector = EVENTS_PERSONAL;
+                    eventSelectorAll.setTextColor(UNSELECTED);
+                    eventSelectorPersonal.setTextColor(SELECTED);
+                    if(csp != null && csp.getState() != event_selector)
+                        csp.setState(EVENTS_PERSONAL);
+                }
+                break;
+        }
+    }
+
+    private class EventSelectorListener implements TextView.OnClickListener
+    {
+        public void onClick(View view)
+        {
+            if(view.equals(eventSelectorAll))
+            {
+                setSelector(EVENTS_ALL);
+            }
+            else if(view.equals(eventSelectorPersonal))
+            {
+                setSelector(EVENTS_PERSONAL);
+            }
+        }
+    }
+
+    private class SchedulePageListener implements ViewPager.OnPageChangeListener
+    {
+        ConferenceSchedule cs;
+
+        public SchedulePageListener(ConferenceSchedule cs)
+        {
+            this.cs = cs;
+        }
+
+        public void onPageSelected(int page){}
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){}
+
+        public void onPageScrollStateChanged(int state)
+        {
+            if(state == ViewPager.SCROLL_STATE_SETTLING)
+            {
+                if(pager.getCurrentItem() != current_page)
+                {
+                    current_page = pager.getCurrentItem();
+                    ConferenceSchedulePage csp = (ConferenceSchedulePage) days.get(current_page);
+                    txtPageDate.setText("Day " + (current_page + 1) + ", " + timeFormat.format(csp.date));
+
+                    if(csp.getState() != event_selector)
+                    {
+                        csp.setState(event_selector);
+                    }
+                }
+            }
+        }
+    }
+
+    private class SchedulePageClickListener implements View.OnClickListener
+    {
+        public void onClick(View view)
+        {
+            try
+            {
+                current_page = pager.getCurrentItem();
+
+                if(view.equals(prevPage))
+                {
+                    if(current_page > 0)
+                    {
+                        pager.setCurrentItem(--current_page);
+                        ConferenceSchedulePage csp = (ConferenceSchedulePage) days.get(current_page);
+                        txtPageDate.setText("Day " + (current_page + 1) + ", " + timeFormat.format(csp.date));
+
+                        if(csp.getState() != event_selector)
+                        {
+                            csp.setState(event_selector);
+                        }
+                    }
+                }
+                else if(view.equals(nextPage))
+                {
+                    if(current_page < days.size())
+                    {
+                        pager.setCurrentItem(++current_page);
+                        ConferenceSchedulePage csp = (ConferenceSchedulePage) days.get(current_page);
+                        txtPageDate.setText("Day " + (current_page + 1) + ", " + timeFormat.format(csp.date));
+
+                        if(csp.getState() != event_selector)
+                        {
+                            csp.setState(event_selector);
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }

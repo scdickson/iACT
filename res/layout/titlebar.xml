@@ -22,9 +22,51 @@
         android:layout_height="match_parent"
         android:focusable="false"
         android:clickable="false"
+        android:id="@+id/menubar_logo"
         android:scaleType="centerInside"
         android:layout_centerVertical="true"
         android:layout_centerInParent="true"
         android:src="@drawable/branding"/>
+
+    <LinearLayout
+            android:padding="5dp"
+            android:orientation="horizontal"
+            android:id="@+id/event_selector_layout"
+            android:layout_toRightOf="@id/toggle_button"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:visibility="gone">
+
+        <TextView
+                android:id="@+id/event_selector_all"
+                android:text="All Events"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:textColor="#E8BD3B"/>
+        <View
+                android:layout_width="2dp"
+                android:gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_height="fill_parent"
+                android:background="#ffffff"/>
+        <TextView
+                android:id="@+id/event_selector_personal"
+                android:text="My Events"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"/>
+
+    </LinearLayout>
+
 
 </RelativeLayout>
