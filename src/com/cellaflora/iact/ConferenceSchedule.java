@@ -58,7 +58,6 @@ public class ConferenceSchedule extends FragmentActivity
     SimpleDateFormat timeFormat;
 
     public static ArrayList<Event> events;
-    public static ArrayList<Event> mySchedule;
     public static ArrayList<Fragment> days;
     public static int event_selector = EVENTS_ALL;
     public static int current_page = 0;
@@ -113,10 +112,11 @@ public class ConferenceSchedule extends FragmentActivity
 
     public void onPause()
     {
+        super.onPause();
+
         try
         {
             PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME, events);
-            PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME, mySchedule);
         }
         catch(Exception e)
         {
@@ -127,7 +127,6 @@ public class ConferenceSchedule extends FragmentActivity
     public void loadEvents()
     {
         events = new ArrayList<Event>();
-        mySchedule = new ArrayList<Event>();
         days = new ArrayList<Fragment>();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Conference_Schedule");
@@ -226,15 +225,6 @@ public class ConferenceSchedule extends FragmentActivity
                 if((f.lastModified() + (Constants.CONFERENCE_EVENTS_REPLACE_INTERVAL * 60 * 1000)) >= System.currentTimeMillis())
                 {
                     events = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME);
-
-                    try
-                    {
-                        mySchedule = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME);
-                    }
-                    catch(Exception ex)
-                    {
-                        mySchedule = new ArrayList<Event>();
-                    }
 
                     days = getDayFragments();
                     txtPageDate.setText("Day 1, " + timeFormat.format(events.get(0).start_time));

@@ -149,18 +149,17 @@ public class ConferenceScheduleAdapter extends BaseAdapter
             if(evt.isInPersonalSchedule)
             {
                 evt.isInPersonalSchedule = false;
-                cs.mySchedule.remove(evt);
                 txtAction.setText("Add to personal schedule");
 
-                if(cs.event_selector == ConferenceSchedule.EVENTS_PERSONAL)
+                if(ConferenceSchedule.event_selector == ConferenceSchedule.EVENTS_PERSONAL)
                 {
-                    //cs.forceSetSelector(ConferenceSchedule.EVENTS_PERSONAL);
+                    events.remove(evt);
+                    notifyDataSetChanged();
                 }
             }
             else
             {
                 evt.isInPersonalSchedule = true;
-                cs.mySchedule.add(evt);
                 txtAction.setText("Remove from personal schedule");
             }
         }
