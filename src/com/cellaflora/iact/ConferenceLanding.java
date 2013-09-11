@@ -2,6 +2,7 @@ package com.cellaflora.iact;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,12 +35,16 @@ public class ConferenceLanding extends Activity
     private Context context;
     private ConferenceListener conference_listener = null;
     private TextView conferenceTitle;
+    private ProgressDialog progressDialog;
 
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conference_landing);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("");
+        progressDialog.setMessage("Loading...");
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
@@ -66,7 +71,7 @@ public class ConferenceLanding extends Activity
     public void onResume()
     {
         super.onResume();
-
+        //progressDialog.show();
         conferenceMenuItems = new ArrayList<String>();
         conference_listener = new ConferenceListener(new ConferenceHandler());
         conference_listener.getConferenceStatus();
@@ -123,6 +128,11 @@ public class ConferenceLanding extends Activity
         public void handleMessage(Message msg)
         {
             conference = (Conference) msg.getData().getSerializable("CONFERENCE_DATA");
+
+            if(progressDialog.isShowing())
+            {
+                progressDialog.dismiss();
+            }
 
             if(conference != null && conference.enabled && !conference.name.isEmpty())
             {

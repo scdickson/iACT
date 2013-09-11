@@ -36,7 +36,6 @@ public class MainActivity extends Activity
     private ListView mainMenu;
     public static ImageView infoButton;
     public static ArrayList<String> menuItems;
-    //public static final String[] menuItems = {"News and Legislative Summary", "Legislative Team", "Find Your Legislator", "IACT Legislative Day", "IACT Twitter Feed", null};
     public static Conference conference;
     public static ConferenceListener conference_listener = null;
     private MenuAdapter adapter;
@@ -195,7 +194,6 @@ public class MainActivity extends Activity
         {
             intent.putExtra("BACK_ENABLED", false);
             startActivity(intent);
-            finish();
         }
     }
 

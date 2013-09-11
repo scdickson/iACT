@@ -92,16 +92,16 @@ public class ConferenceSchedulePage extends Fragment
             }
         }
 
-        /*if(content.size() == 0)
+        if(content.size() == 0)
         {
-            noEvents.setVisibility(View.VISIBLE);
             eventList.setVisibility(View.GONE);
+            noEvents.setVisibility(View.VISIBLE);
         }
         else
         {
             noEvents.setVisibility(View.GONE);
             eventList.setVisibility(View.VISIBLE);
-        }*/
+        }
 
         adapter = new ConferenceScheduleAdapter(view.getContext(), content, cs);
         eventList.setAdapter(adapter);
@@ -121,24 +121,20 @@ public class ConferenceSchedulePage extends Fragment
     {
         super.onResume();
 
-        /*if(content.size() == 0)
+        if(content.size() == 0)
         {
-            noEvents.setVisibility(View.VISIBLE);
             eventList.setVisibility(View.GONE);
+            noEvents.setVisibility(View.VISIBLE);
         }
         else
-        {*/
+        {
             noEvents.setVisibility(View.GONE);
             eventList.setVisibility(View.VISIBLE);
 
             adapter = new ConferenceScheduleAdapter(view.getContext(), content, cs);
             eventList.setAdapter(adapter);
-
-            if(Constants.CONFERENCE_EVENTS_DETAIL_ITEM_VIEW_ENABLED)
-            {
-                eventList.setOnItemClickListener(listener);
-            }
-        //}
+            eventList.setOnItemClickListener(listener);
+        }
     }
 
     private class EventItemClickListener implements ListView.OnItemClickListener
