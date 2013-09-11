@@ -113,20 +113,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConferenceLanding.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ConferenceLanding.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceLanding.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="10" selection-start="2444" selection-end="2444" vertical-scroll-proportion="0.41558442" vertical-offset="496" max-vertical-offset="2670">
+            <state line="73" column="10" selection-start="2444" selection-end="2444" vertical-scroll-proportion="0.0" vertical-offset="1291" max-vertical-offset="2670">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="195" column="34" selection-start="6688" selection-end="6688" vertical-scroll-proportion="0.0" vertical-offset="630" max-vertical-offset="3330">
-              <folding />
+            <state line="55" column="81" selection-start="1897" selection-end="1897" vertical-scroll-proportion="0.3617811" vertical-offset="210" max-vertical-offset="3480">
+              <folding>
+                <element signature="e#2863#3031#0" expanded="true" />
+                <element signature="e#3020#3021#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -163,8 +166,8 @@
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java" />
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedulePage.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java" />
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceLanding.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -882,9 +885,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceLanding.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="195" column="34" selection-start="6688" selection-end="6688" vertical-scroll-proportion="0.0" vertical-offset="630" max-vertical-offset="3330">
+        <state line="73" column="10" selection-start="2444" selection-end="2444" vertical-scroll-proportion="0.0" vertical-offset="496" max-vertical-offset="2670">
           <folding />
         </state>
       </provider>
@@ -896,10 +899,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceLanding.java">
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="10" selection-start="2444" selection-end="2444" vertical-scroll-proportion="0.41558442" vertical-offset="496" max-vertical-offset="2670">
-          <folding />
+        <state line="55" column="81" selection-start="1897" selection-end="1897" vertical-scroll-proportion="0.3617811" vertical-offset="210" max-vertical-offset="3480">
+          <folding>
+            <element signature="e#2863#3031#0" expanded="true" />
+            <element signature="e#3020#3021#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

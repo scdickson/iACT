@@ -53,6 +53,10 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
 
         menuItems = new ArrayList<String>();
+        if(conference_enabled && conference != null && !conference.name.isEmpty())
+        {
+            menuItems.add(conference.name);
+        }
         menuItems.add("News and Legislative Summary");
         menuItems.add("Calendar of Events");
         menuItems.add("IACT Legislative Hub");
