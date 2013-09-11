@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.cellaflora.iact.objects.Advertisement;
+import com.cellaflora.iact.support.PersistenceManager;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -44,10 +47,8 @@ public class AdvertFragment extends Fragment
         return view;
     }
 
-    public void onResume()
+    public void loadAds()
     {
-        super.onResume();
-
         if(adt == null)
         {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Advertisement");
@@ -74,10 +75,42 @@ public class AdvertFragment extends Fragment
                             //Log.d("Ad", tmp.toString());
                         }
 
+                        try
+                        {
+                            PersistenceManager.writeObject(view.getContext(), Constants.AD_FILE_NAME, ads);
+                        }
+                        catch(Exception ex)
+                        {
+                            e.printStackTrace();
+                        }
+
                         displayAds();
                     }
                 }
             });
+        }
+    }
+
+    public void onResume()
+    {
+        super.onResume();
+
+        try
+        {
+            File f = new File(view.getContext().getFilesDir(), Constants.AD_FILE_NAME);
+            if((f.lastModified() + (Constants.AD_UPDATE_INTERVAL * 60 * 1000)) >= System.currentTimeMillis())
+            {
+                ads = (ArrayList<Advertisement>) PersistenceManager.readObject(view.getContext(), Constants.AD_FILE_NAME);
+                displayAds();
+            }
+            else
+            {
+                loadAds();
+            }
+        }
+        catch(Exception e)
+        {
+            loadAds();
         }
     }
 
@@ -111,6 +144,26 @@ public class AdvertFragment extends Fragment
         }
 
     }
+
+    public void onPause()
+    {
+        super.onPause();
+
+        if(adt != null)
+        {
+            try
+            {
+                adt.running = false;
+                adt.join();
+                adt = null;
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private class loadAd extends AsyncTask<ImageView, Integer, Void>
     {
         ImageView ad;

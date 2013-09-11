@@ -10,6 +10,7 @@ import android.os.Message;
 import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,7 +18,9 @@ import com.cellaflora.iact.adapters.ConferenceMenuAdapter;
 import com.cellaflora.iact.objects.Conference;
 import com.cellaflora.iact.support.ConferenceListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by sdickson on 9/2/13.
@@ -45,6 +48,19 @@ public class ConferenceLanding extends Activity
         context = this;
         MainActivity.infoButton.setVisibility(View.GONE);
         conferenceTitle = (TextView) findViewById(R.id.conference_title);
+
+        ImageButton ib = (ImageButton) findViewById(R.id.toggle_button);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(context, MainActivity.class);
+                if(intent != null)
+                {
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     public void onResume()
@@ -110,7 +126,31 @@ public class ConferenceLanding extends Activity
 
             if(conference != null && conference.enabled && !conference.name.isEmpty())
             {
-                conferenceTitle.setText(Html.fromHtml(conference.name + "\n<font color=\"#825957\">Indianapolis</font>"));
+
+                if(conference.startDate != null && conference.endDate != null)
+                {
+                    String date = "";
+                    int bullet = (char) 0x2022;
+
+                    if(conference.startDate.getMonth() == conference.endDate.getMonth())
+                    {
+                        SimpleDateFormat formatDateStart = new SimpleDateFormat("MMMM d", Locale.US);
+                        SimpleDateFormat formatDateEnd = new SimpleDateFormat("d", Locale.US);
+
+                        date = formatDateStart.format(conference.startDate) + "-" + formatDateEnd.format(conference.endDate);
+                    }
+                    else
+                    {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d", Locale.US);
+                        date = dateFormat.format(conference.startDate) + "-" + dateFormat.format(conference.endDate);
+                    }
+
+                    conferenceTitle.setText(Html.fromHtml(conference.name + "\n<font color=\"#825957\">" + date + "</font><font color=\"#EEBF29\"> " + (char) bullet +"</font><font color=\"#825957\"> Indianapolis</font>"));
+                }
+                else
+                {
+                    conferenceTitle.setText(Html.fromHtml(conference.name + "\n<font color=\"#825957\"> Indianapolis</font>"));
+                }
 
                 if(conference.show_daily_schedule)
                 {

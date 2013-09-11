@@ -8,11 +8,12 @@
     <RelativeLayout
         android:background="#ffffff"
         android:layout_width="match_parent"
+        android:layout_marginBottom="5dp"
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/schedule_prev_day"
             android:layout_height="40dp"
-            android:src="@drawable/arrow_left"
+            android:src="@drawable/ls_arrow_left"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_width="40dp"/>
@@ -20,13 +21,13 @@
             android:id="@+id/schedule_current_day"
             android:layout_centerInParent="true"
             android:textStyle="bold"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>
         <ImageView
                 android:id="@+id/schedule_next_day"
                 android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right"
+                android:src="@drawable/ls_arrow_right"
                 android:layout_alignParentRight="true"
                 android:layout_height="40dp"
                 android:layout_width="40dp"/>

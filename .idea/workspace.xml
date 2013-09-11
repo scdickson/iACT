@@ -15,9 +15,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74afb3b5-fd18-422d-900f-f44fb95c276c" name="Default" comment="Initial commit. Old version of iACT.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedule.java" afterPath="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedule.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable-mdpi/iact_background.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable-mdpi/iact_nav_bar.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable-mdpi/iact_nav_button.png" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/arrow_left.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/arrow_right.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/background.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/nav_bar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/nav_button.png" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/ls_arrow.png" afterPath="$PROJECT_DIR$/res/drawable-mdpi/ls_arrow_right.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-mdpi/info_button.png" afterPath="$PROJECT_DIR$/res/drawable-mdpi/info_button.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/cellaflora/iact/AdvertFragment.java" afterPath="$PROJECT_DIR$/src/com/cellaflora/iact/AdvertFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/cellaflora/iact/objects/Advertisement.java" afterPath="$PROJECT_DIR$/src/com/cellaflora/iact/objects/Advertisement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/cellaflora/iact/adapters/ConferenceScheduleAdapter.java" afterPath="$PROJECT_DIR$/src/com/cellaflora/iact/adapters/ConferenceScheduleAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedulePage.java" afterPath="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedulePage.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java" afterPath="$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/res/layout/activity_main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/conference_list_row.xml" afterPath="$PROJECT_DIR$/res/layout/conference_list_row.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/conference_schedule.xml" afterPath="$PROJECT_DIR$/res/layout/conference_schedule.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/conference_schedule_list_row.xml" afterPath="$PROJECT_DIR$/res/layout/conference_schedule_list_row.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/conference_schedule_page.xml" afterPath="$PROJECT_DIR$/res/layout/conference_schedule_page.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/ls_list_item.xml" afterPath="$PROJECT_DIR$/res/layout/ls_list_item.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/titlebar.xml" afterPath="$PROJECT_DIR$/res/layout/titlebar.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="IACT.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -84,33 +104,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ConferenceSchedulePage.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedulePage.java">
+      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="0" selection-start="1385" selection-end="1385" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="1365">
+            <state line="43" column="38" selection-start="1495" selection-end="1495" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="3360">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConferenceSchedule.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedule.java">
+      <file leaf-file-name="ConferenceListener.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/support/ConferenceListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="115" column="0" selection-start="4065" selection-end="4065" vertical-scroll-proportion="0.0" vertical-offset="1545" max-vertical-offset="5910">
+            <state line="54" column="29" selection-start="2190" selection-end="2190" vertical-scroll-proportion="0.0" vertical-offset="363" max-vertical-offset="1140">
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4584#6472#0" expanded="true" />
-                <element signature="e#6461#6462#0" expanded="true" />
-                <element signature="e#6585#6595#0" expanded="true" />
+                <element signature="e#750#2930#0" expanded="true" />
+                <element signature="e#1973#2788#0" expanded="true" />
+                <element signature="e#2764#2765#0" expanded="true" />
+                <element signature="e#2919#2920#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConferenceScheduleAdapter.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/adapters/ConferenceScheduleAdapter.java">
+      <file leaf-file-name="ConferenceLanding.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceLanding.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="156" column="20" selection-start="4328" selection-end="4328" vertical-scroll-proportion="0.52690166" vertical-offset="1831" max-vertical-offset="2370">
+            <state line="147" column="147" selection-start="5288" selection-end="5288" vertical-scroll-proportion="0.0" vertical-offset="1605" max-vertical-offset="2535">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constants.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="66" selection-start="1205" selection-end="1205" vertical-scroll-proportion="0.6793478" vertical-offset="0" max-vertical-offset="660">
               <folding />
             </state>
           </provider>
@@ -134,22 +163,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/res/layout/conference_landing.xml" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/WebContentView.java" />
-        <option value="$PROJECT_DIR$/res/layout/conference_event_list_row.xml" />
         <option value="$PROJECT_DIR$/res/layout/titlebar.xml" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/objects/Event.java" />
-        <option value="$PROJECT_DIR$/res/layout/conference_schedule_list_row.xml" />
-        <option value="$PROJECT_DIR$/res/layout/conference_schedule_page.xml" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceLanding.java" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/adapters/SchedulePageAdapter.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/res/layout/conference_schedule.xml" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedulePage.java" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedule.java" />
-        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java" />
+        <option value="$PROJECT_DIR$/res/layout/menu_list_item.xml" />
+        <option value="$PROJECT_DIR$/res/layout/conference_list_row.xml" />
+        <option value="$PROJECT_DIR$/res/layout/ls_list_item.xml" />
         <option value="$PROJECT_DIR$/src/com/cellaflora/iact/adapters/ConferenceScheduleAdapter.java" />
+        <option value="$PROJECT_DIR$/res/layout/conference_schedule_list_row.xml" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedule.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/LegislativeSummary.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/WebContentView.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/adapters/MenuAdapter.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/objects/Conference.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/support/ConferenceListener.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceLanding.java" />
+        <option value="$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java" />
       </list>
     </option>
   </component>
@@ -438,30 +467,37 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
     <property name="project.structure.last.edited" value="Libraries" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="preferences.sourceCode" />
-    <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="GenerateAntBuildDialog.generateSingleFile" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="3834DB90B00000EC" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="iact" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_S_ARM" />
-    <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="options.lastSelected" value="preferences.sourceCode" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="3834DB90B00000EC" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -643,7 +679,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283046" sideWeight="0.7082228" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283046" sideWeight="0.7692308" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -651,7 +687,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3275862" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2917772" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1657825" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -671,13 +707,13 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24605452" sideWeight="0.67241377" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.198939" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -757,134 +793,132 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/res/layout/conference_list_row.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="27" selection-start="487" selection-end="487" vertical-scroll-proportion="0.33582088" vertical-offset="0" max-vertical-offset="536">
+        <state line="28" column="52" selection-start="742" selection-end="1127" vertical-scroll-proportion="0.7363281" vertical-offset="43" max-vertical-offset="555">
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/objects/Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="48" selection-start="404" selection-end="404" vertical-scroll-proportion="0.41666666" vertical-offset="0" max-vertical-offset="576">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/adapters/LSAdapter.java">
+    <entry file="file://$PROJECT_DIR$/res/layout/ls_list_item.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="71" selection-start="1642" selection-end="1781" vertical-scroll-proportion="0.24479167" vertical-offset="579" max-vertical-offset="1230">
+        <state line="18" column="28" selection-start="681" selection-end="681" vertical-scroll-proportion="-0.5234375" vertical-offset="538" max-vertical-offset="1050">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/conference_event_list_row.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="29" selection-start="187" selection-end="187" vertical-scroll-proportion="0.114285715" vertical-offset="0" max-vertical-offset="525">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/adapters/ConferenceScheduleAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="171" column="66" selection-start="5305" selection-end="5305" vertical-scroll-proportion="1.0166976" vertical-offset="1762" max-vertical-offset="2475">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/conference_schedule_list_row.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="32" selection-start="1698" selection-end="1698" vertical-scroll-proportion="0.5019531" vertical-offset="448" max-vertical-offset="1050">
+          <folding />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="38" selection-start="458" selection-end="458" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="750">
-          <folding />
-        </state>
-      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/WebContentView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="53" selection-start="1393" selection-end="1393" vertical-scroll-proportion="-2.2916667" vertical-offset="1695" max-vertical-offset="3450">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/adapters/SchedulePageAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="394" selection-end="394" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="19" selection-start="2175" selection-end="2175" vertical-scroll-proportion="0.5738636" vertical-offset="537" max-vertical-offset="1215">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable-mdpi/arrow_left.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/conference_schedule_page.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="55" selection-start="347" selection-end="373" vertical-scroll-proportion="0.22804055" vertical-offset="0" max-vertical-offset="592">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceLanding.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="0" selection-start="1501" selection-end="1501" vertical-scroll-proportion="-0.3043478" vertical-offset="829" max-vertical-offset="2295">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/conference_schedule.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="48" selection-start="863" selection-end="863" vertical-scroll-proportion="0.5386266" vertical-offset="49" max-vertical-offset="735">
+        <state line="28" column="8" selection-start="769" selection-end="769" vertical-scroll-proportion="0.46195653" vertical-offset="0" max-vertical-offset="915">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/LegislativeSummary.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="198" column="109" selection-start="6438" selection-end="6527" vertical-scroll-proportion="0.5638945" vertical-offset="1987" max-vertical-offset="6645">
+        <state line="76" column="72" selection-start="2578" selection-end="2578" vertical-scroll-proportion="0.69573283" vertical-offset="240" max-vertical-offset="6645">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="39" selection-start="1094" selection-end="1094" vertical-scroll-proportion="0.0" vertical-offset="104" max-vertical-offset="1245">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/adapters/MenuAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="17" selection-start="1691" selection-end="1691" vertical-scroll-proportion="0.0" vertical-offset="438" max-vertical-offset="990">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/objects/Conference.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="35" selection-start="340" selection-end="340" vertical-scroll-proportion="0.38043478" vertical-offset="0" max-vertical-offset="552">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/adapters/ConferenceMenuAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="13" selection-start="347" selection-end="347" vertical-scroll-proportion="-0.16847827" vertical-offset="198" max-vertical-offset="750">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/support/ConferenceListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="29" selection-start="2190" selection-end="2190" vertical-scroll-proportion="0.0" vertical-offset="363" max-vertical-offset="1140">
+          <folding>
+            <element signature="e#750#2930#0" expanded="true" />
+            <element signature="e#1973#2788#0" expanded="true" />
+            <element signature="e#2764#2765#0" expanded="true" />
+            <element signature="e#2919#2920#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="115" column="0" selection-start="4065" selection-end="4065" vertical-scroll-proportion="0.0" vertical-offset="1545" max-vertical-offset="5910">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4584#6472#0" expanded="true" />
-            <element signature="e#6461#6462#0" expanded="true" />
-            <element signature="e#6585#6595#0" expanded="true" />
-          </folding>
+        <state line="88" column="65" selection-start="3275" selection-end="3332" vertical-scroll-proportion="0.5009276" vertical-offset="525" max-vertical-offset="5475">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="38" selection-start="1495" selection-end="1495" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="3360">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceLanding.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="147" column="147" selection-start="5288" selection-end="5288" vertical-scroll-proportion="0.0" vertical-offset="1605" max-vertical-offset="2535">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="80" selection-start="1135" selection-end="1135" vertical-scroll-proportion="0.71146244" vertical-offset="0" max-vertical-offset="615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/ConferenceSchedulePage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="0" selection-start="1385" selection-end="1385" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="1365">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cellaflora/iact/adapters/ConferenceScheduleAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="20" selection-start="4328" selection-end="4328" vertical-scroll-proportion="0.52690166" vertical-offset="1831" max-vertical-offset="2370">
+        <state line="25" column="66" selection-start="1205" selection-end="1205" vertical-scroll-proportion="0.6793478" vertical-offset="0" max-vertical-offset="660">
           <folding />
         </state>
       </provider>

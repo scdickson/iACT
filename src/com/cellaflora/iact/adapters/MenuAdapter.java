@@ -55,60 +55,18 @@ public class MenuAdapter extends BaseAdapter
         if(menuItems.get(position) != null)
         {
             TextView txtMenuItemText = (TextView) itemView.findViewById(R.id.menu_item_text);
-            ImageView imgMenuItemImage = (ImageView) itemView.findViewById(R.id.menu_item_image);
             txtMenuItemText.setText(getItem(position).toString());
             int id = -1;
 
             if(MainActivity.conference_enabled)
             {
-                switch(position)
+                if(position == 0)
                 {
-                    case 0:
-                        //CONFERENCE IMAGE
-                        //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/home", null, null);
-                        Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_right);
-                        itemView.startAnimation(animation);
-                        break;
-                    case 1:
-                        //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/home_off", null, null);
-                        break;
-                    case 2:
-                        //CALENDAR IMAGE
-                        //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/initiatives_off", null, null);
-                        break;
-                    case 3:
-                        //HUB IMAGE
-                        //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/find_off", null, null);
-                        break;
-                    case 4:
-                        //Twitter Image
-                        //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/twitter_off", null, null);
-                        break;
-                }
-            }
-            else
-            {
-                switch(position)
-                {
-                    case 0:
-                        //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/home_off", null, null);
-                        break;
-                    case 1:
-                        //CALENDAR IMAGE
-                        //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/initiatives_off", null, null);
-                        break;
-                    case 2:
-                        //HUB IMAGE
-                        //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/find_off", null, null);
-                        break;
-                    case 3:
-                        //Twitter Image
-                        //id = context.getResources().getIdentifier("com.cellaflora.iact:drawable/twitter_off", null, null);
-                        break;
+                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_right);
+                    itemView.startAnimation(animation);
                 }
             }
 
-            imgMenuItemImage.setImageResource(id);
             Typeface HelveticaNeue_Bold = Typeface.createFromAsset(context.getAssets(), "helveticaneue-bold.ttf");
             txtMenuItemText.setTypeface(HelveticaNeue_Bold);
         }

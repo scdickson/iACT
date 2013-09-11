@@ -2,6 +2,7 @@ package com.cellaflora.iact;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,11 +19,14 @@ import android.widget.ImageButton;
 
 public class WebContentView extends Activity
 {
+    private Context context;
+
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         setContentView(R.layout.web_content_activity);
+        context = this;
         Bundle arguments = getIntent().getExtras();
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
@@ -30,38 +34,18 @@ public class WebContentView extends Activity
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
 
-        if(arguments.getBoolean("BACK_ENABLED") == true)
-        {
-            int id = getResources().getIdentifier("com.cellaflora.iact:drawable/back", null, null);
-            ImageButton ib = (ImageButton) findViewById(R.id.toggle_button);
-            ib.setImageResource(id);
-            ib.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view)
+        ImageButton ib = (ImageButton) findViewById(R.id.toggle_button);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(context, MainActivity.class);
+                if(intent != null)
                 {
-                    Intent intent = new Intent().setClass(getApplicationContext(), LegislativeSummary.class);
-                    if(intent != null)
-                    {
-                        startActivity(intent);
-                    }
+                    startActivity(intent);
                 }
-            });
-        }
-        else
-        {
-            ImageButton ib = (ImageButton) findViewById(R.id.toggle_button);
-            ib.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view)
-                {
-                    Intent intent = new Intent().setClass(getApplicationContext(), MainActivity.class);
-                    if(intent != null)
-                    {
-                        startActivity(intent);
-                    }
-                }
-            });
-        }
+            }
+        });
     }
 
     protected void onResume()

@@ -6,12 +6,24 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/conference_schedule_no_events"
+        android:padding="15dp"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:text="No Events"
+        android:textColor="#888888"/>
+
     <ListView
             android:id="@+id/conference_event_list_view"
             android:layout_height="fill_parent"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:paddingTop="15dp"
+            android:clipToPadding="false"
             android:paddingBottom="15dp"
             android:dividerHeight="15dp"
             android:divider="@android:color/transparent"

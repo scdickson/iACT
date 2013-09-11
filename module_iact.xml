@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_iact" default="compile.module.iact">
+  <dirname property="module.iact.basedir" file="${ant.file.module_iact}"/>
+  
+  <property name="module.jdk.home.iact" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.iact" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.iact" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.iact" value="${compiler.args}"/>
+  
+  <property name="iact.output.dir" value="${module.iact.basedir}/out/production/IACT"/>
+  <property name="iact.testoutput.dir" value="${module.iact.basedir}/out/test/IACT"/>
+  
+  <path id="iact.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="iact.module.production.classpath">
+    <path refid="${module.jdk.classpath.iact}"/>
+    <path refid="library.parse-1.3.1.classpath"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="iact.runtime.production.module.classpath">
+    <pathelement location="${iact.output.dir}"/>
+    <path refid="library.parse-1.3.1.classpath"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="iact.module.classpath">
+    <path refid="${module.jdk.classpath.iact}"/>
+    <pathelement location="${iact.output.dir}"/>
+    <path refid="library.parse-1.3.1.classpath"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="iact.runtime.module.classpath">
+    <pathelement location="${iact.testoutput.dir}"/>
+    <pathelement location="${iact.output.dir}"/>
+    <path refid="library.parse-1.3.1.classpath"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.iact">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.iact">
+    <patternset refid="compiler.excluded"/>
+    <patternset refid="excluded.from.module.iact"/>
+  </patternset>
+  
+  <path id="iact.module.sourcepath">
+    <dirset dir="${module.iact.basedir}">
+      <include name="src"/>
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.iact" depends="compile.module.iact.production,compile.module.iact.tests" description="Compile module IACT"/>
+  
+  <target name="compile.module.iact.production" depends="register.custom.compilers" description="Compile module IACT; production classes">
+    <mkdir dir="${iact.output.dir}"/>
+    <javac2 destdir="${iact.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.iact}/javac">
+      <compilerarg line="${compiler.args.iact}"/>
+      <bootclasspath refid="iact.module.bootclasspath"/>
+      <classpath refid="iact.module.production.classpath"/>
+      <src refid="iact.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.iact"/>
+    </javac2>
+    
+    <copy todir="${iact.output.dir}">
+      <fileset dir="${module.iact.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+        <patternset refid="excluded.from.compilation.iact"/>
+      </fileset>
+      <fileset dir="${module.iact.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+        <patternset refid="excluded.from.compilation.iact"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.iact.tests" depends="register.custom.compilers,compile.module.iact.production" description="compile module IACT; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.iact" description="cleanup module">
+    <delete dir="${iact.output.dir}"/>
+    <delete dir="${iact.testoutput.dir}"/>
+  </target>
+</project>

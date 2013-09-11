@@ -62,7 +62,7 @@ public class LegislativeSummary extends Activity
         progressDialog.setMessage("Loading...");
         pdfProgress = new ProgressDialog(this);
         pdfProgress.setTitle("");
-        pdfProgress.setMessage("Loading PDF...");
+        pdfProgress.setMessage("Loading Document...");
         pdfProgress.setIndeterminate(false);
         pdfProgress.setMax(100);
         pdfProgress.setProgressNumberFormat(null);
@@ -79,7 +79,7 @@ public class LegislativeSummary extends Activity
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent().setClass(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(context, MainActivity.class);
                 if(intent != null)
                 {
                     startActivity(intent);

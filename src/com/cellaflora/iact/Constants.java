@@ -14,7 +14,7 @@ public class Constants
     //Constants for Web Views
     public static final String CALENDAR_OF_EVENTS_URL = "http://www.google.com";
     public static final String LEGISLATIVE_HUB_URL = "http://www.yahoo.com";
-    public static final String TWITTER_URL = "https://www.twitter.com/INCitiesTowns";
+    public static final String TWITTER_URL = "http://mobile.twitter.com/INCitiesTowns?";
 
     //Constants for Conference Page
     public static final String CONFERENCE_SPONSORS_URL = "http://www.google.com";
@@ -23,9 +23,12 @@ public class Constants
 
     //Constants for Conference Schedule
     public static final String CONFERENCE_EVENT_FILE_NAME = "iact_saved_events";
-    public static final int CONFERENCE_EVENTS_REPLACE_INTERVAL = 60;
+    public static final int CONFERENCE_EVENTS_REPLACE_INTERVAL = 1;
+    public static final boolean CONFERENCE_EVENTS_DETAIL_ITEM_VIEW_ENABLED = false;
 
     //Constants for Banner Ad
+    public static final String AD_FILE_NAME = "iact_saved_ads";
+    public static final int AD_UPDATE_INTERVAL = 60; // In minutes!
     public static final int AD_ROTATE_FREQUENCY = 30; //In seconds!
 
     //Constants for News and Legislative Summary

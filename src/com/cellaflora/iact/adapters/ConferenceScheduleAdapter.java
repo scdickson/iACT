@@ -1,10 +1,12 @@
 package com.cellaflora.iact.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cellaflora.iact.ConferenceSchedule;
@@ -22,6 +24,8 @@ import java.util.Locale;
  */
 public class ConferenceScheduleAdapter extends BaseAdapter
 {
+    public static int SCHEDULE_ADD_IMAGE, SCHEDULE_REMOVE_IMAGE;
+
     Context context;
     LayoutInflater inflater;
     ArrayList<Event> events;
@@ -32,6 +36,9 @@ public class ConferenceScheduleAdapter extends BaseAdapter
         this.context = context;
         this.events = events;
         this.cs = cs;
+
+        SCHEDULE_ADD_IMAGE = context.getResources().getIdentifier("com.cellaflora.iact:drawable/add_cal", null, null);
+        SCHEDULE_REMOVE_IMAGE = context.getResources().getIdentifier("com.cellaflora.iact:drawable/remove_cal", null, null);
     }
 
     public void clearContent()
@@ -43,11 +50,6 @@ public class ConferenceScheduleAdapter extends BaseAdapter
     {
         clearContent();
         this.events = events;
-    }
-
-    public void setDate(Date date)
-    {
-
     }
 
     public int getCount()
@@ -70,6 +72,7 @@ public class ConferenceScheduleAdapter extends BaseAdapter
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.conference_schedule_list_row, parent, false);
         TextView txtTitle, txtTime, txtDescription, txtAction;
+        ImageView imgAction = (ImageView) itemView.findViewById(R.id.schedule_event_action_image);
         txtTitle = (TextView) itemView.findViewById(R.id.schedule_event_title);
         txtTime = (TextView) itemView.findViewById(R.id.schedule_event_time);
         txtDescription = (TextView) itemView.findViewById(R.id.schedule_event_description);
@@ -119,14 +122,16 @@ public class ConferenceScheduleAdapter extends BaseAdapter
             txtDescription.setVisibility(View.GONE);
         }
 
-        txtAction.setOnClickListener(new myScheduleListener(evt, txtAction));
+        txtAction.setOnClickListener(new myScheduleListener(evt, txtAction, imgAction));
         if(evt.isInPersonalSchedule)
         {
             txtAction.setText("Remove from personal schedule");
+            imgAction.setImageResource(SCHEDULE_REMOVE_IMAGE);
         }
         else
         {
             txtAction.setText("Add to personal schedule");
+            imgAction.setImageResource(SCHEDULE_ADD_IMAGE);
         }
 
 
@@ -137,11 +142,13 @@ public class ConferenceScheduleAdapter extends BaseAdapter
     {
         Event evt;
         TextView txtAction;
+        ImageView imgAction;
 
-        public myScheduleListener(Event evt, TextView txtAction)
+        public myScheduleListener(Event evt, TextView txtAction, ImageView imgAction)
         {
             this.evt = evt;
             this.txtAction = txtAction;
+            this.imgAction = imgAction;
         }
 
         public void onClick(View view)
@@ -150,6 +157,7 @@ public class ConferenceScheduleAdapter extends BaseAdapter
             {
                 evt.isInPersonalSchedule = false;
                 txtAction.setText("Add to personal schedule");
+                imgAction.setImageResource(SCHEDULE_ADD_IMAGE);
 
                 if(ConferenceSchedule.event_selector == ConferenceSchedule.EVENTS_PERSONAL)
                 {
@@ -161,6 +169,7 @@ public class ConferenceScheduleAdapter extends BaseAdapter
             {
                 evt.isInPersonalSchedule = true;
                 txtAction.setText("Remove from personal schedule");
+                imgAction.setImageResource(SCHEDULE_REMOVE_IMAGE);
             }
         }
     }

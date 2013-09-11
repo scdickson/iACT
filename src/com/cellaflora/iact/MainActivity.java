@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cellaflora.iact.adapters.MenuAdapter;
@@ -39,6 +41,7 @@ public class MainActivity extends Activity
     public static ConferenceListener conference_listener = null;
     private MenuAdapter adapter;
     public static boolean conference_enabled = false;
+    private ConferenceHandler handler;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -60,25 +63,13 @@ public class MainActivity extends Activity
         mainMenu.setAdapter(adapter);
         MenuItemClickListener menuListener = new MenuItemClickListener();
         mainMenu.setOnItemClickListener(menuListener);
+        handler = new ConferenceHandler();
 
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
-
-        ImageButton ib = (ImageButton) findViewById(R.id.toggle_button);
-        ib.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent().setClass(getApplicationContext(), LegislativeSummary.class);
-                if(intent != null)
-                {
-                    startActivity(intent);
-                }
-            }
-        });
 
         infoButton = (ImageView) findViewById(R.id.info_button);
         infoButton.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +90,7 @@ public class MainActivity extends Activity
     public void onResume()
     {
         super.onResume();
-        conference_listener = new ConferenceListener(new ConferenceHandler());
+        conference_listener = new ConferenceListener(handler);
         conference_listener.getConferenceStatus();
         infoButton.setVisibility(View.VISIBLE);
     }
@@ -204,6 +195,7 @@ public class MainActivity extends Activity
         {
             intent.putExtra("BACK_ENABLED", false);
             startActivity(intent);
+            finish();
         }
     }
 

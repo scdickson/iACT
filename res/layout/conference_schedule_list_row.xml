@@ -24,6 +24,9 @@
 
     <TextView
             android:id="@+id/schedule_event_description"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:textColor="#999999"/>
@@ -31,15 +34,32 @@
     <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:background="#D9D9D9"/>
 
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    <ImageView
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="36dp"
+        android:layout_width="36dp"
+        android:padding="10dp"
+        android:id="@+id/schedule_event_action_image"/>
+
     <TextView
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
             android:id="@+id/schedule_event_action"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:textColor="#D9D9D9"/>
+    </LinearLayout>
 
 
 </LinearLayout>

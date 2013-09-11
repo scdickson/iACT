@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -90,6 +92,19 @@ public class ConferenceSchedule extends FragmentActivity
         prevPage.setOnClickListener(pageClickListener);
         nextPage = (ImageView) findViewById(R.id.schedule_next_day);
         nextPage.setOnClickListener(pageClickListener);
+
+        ImageButton ib = (ImageButton) findViewById(R.id.toggle_button);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(context, MainActivity.class);
+                if(intent != null)
+                {
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private Date fixDate(Date date)

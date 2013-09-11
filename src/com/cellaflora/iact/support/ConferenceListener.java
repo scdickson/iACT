@@ -41,23 +41,40 @@ public class ConferenceListener
                         conference.maps_link = parse.getString("link_for_Maps");
                         conference.sponsors_link = parse.getString("link_for_Sponsors");
                         conference.name = parse.getString("Conference_Name");
-                        conference.show_daily_schedule = parse.getBoolean("show_Daily_Schedule");;
-                        conference.show_event_highlights = parse.getBoolean("show_Event_Highlights");;
-                        conference.show_event_maps = parse.getBoolean("show_Maps");;
-                        conference.show_event_sponsors = parse.getBoolean("show_Sponsors");;
+                        conference.show_daily_schedule = parse.getBoolean("show_Daily_Schedule");
+                        conference.show_event_highlights = parse.getBoolean("show_Event_Highlights");
+                        conference.show_event_maps = parse.getBoolean("show_Maps");
+                        conference.show_event_sponsors = parse.getBoolean("show_Sponsors");
                     }
 
-                        Message msg = new Message();
-                        Bundle data = new Bundle();
-                        data.putSerializable("CONFERENCE_DATA", conference);
-                        msg.setData(data);
-                        handler.sendMessage(msg);
+                    ParseQuery<ParseObject> event_query = ParseQuery.getQuery("Conference_Schedule");
+                    event_query.findInBackground(new FindCallback<ParseObject>() {
+                        public void done(List<ParseObject> result, ParseException e)
+                        {
+                            if (e == null)
+                            {
+                                conference.startDate = result.get(0).getDate("p3_Start_Time");
+                                conference.endDate = result.get(result.size()-1).getDate("p3_Start_Time");
+
+                                Message msg = new Message();
+                                Bundle data = new Bundle();
+                                data.putSerializable("CONFERENCE_DATA", conference);
+                                msg.setData(data);
+                                handler.sendMessage(msg);
+                            }
+
+                        }
+
+                    });
+                }
+                else
+                {
+                    e.printStackTrace();
                 }
             }
         });
+}
 
-
-    }
 
 
 }

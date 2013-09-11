@@ -39,13 +39,16 @@ public class ConferenceSchedulePage extends Fragment
     Date date;
     public ArrayList<Event> content;
     ListView eventList;
+    TextView noEvents;
     ConferenceScheduleAdapter adapter;
     ConferenceSchedule cs;
+    EventItemClickListener listener;
     int state = ConferenceSchedule.EVENTS_ALL;
 
     public ConferenceSchedulePage(Date date, ConferenceSchedule cs)
     {
         content = new ArrayList<Event>();
+        listener = new EventItemClickListener();
         this.cs = cs;
         this.date = date;
 
@@ -89,8 +92,19 @@ public class ConferenceSchedulePage extends Fragment
             }
         }
 
-        adapter.setContent(content);
-        adapter.notifyDataSetChanged();
+        /*if(content.size() == 0)
+        {
+            noEvents.setVisibility(View.VISIBLE);
+            eventList.setVisibility(View.GONE);
+        }
+        else
+        {
+            noEvents.setVisibility(View.GONE);
+            eventList.setVisibility(View.VISIBLE);
+        }*/
+
+        adapter = new ConferenceScheduleAdapter(view.getContext(), content, cs);
+        eventList.setAdapter(adapter);
         eventList.invalidateViews();
 
     }
@@ -99,14 +113,40 @@ public class ConferenceSchedulePage extends Fragment
     {
         view = inflater.inflate(R.layout.conference_schedule_page, container, false);
         eventList = (ListView) view.findViewById(R.id.conference_event_list_view);
+        noEvents = (TextView) view.findViewById(R.id.conference_schedule_no_events);
         return view;
     }
 
     public void onResume()
     {
         super.onResume();
-        adapter = new ConferenceScheduleAdapter(view.getContext(), content, cs);
-        eventList.setAdapter(adapter);
+
+        /*if(content.size() == 0)
+        {
+            noEvents.setVisibility(View.VISIBLE);
+            eventList.setVisibility(View.GONE);
+        }
+        else
+        {*/
+            noEvents.setVisibility(View.GONE);
+            eventList.setVisibility(View.VISIBLE);
+
+            adapter = new ConferenceScheduleAdapter(view.getContext(), content, cs);
+            eventList.setAdapter(adapter);
+
+            if(Constants.CONFERENCE_EVENTS_DETAIL_ITEM_VIEW_ENABLED)
+            {
+                eventList.setOnItemClickListener(listener);
+            }
+        //}
+    }
+
+    private class EventItemClickListener implements ListView.OnItemClickListener
+    {
+        public void onItemClick(AdapterView parent, View view, int position, long id)
+        {
+
+        }
     }
 
 
