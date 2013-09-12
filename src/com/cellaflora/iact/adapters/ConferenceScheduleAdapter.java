@@ -29,13 +29,13 @@ public class ConferenceScheduleAdapter extends BaseAdapter
     Context context;
     LayoutInflater inflater;
     ArrayList<Event> events;
-    ConferenceSchedule cs;
+    ConferenceSchedulePage csp;
 
-    public ConferenceScheduleAdapter(Context context, ArrayList<Event> events, ConferenceSchedule cs)
+    public ConferenceScheduleAdapter(Context context, ArrayList<Event> events, ConferenceSchedulePage csp)
     {
         this.context = context;
         this.events = events;
-        this.cs = cs;
+        this.csp = csp;
 
         SCHEDULE_ADD_IMAGE = context.getResources().getIdentifier("com.cellaflora.iact:drawable/add_cal", null, null);
         SCHEDULE_REMOVE_IMAGE = context.getResources().getIdentifier("com.cellaflora.iact:drawable/remove_cal", null, null);
@@ -163,6 +163,11 @@ public class ConferenceScheduleAdapter extends BaseAdapter
                 {
                     events.remove(evt);
                     notifyDataSetChanged();
+                }
+
+                if(events.size() == 0)
+                {
+                    csp.setNoEvents();
                 }
             }
             else

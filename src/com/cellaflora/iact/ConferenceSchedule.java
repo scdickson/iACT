@@ -58,6 +58,7 @@ public class ConferenceSchedule extends FragmentActivity
     ViewPager pager;
     ConferenceSchedule cs;
     SimpleDateFormat timeFormat;
+    Parcelable state;
 
     public static ArrayList<Event> events;
     public static ArrayList<Fragment> days;
@@ -128,6 +129,7 @@ public class ConferenceSchedule extends FragmentActivity
     public void onPause()
     {
         super.onPause();
+        state = pager.onSaveInstanceState();
 
         try
         {
@@ -232,6 +234,12 @@ public class ConferenceSchedule extends FragmentActivity
         eventSelectorAll.setOnClickListener(selector);
         eventSelectorPersonal.setOnClickListener(selector);
 
+        if(state != null)
+        {
+            pager.onRestoreInstanceState(state);
+            return;
+        }
+
         if(events == null)
         {
             try
@@ -284,8 +292,6 @@ public class ConferenceSchedule extends FragmentActivity
 
     public void setSelector(int selectorState)
     {
-        //ConferenceSchedulePage csp = (ConferenceSchedulePage) days.get(pager.getCurrentItem());
-
         switch(selectorState)
         {
             case EVENTS_ALL:
@@ -294,8 +300,7 @@ public class ConferenceSchedule extends FragmentActivity
                     event_selector = EVENTS_ALL;
                     eventSelectorAll.setTextColor(SELECTED);
                     eventSelectorPersonal.setTextColor(UNSELECTED);
-                    /*if(csp != null && csp.getState() != event_selector)
-                        csp.setState(EVENTS_ALL);*/
+
                     for(Fragment fragment : days)
                     {
                         ConferenceSchedulePage csp = (ConferenceSchedulePage) fragment;
@@ -312,8 +317,7 @@ public class ConferenceSchedule extends FragmentActivity
                     event_selector = EVENTS_PERSONAL;
                     eventSelectorAll.setTextColor(UNSELECTED);
                     eventSelectorPersonal.setTextColor(SELECTED);
-                    /*if(csp != null && csp.getState() != event_selector)
-                        csp.setState(EVENTS_PERSONAL);*/
+
                     for(Fragment fragment : days)
                     {
                         ConferenceSchedulePage csp = (ConferenceSchedulePage) fragment;

@@ -62,6 +62,12 @@
                 android:label="@string/app_name" >
         </activity>
 
+        <activity
+                android:name="com.cellaflora.iact.ConferenceEventDetail"
+                android:screenOrientation="portrait"
+                android:label="@string/app_name" >
+        </activity>
+
         <service android:name="com.parse.PushService" />
         <receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>

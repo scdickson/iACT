@@ -4,10 +4,12 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,8 +107,9 @@ public class ConferenceSchedulePage extends Fragment
                 eventList.setVisibility(View.VISIBLE);
             }
 
-            adapter = new ConferenceScheduleAdapter(view.getContext(), content, cs);
+            adapter = new ConferenceScheduleAdapter(view.getContext(), content, this);
             eventList.setAdapter(adapter);
+            eventList.setOnItemClickListener(listener);
             eventList.invalidateViews();
         }
 
@@ -134,17 +137,35 @@ public class ConferenceSchedulePage extends Fragment
             noEvents.setVisibility(View.GONE);
             eventList.setVisibility(View.VISIBLE);
 
-            adapter = new ConferenceScheduleAdapter(view.getContext(), content, cs);
+            adapter = new ConferenceScheduleAdapter(view.getContext(), content, this);
             eventList.setAdapter(adapter);
             eventList.setOnItemClickListener(listener);
         }
+    }
+
+    public void setNoEvents()
+    {
+        if(eventList != null && noEvents != null)
+        {
+            eventList.setVisibility(View.GONE);
+            noEvents.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void selectItem(int position)
+    {
+        Intent intent = new Intent(view.getContext(), ConferenceEventDetail.class);
+        intent.putExtra("EVENT", content.get(position));
+
+        if(intent != null)
+            startActivity(intent);
     }
 
     private class EventItemClickListener implements ListView.OnItemClickListener
     {
         public void onItemClick(AdapterView parent, View view, int position, long id)
         {
-
+            selectItem(position);
         }
     }
 

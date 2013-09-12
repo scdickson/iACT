@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <ScrollView
+        android:padding="15dp"
+        android:background="#ffffffff"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="#ffffffff"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+        <TextView
+            android:id="@+id/schedule_detail_event_title"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:textColor="#225161">
+        </TextView>
+
+        <TextView
+                android:id="@+id/schedule_detail_event_time"
+                android:layout_marginBottom="5dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColor="#888888"/>
+        <TextView
+                android:id="@+id/schedule_detail_event_description"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColor="#999999"/>
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#D9D9D9"/>
+
+        <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+            <ImageView
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_height="36dp"
+                    android:layout_width="36dp"
+                    android:padding="10dp"
+                    android:id="@+id/schedule_detail_event_action_image"/>
+
+            <TextView
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:id="@+id/schedule_detail_event_action"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textColor="#D9D9D9"/>
+        </LinearLayout>
+        </LinearLayout>
+
+        </ScrollView>
+
+</LinearLayout>
