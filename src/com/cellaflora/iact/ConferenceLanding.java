@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.cellaflora.iact.adapters.ConferenceMenuAdapter;
 import com.cellaflora.iact.objects.Conference;
 import com.cellaflora.iact.support.ConferenceListener;
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class ConferenceLanding extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conference_landing);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        Parse.initialize(this, Constants.PARSE_APPLICATION_ID, Constants.PARSE_CLIENT_KEY);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("");
         progressDialog.setMessage("Loading...");
@@ -51,7 +54,6 @@ public class ConferenceLanding extends Activity
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         context = this;
-        MainActivity.infoButton.setVisibility(View.GONE);
         conferenceTitle = (TextView) findViewById(R.id.conference_title);
 
         ImageButton ib = (ImageButton) findViewById(R.id.toggle_button);

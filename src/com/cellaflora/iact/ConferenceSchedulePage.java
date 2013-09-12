@@ -92,20 +92,23 @@ public class ConferenceSchedulePage extends Fragment
             }
         }
 
-        if(content.size() == 0)
+        if(eventList != null && noEvents != null)
         {
-            eventList.setVisibility(View.GONE);
-            noEvents.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            noEvents.setVisibility(View.GONE);
-            eventList.setVisibility(View.VISIBLE);
-        }
+            if(content.size() == 0)
+            {
+                eventList.setVisibility(View.GONE);
+                noEvents.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                noEvents.setVisibility(View.GONE);
+                eventList.setVisibility(View.VISIBLE);
+            }
 
-        adapter = new ConferenceScheduleAdapter(view.getContext(), content, cs);
-        eventList.setAdapter(adapter);
-        eventList.invalidateViews();
+            adapter = new ConferenceScheduleAdapter(view.getContext(), content, cs);
+            eventList.setAdapter(adapter);
+            eventList.invalidateViews();
+        }
 
     }
 

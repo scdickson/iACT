@@ -114,6 +114,7 @@ public class MainActivity extends Activity
     protected void onDestroy()
     {
         super.onDestroy();
+        Log.d("fatal", "DESTROYED");
 
         try
         {
@@ -142,7 +143,11 @@ public class MainActivity extends Activity
         }
     }
 
-
+    public void onPause()
+    {
+        super.onPause();
+        infoButton.setVisibility(View.GONE);
+    }
 
     private void selectItem(int position)
     {

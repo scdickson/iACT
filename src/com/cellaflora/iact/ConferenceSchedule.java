@@ -284,7 +284,7 @@ public class ConferenceSchedule extends FragmentActivity
 
     public void setSelector(int selectorState)
     {
-        ConferenceSchedulePage csp = (ConferenceSchedulePage) days.get(pager.getCurrentItem());
+        //ConferenceSchedulePage csp = (ConferenceSchedulePage) days.get(pager.getCurrentItem());
 
         switch(selectorState)
         {
@@ -294,8 +294,16 @@ public class ConferenceSchedule extends FragmentActivity
                     event_selector = EVENTS_ALL;
                     eventSelectorAll.setTextColor(SELECTED);
                     eventSelectorPersonal.setTextColor(UNSELECTED);
-                    if(csp != null && csp.getState() != event_selector)
-                        csp.setState(EVENTS_ALL);
+                    /*if(csp != null && csp.getState() != event_selector)
+                        csp.setState(EVENTS_ALL);*/
+                    for(Fragment fragment : days)
+                    {
+                        ConferenceSchedulePage csp = (ConferenceSchedulePage) fragment;
+                        if(csp != null)
+                        {
+                            csp.setState(event_selector);
+                        }
+                    }
                 }
                 break;
             case EVENTS_PERSONAL:
@@ -304,8 +312,16 @@ public class ConferenceSchedule extends FragmentActivity
                     event_selector = EVENTS_PERSONAL;
                     eventSelectorAll.setTextColor(UNSELECTED);
                     eventSelectorPersonal.setTextColor(SELECTED);
-                    if(csp != null && csp.getState() != event_selector)
-                        csp.setState(EVENTS_PERSONAL);
+                    /*if(csp != null && csp.getState() != event_selector)
+                        csp.setState(EVENTS_PERSONAL);*/
+                    for(Fragment fragment : days)
+                    {
+                        ConferenceSchedulePage csp = (ConferenceSchedulePage) fragment;
+                        if(csp != null)
+                        {
+                            csp.setState(event_selector);
+                        }
+                    }
                 }
                 break;
         }
@@ -340,7 +356,7 @@ public class ConferenceSchedule extends FragmentActivity
 
         public void onPageScrollStateChanged(int state)
         {
-            if(state == ViewPager.SCROLL_STATE_DRAGGING)
+            if(state == ViewPager.SCROLL_STATE_SETTLING)
             {
                 if(pager.getCurrentItem() != current_page)
                 {
