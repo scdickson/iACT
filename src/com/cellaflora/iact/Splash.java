@@ -3,6 +3,7 @@ package com.cellaflora.iact;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,24 +13,21 @@ import java.util.TimerTask;
  */
 public class Splash extends Activity
 {
-    public static final int SPLASH_DELAY = 3;
+    TimerTask task;
+    Timer timer;
 
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        TimerTask task = new TimerTask()
-        {
+        new Handler().postDelayed(new Runnable() {
             public void run()
             {
+                Intent i = new Intent(Splash.this, MainActivity.class);
+                startActivity(i);
                 finish();
-                Intent intent = new Intent().setClass(Splash.this, MainActivity.class);
-                startActivity(intent);
             }
-        };
-
-        Timer timer = new Timer();
-        timer.schedule(task, SPLASH_DELAY);
+        }, (Constants.SPLASH_DELAY * 1000));
     }
 }

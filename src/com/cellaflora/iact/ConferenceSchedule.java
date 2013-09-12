@@ -340,7 +340,7 @@ public class ConferenceSchedule extends FragmentActivity
 
         public void onPageScrollStateChanged(int state)
         {
-            if(state == ViewPager.SCROLL_STATE_SETTLING)
+            if(state == ViewPager.SCROLL_STATE_DRAGGING)
             {
                 if(pager.getCurrentItem() != current_page)
                 {

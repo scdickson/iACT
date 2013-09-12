@@ -10,6 +10,7 @@ public class Constants
     public static final String PARSE_CLIENT_KEY = "5c0vZKDhCoxMyJZo0ZqobQBcYwmdLddKURvsYbTb";
     public static final int MAX_CACHE_SIZE = 30; //In Megabytes!
     public static final int CACHE_DECREASE_AMOUNT = 15; //In Megabytes!
+    public static final int SPLASH_DELAY = 2; //In seconds!
 
     //Constants for Web Views
     public static final String CALENDAR_OF_EVENTS_URL = "http://www.google.com";
@@ -23,8 +24,7 @@ public class Constants
 
     //Constants for Conference Schedule
     public static final String CONFERENCE_EVENT_FILE_NAME = "iact_saved_events";
-    public static final int CONFERENCE_EVENTS_REPLACE_INTERVAL = 1;
-    public static final boolean CONFERENCE_EVENTS_DETAIL_ITEM_VIEW_ENABLED = false;
+    public static final int CONFERENCE_EVENTS_REPLACE_INTERVAL = 60;
 
     //Constants for Banner Ad
     public static final String AD_FILE_NAME = "iact_saved_ads";

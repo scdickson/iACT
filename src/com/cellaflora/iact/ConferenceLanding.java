@@ -155,11 +155,11 @@ public class ConferenceLanding extends Activity
                         date = dateFormat.format(conference.startDate) + "-" + dateFormat.format(conference.endDate);
                     }
 
-                    conferenceTitle.setText(Html.fromHtml(conference.name + "\n<font color=\"#825957\">" + date + "</font><font color=\"#EEBF29\"> " + (char) bullet +"</font><font color=\"#825957\"> Indianapolis</font>"));
+                    conferenceTitle.setText(Html.fromHtml(conference.name + "<br/><font color=\"#825957\">" + date + "</font><font color=\"#EEBF29\"> " + (char) bullet +"</font><font color=\"#825957\"> Indianapolis</font>"));
                 }
                 else
                 {
-                    conferenceTitle.setText(Html.fromHtml(conference.name + "\n<font color=\"#825957\"> Indianapolis</font>"));
+                    conferenceTitle.setText(Html.fromHtml(conference.name + "<br/><font color=\"#825957\"> Indianapolis</font>"));
                 }
 
                 if(conference.show_daily_schedule)
