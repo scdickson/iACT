@@ -68,6 +68,12 @@
                 android:label="@string/app_name" >
         </activity>
 
+        <activity
+                android:name="com.cellaflora.iact.FullScreenImageView"
+                android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                android:label="@string/app_name" >
+        </activity>
+
         <service android:name="com.parse.PushService" />
         <receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>

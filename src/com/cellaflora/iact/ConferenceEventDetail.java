@@ -100,7 +100,7 @@ public class ConferenceEventDetail extends Activity
             }
 
             txtAction.setOnClickListener(new myScheduleListener(evt, txtAction, imgAction));
-            if(evt.isInPersonalSchedule)
+            if(isInPersonalSchedule(evt))
             {
                 txtAction.setText("Remove from personal schedule");
                 imgAction.setImageResource(SCHEDULE_REMOVE_IMAGE);
@@ -111,6 +111,19 @@ public class ConferenceEventDetail extends Activity
                 imgAction.setImageResource(SCHEDULE_ADD_IMAGE);
             }
         }
+    }
+
+    private boolean isInPersonalSchedule(Event evt)
+    {
+        for(Event e : ConferenceSchedule.mySchedule)
+        {
+            if(e.equals(evt))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private class myScheduleListener implements View.OnClickListener
@@ -128,15 +141,15 @@ public class ConferenceEventDetail extends Activity
 
         public void onClick(View view)
         {
-            if(evt.isInPersonalSchedule)
+            if(isInPersonalSchedule(evt))
             {
-                evt.isInPersonalSchedule = false;
+                ConferenceSchedule.mySchedule.remove(evt);
                 txtAction.setText("Add to personal schedule");
                 imgAction.setImageResource(SCHEDULE_ADD_IMAGE);
             }
             else
             {
-                evt.isInPersonalSchedule = true;
+                ConferenceSchedule.mySchedule.add(evt);
                 txtAction.setText("Remove from personal schedule");
                 imgAction.setImageResource(SCHEDULE_REMOVE_IMAGE);
             }

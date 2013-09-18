@@ -10,11 +10,13 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,8 +61,10 @@ public class ConferenceSchedule extends FragmentActivity
     ConferenceSchedule cs;
     SimpleDateFormat timeFormat;
     Parcelable state;
+    FrameLayout adLayout;
 
     public static ArrayList<Event> events;
+    public static ArrayList<Event> mySchedule;
     public static ArrayList<Fragment> days;
     public static int event_selector = EVENTS_ALL;
     public static int current_page = 0;
@@ -106,6 +110,7 @@ public class ConferenceSchedule extends FragmentActivity
                 }
             }
         });
+
     }
 
     private Date fixDate(Date date)
@@ -130,15 +135,6 @@ public class ConferenceSchedule extends FragmentActivity
     {
         super.onPause();
         state = pager.onSaveInstanceState();
-
-        try
-        {
-            PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME, events);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
     }
 
     public void loadEvents()
@@ -173,7 +169,10 @@ public class ConferenceSchedule extends FragmentActivity
                         tmp.end_time = fixDate(parse.getDate("p4_End_Time"));
                     }
 
-                    events.add(tmp);
+                    if(tmp.start_time != null)
+                    {
+                        events.add(tmp);
+                    }
                 }
                 try
                 {
@@ -249,6 +248,15 @@ public class ConferenceSchedule extends FragmentActivity
                 {
                     events = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME);
 
+                    try
+                    {
+                        mySchedule = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME);
+                    }
+                    catch(Exception ex)
+                    {
+                        mySchedule = new ArrayList<Event>();
+                    }
+
                     days = getDayFragments();
                     txtPageDate.setText("Day 1, " + timeFormat.format(events.get(0).start_time));
                     adapter = new SchedulePageAdapter(getSupportFragmentManager(), days);
@@ -259,12 +267,30 @@ public class ConferenceSchedule extends FragmentActivity
                 else
                 {
                     progressDialog.show();
+                    try
+                    {
+                        mySchedule = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME);
+                    }
+                    catch(Exception ex)
+                    {
+                        mySchedule = new ArrayList<Event>();
+                    }
+
                     loadEvents();
                 }
             }
             catch(Exception e)
             {
                 progressDialog.show();
+                try
+                {
+                    mySchedule = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME);
+                }
+                catch(Exception ex)
+                {
+                    mySchedule = new ArrayList<Event>();
+                }
+
                 loadEvents();
             }
         }

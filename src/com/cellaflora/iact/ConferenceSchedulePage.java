@@ -76,9 +76,9 @@ public class ConferenceSchedulePage extends Fragment
 
         if(state == ConferenceSchedule.EVENTS_PERSONAL)
         {
-            for(Event evt : ConferenceSchedule.events)
+            for(Event evt : ConferenceSchedule.mySchedule)
             {
-                if(evt.start_time.getDay() == date.getDay() && evt.isInPersonalSchedule)
+                if(evt.start_time.getDay() == date.getDay())
                 {
                     content.add(evt);
                 }
@@ -127,6 +127,26 @@ public class ConferenceSchedulePage extends Fragment
     public void onResume()
     {
         super.onResume();
+
+        /*if(state == ConferenceSchedule.EVENTS_PERSONAL)
+        {
+            for(Event evt : ConferenceSchedule.mySchedule)
+            {
+                if(evt.start_time.getDay() == date.getDay())
+                {
+                    content.add(evt);
+                }
+            }
+
+            if(eventList != null && noEvents != null)
+            {
+                adapter = new ConferenceScheduleAdapter(view.getContext(), content, this);
+                eventList.setAdapter(adapter);
+                eventList.setOnItemClickListener(listener);
+                eventList.invalidateViews();
+            }
+
+        }*/
 
         if(content.size() == 0)
         {

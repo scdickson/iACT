@@ -240,7 +240,7 @@ public class MainActivity extends Activity
                 {
                     conference_enabled = true;
                     menuItems = new ArrayList<String>();
-                    menuItems.add(conference.name);
+                    menuItems.add(conference.name_short);
                     setupMenu();
                 }
             }

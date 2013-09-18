@@ -12,7 +12,8 @@ public class Post implements Serializable
     public String caption;
     public String doc_url;
     public String photo_url;
+    public String dateline;
     public String description;
     public String headline;
-    public Date update_time;
+    public boolean isAlert = false;
 }

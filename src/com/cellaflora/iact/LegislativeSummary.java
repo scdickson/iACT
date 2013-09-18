@@ -177,10 +177,11 @@ public class LegislativeSummary extends Activity
                     tmp.caption = parse.getString("Caption");
                     tmp.headline = parse.getString("Post_Headline");
                     tmp.objectId = parse.getObjectId();
-                    tmp.update_time = fixDate(parse.getUpdatedAt());
+                    tmp.dateline = parse.getString("Dateline");
+                    tmp.isAlert = parse.getBoolean("isAlert");
 
-                    ParseFile image = null;//(ParseFile) parse.get("Photo");
-                    ParseFile document = (ParseFile) parse.get("DOC");
+                    ParseFile image = parse.getParseFile("Photo");
+                    ParseFile document = parse.getParseFile("DOC");
 
                     if(image != null)
                     {

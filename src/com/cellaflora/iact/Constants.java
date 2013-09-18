@@ -13,18 +13,14 @@ public class Constants
     public static final int SPLASH_DELAY = 2; //In seconds!
 
     //Constants for Web Views
-    public static final String CALENDAR_OF_EVENTS_URL = "http://www.google.com";
-    public static final String LEGISLATIVE_HUB_URL = "http://www.yahoo.com";
-    public static final String TWITTER_URL = "http://mobile.twitter.com/INCitiesTowns?";
-
-    //Constants for Conference Page
-    public static final String CONFERENCE_SPONSORS_URL = "http://www.google.com";
-    public static final String CONFERENCE_MAPS_URL = "http://www.yahoo.com";
-    public static final String CONFERENCE_HIGHLIGHTS_URL = "http://www.bing.com";
+    public static final String CALENDAR_OF_EVENTS_URL = "http://www.citiesandtowns.org/IACTGoEvents/tabid/16102/Default.aspx";
+    public static final String LEGISLATIVE_HUB_URL = "http://www.citiesandtowns.org/IACTGoLegislativeHub/tabid/16103/Default.aspx";
+    public static final String TWITTER_URL = "https://twitter.com/INCitiesTowns";
 
     //Constants for Conference Schedule
     public static final String CONFERENCE_EVENT_FILE_NAME = "iact_saved_events";
-    public static final int CONFERENCE_EVENTS_REPLACE_INTERVAL = 60;
+    public static final String CONFERENCE_MY_SCHEDULE_FILE_NAME = "iact_saved_myschedule";
+    public static final int CONFERENCE_EVENTS_REPLACE_INTERVAL = 1;
 
     //Constants for Banner Ad
     public static final String AD_FILE_NAME = "iact_saved_ads";
@@ -34,5 +30,6 @@ public class Constants
     //Constants for News and Legislative Summary
     public static final String NEWS_FILE_NAME = "iact_saved_news";
     public static final int NEWS_UPDATE_INTERVAL = 60; //In minutes!
+    public static final int IMAGE_BUFFER_SIZE = 10; //In Megabytes!
 
 }

@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.cellaflora.iact.Constants;
 import com.cellaflora.iact.objects.Conference;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -73,6 +75,29 @@ public class ConferenceListener
                     data.putSerializable("CONFERENCE_DATA", conference);
                     msg.setData(data);
                     handler.sendMessage(msg);
+
+                    if(!conference.enabled)
+                    {
+                        try
+                        {
+                            File events = new File(Constants.CONFERENCE_EVENT_FILE_NAME);
+                            File mySchedule = new File(Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME);
+
+                            if(events.exists())
+                            {
+                                events.delete();
+                            }
+
+                            if(mySchedule.exists())
+                            {
+                                mySchedule.delete();
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 else
                 {

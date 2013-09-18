@@ -4,31 +4,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="15dp"
                 android:background="@drawable/rectangle_shape">
-
     <ImageView
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:src="@drawable/alert"
+            android:visibility="gone"
             android:layout_width="wrap_content"
-            android:id="@+id/ls_image"/>
+            android:id="@+id/ls_alert"/>
 
     <LinearLayout
+        android:layout_gravity="center"
         android:orientation="vertical"
         android:layout_weight="0.9"
-        android:paddingRight="5dp"
+        android:padding="15dp"
         android:layout_width="match_parent"
         android:id="@+id/ls_body_layout"
         android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/ls_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#A8A8A8"
-        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
         android:paddingBottom="10dp"
         android:textSize="17sp"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
         />
+
+        <ImageView
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rectangle_shape"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/ls_image"/>
+
     <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"

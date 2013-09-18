@@ -15,8 +15,10 @@ import android.widget.TextView;
 
 import com.cellaflora.iact.ConferenceSchedule;
 import com.cellaflora.iact.ConferenceSchedulePage;
+import com.cellaflora.iact.Constants;
 import com.cellaflora.iact.R;
 import com.cellaflora.iact.objects.Event;
+import com.cellaflora.iact.support.PersistenceManager;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -138,7 +140,7 @@ public class ConferenceScheduleAdapter extends BaseAdapter
         }
 
         txtAction.setOnClickListener(new myScheduleListener(evt, txtAction, imgAction));
-        if(evt.isInPersonalSchedule)
+        if(isInPersonalSchedule(evt))
         {
             txtAction.setText("Remove from personal schedule");
             imgAction.setImageResource(SCHEDULE_REMOVE_IMAGE);
@@ -153,26 +155,17 @@ public class ConferenceScheduleAdapter extends BaseAdapter
         return itemView;
     }
 
-    public void removeEvent(Event evt)
+    private boolean isInPersonalSchedule(Event evt)
     {
-        if(evt != null)
+        for(Event e : ConferenceSchedule.mySchedule)
         {
-            if(evt.isInPersonalSchedule)
+            if(e.equals(evt))
             {
-                evt.isInPersonalSchedule = false;
-
-                if(ConferenceSchedule.event_selector == ConferenceSchedule.EVENTS_PERSONAL)
-                {
-                    events.remove(evt);
-                    notifyDataSetChanged();
-                }
-
-                if(events.size() == 0)
-                {
-                    csp.setNoEvents();
-                }
+                return true;
             }
         }
+
+        return false;
     }
 
     private class myScheduleListener implements View.OnClickListener
@@ -190,9 +183,9 @@ public class ConferenceScheduleAdapter extends BaseAdapter
 
         public void onClick(View view)
         {
-            if(evt.isInPersonalSchedule)
+            if(isInPersonalSchedule(evt))
             {
-                evt.isInPersonalSchedule = false;
+                ConferenceSchedule.mySchedule.remove(evt);
                 txtAction.setText("Add to personal schedule");
                 imgAction.setImageResource(SCHEDULE_ADD_IMAGE);
 
@@ -209,10 +202,16 @@ public class ConferenceScheduleAdapter extends BaseAdapter
             }
             else
             {
-                evt.isInPersonalSchedule = true;
+                ConferenceSchedule.mySchedule.add(evt);
                 txtAction.setText("Remove from personal schedule");
                 imgAction.setImageResource(SCHEDULE_REMOVE_IMAGE);
             }
+
+            try
+            {
+                PersistenceManager.writeObject(context, Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME, ConferenceSchedule.mySchedule);
+            }
+            catch(Exception e){}
         }
     }
 }
