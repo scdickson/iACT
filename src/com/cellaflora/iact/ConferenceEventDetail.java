@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cellaflora.iact.adapters.ConferenceScheduleAdapter;
 import com.cellaflora.iact.objects.Event;
 
 import java.text.SimpleDateFormat;
@@ -132,11 +133,6 @@ public class ConferenceEventDetail extends Activity
                 evt.isInPersonalSchedule = false;
                 txtAction.setText("Add to personal schedule");
                 imgAction.setImageResource(SCHEDULE_ADD_IMAGE);
-
-                if(ConferenceSchedule.event_selector == ConferenceSchedule.EVENTS_PERSONAL)
-                {
-
-                }
             }
             else
             {

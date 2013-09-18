@@ -41,31 +41,38 @@ public class ConferenceListener
                         conference.maps_link = parse.getString("link_for_Maps");
                         conference.sponsors_link = parse.getString("link_for_Sponsors");
                         conference.name = parse.getString("Conference_Name");
+                        conference.sub_headline = parse.getString("Conference_Subtitle");
+                        conference.name_short = parse.getString("Conference_Name_Short");
                         conference.show_daily_schedule = parse.getBoolean("show_Daily_Schedule");
                         conference.show_event_highlights = parse.getBoolean("show_Event_Highlights");
                         conference.show_event_maps = parse.getBoolean("show_Maps");
                         conference.show_event_sponsors = parse.getBoolean("show_Sponsors");
-                    }
 
-                    ParseQuery<ParseObject> event_query = ParseQuery.getQuery("Conference_Schedule");
-                    event_query.findInBackground(new FindCallback<ParseObject>() {
-                        public void done(List<ParseObject> result, ParseException e)
+                        conference.event_highlights_url = parse.getString("link_for_Event_Highlights");
+                        if(conference.event_highlights_url == null || conference.event_highlights_url.isEmpty())
                         {
-                            if (e == null)
-                            {
-                                conference.startDate = result.get(0).getDate("p3_Start_Time");
-                                conference.endDate = result.get(result.size()-1).getDate("p3_Start_Time");
-
-                                Message msg = new Message();
-                                Bundle data = new Bundle();
-                                data.putSerializable("CONFERENCE_DATA", conference);
-                                msg.setData(data);
-                                handler.sendMessage(msg);
-                            }
-
+                            conference.show_event_highlights = false;
                         }
 
-                    });
+                        conference.event_maps_url = parse.getString("link_for_Maps");
+                        if(conference.event_maps_url == null || conference.event_maps_url.isEmpty())
+                        {
+                            conference.show_event_maps = false;
+                        }
+
+                        conference.event_sponsors_url = parse.getString("link_for_Sponsors");
+                        if(conference.event_sponsors_url == null || conference.event_sponsors_url.isEmpty())
+                        {
+                            conference.show_event_sponsors = false;
+                        }
+                    }
+
+
+                    Message msg = new Message();
+                    Bundle data = new Bundle();
+                    data.putSerializable("CONFERENCE_DATA", conference);
+                    msg.setData(data);
+                    handler.sendMessage(msg);
                 }
                 else
                 {

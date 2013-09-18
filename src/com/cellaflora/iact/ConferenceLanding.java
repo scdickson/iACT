@@ -2,6 +2,7 @@ package com.cellaflora.iact;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -96,17 +97,17 @@ public class ConferenceLanding extends Activity
         else if(conferenceMenuItems.get(position).equalsIgnoreCase("Sponsors"))
         {
             intent = new Intent(this, WebContentView.class);
-            intent.putExtra("URL", Constants.CONFERENCE_SPONSORS_URL);
+            intent.putExtra("URL", conference.event_sponsors_url);
         }
         else if(conferenceMenuItems.get(position).equalsIgnoreCase("Event Highlights"))
         {
             intent = new Intent(this, WebContentView.class);
-            intent.putExtra("URL", Constants.CONFERENCE_HIGHLIGHTS_URL);
+            intent.putExtra("URL", conference.event_highlights_url);
         }
         else if(conferenceMenuItems.get(position).equalsIgnoreCase("Maps and Directions"))
         {
             intent = new Intent(this, WebContentView.class);
-            intent.putExtra("URL", Constants.CONFERENCE_MAPS_URL);
+            intent.putExtra("URL", conference.event_maps_url);
         }
 
         if(intent != null)
@@ -139,29 +140,13 @@ public class ConferenceLanding extends Activity
             if(conference != null && conference.enabled && !conference.name.isEmpty())
             {
 
-                if(conference.startDate != null && conference.endDate != null)
+                if(conference.sub_headline != null && !conference.sub_headline.isEmpty())
                 {
-                    String date = "";
-                    int bullet = (char) 0x2022;
-
-                    if(conference.startDate.getMonth() == conference.endDate.getMonth())
-                    {
-                        SimpleDateFormat formatDateStart = new SimpleDateFormat("MMMM d", Locale.US);
-                        SimpleDateFormat formatDateEnd = new SimpleDateFormat("d", Locale.US);
-
-                        date = formatDateStart.format(conference.startDate) + "-" + formatDateEnd.format(conference.endDate);
-                    }
-                    else
-                    {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d", Locale.US);
-                        date = dateFormat.format(conference.startDate) + "-" + dateFormat.format(conference.endDate);
-                    }
-
-                    conferenceTitle.setText(Html.fromHtml(conference.name + "<br/><font color=\"#825957\">" + date + "</font><font color=\"#EEBF29\"> " + (char) bullet +"</font><font color=\"#825957\"> Indianapolis</font>"));
+                    conferenceTitle.setText(Html.fromHtml(conference.name + "<br/><font color=\"#e84d3d\">" + conference.sub_headline + "<font/>"));
                 }
                 else
                 {
-                    conferenceTitle.setText(Html.fromHtml(conference.name + "<br/><font color=\"#825957\"> Indianapolis</font>"));
+                    conferenceTitle.setText(conference.name);
                 }
 
                 if(conference.show_daily_schedule)

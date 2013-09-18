@@ -1,6 +1,10 @@
 package com.cellaflora.iact.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +18,7 @@ import com.cellaflora.iact.ConferenceSchedulePage;
 import com.cellaflora.iact.R;
 import com.cellaflora.iact.objects.Event;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -71,10 +76,11 @@ public class ConferenceScheduleAdapter extends BaseAdapter
     {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.conference_schedule_list_row, parent, false);
-        TextView txtTitle, txtTime, txtDescription, txtAction;
+        TextView txtTitle, txtTime, txtDescription, txtAction, txtLocation;
         ImageView imgAction = (ImageView) itemView.findViewById(R.id.schedule_event_action_image);
         txtTitle = (TextView) itemView.findViewById(R.id.schedule_event_title);
         txtTime = (TextView) itemView.findViewById(R.id.schedule_event_time);
+        txtLocation = (TextView) itemView.findViewById(R.id.schedule_event_locaton);
         txtDescription = (TextView) itemView.findViewById(R.id.schedule_event_description);
         txtAction = (TextView) itemView.findViewById(R.id.schedule_event_action);
         Event evt = (Event) getItem(position);
@@ -90,7 +96,7 @@ public class ConferenceScheduleAdapter extends BaseAdapter
 
         if(evt.start_time != null)
         {
-            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mma", Locale.US);
+            SimpleDateFormat timeFormat = new SimpleDateFormat("k:mm", Locale.US);
 
             if(evt.end_time == null)
             {
@@ -111,6 +117,15 @@ public class ConferenceScheduleAdapter extends BaseAdapter
         else
         {
             txtTime.setVisibility(View.GONE);
+        }
+
+        if(evt.location != null && !evt.location.isEmpty())
+        {
+            txtLocation.setText(evt.location);
+        }
+        else
+        {
+            txtLocation.setVisibility(View.GONE);
         }
 
         if(evt.description != null && !evt.description.isEmpty())
@@ -136,6 +151,28 @@ public class ConferenceScheduleAdapter extends BaseAdapter
 
 
         return itemView;
+    }
+
+    public void removeEvent(Event evt)
+    {
+        if(evt != null)
+        {
+            if(evt.isInPersonalSchedule)
+            {
+                evt.isInPersonalSchedule = false;
+
+                if(ConferenceSchedule.event_selector == ConferenceSchedule.EVENTS_PERSONAL)
+                {
+                    events.remove(evt);
+                    notifyDataSetChanged();
+                }
+
+                if(events.size() == 0)
+                {
+                    csp.setNoEvents();
+                }
+            }
+        }
     }
 
     private class myScheduleListener implements View.OnClickListener

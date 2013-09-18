@@ -1,8 +1,10 @@
 package com.cellaflora.iact;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -168,6 +170,7 @@ public class AdvertFragment extends Fragment
     {
         ImageView ad;
         Bitmap image;
+        Advertisement tmp;
 
         protected Void doInBackground(ImageView... arg0)
         {
@@ -176,7 +179,7 @@ public class AdvertFragment extends Fragment
                 ad = arg0[0];
 
                 Random generator = new Random(System.currentTimeMillis());
-                Advertisement tmp = ads.get(generator.nextInt(ads.size()));
+                tmp = ads.get(generator.nextInt(ads.size()));
 
                 while(ad.getTag().equals(tmp.ad_url))
                 {
@@ -216,6 +219,18 @@ public class AdvertFragment extends Fragment
                     }
                 });
                 ad.startAnimation(clear);
+                ad.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        if(tmp.ad_url != null && !tmp.ad_url.isEmpty())
+                        {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(tmp.ad_url));
+                            startActivity(intent);
+                        }
+                    }
+                });
 
             }
         }
