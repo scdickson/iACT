@@ -25,6 +25,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -69,7 +70,7 @@ public class AdvertFragment extends Fragment
                         for(ParseObject parse : result)
                         {
                             Advertisement tmp = new Advertisement();
-                            tmp.objectId = parse.getString("objectId");
+                            tmp.objectId = parse.getObjectId();
                             tmp.ad_url = parse.getString("Link");
                             tmp.lastModified = parse.getString("updatedAt");
 
@@ -80,7 +81,6 @@ public class AdvertFragment extends Fragment
                             }
 
                             ads.add(tmp);
-                            //Log.d("Ad", tmp.toString());
                         }
 
                         try
@@ -132,17 +132,49 @@ public class AdvertFragment extends Fragment
     {
         ImageView adBanner;
         boolean running = true;
+        Random generator;
+        Advertisement currentAd = null;
 
         public AdvertTimer(ImageView adBanner)
         {
             this.adBanner = adBanner;
+            generator = new Random(System.currentTimeMillis());
         }
 
         public void run()
         {
             while(running)
             {
-                new loadAd().execute(adBanner);
+                Advertisement tmp = ads.get(generator.nextInt(ads.size()));
+
+                if(currentAd != null)
+                {
+                    while(tmp.objectId.equals(currentAd.objectId))
+                    {
+                        tmp = ads.get(generator.nextInt(ads.size()));
+                    }
+                }
+
+                currentAd = tmp;
+
+
+                try
+                {
+                    File f = new File(view.getContext().getFilesDir() + "/" + tmp.objectId);
+                    if(f != null && f.exists())
+                    {
+                        new loadAd().execute(adBanner, f, tmp);
+                    }
+                    else
+                    {
+                        new loadAdFromParse().execute(adBanner, tmp);
+                    }
+                }
+                catch(Exception e)
+                {
+                    new loadAdFromParse().execute(adBanner, tmp);
+                }
+
                 try
                 {
                     sleep(Constants.AD_ROTATE_FREQUENCY * 1000);
@@ -172,25 +204,18 @@ public class AdvertFragment extends Fragment
         }
     }
 
-    private class loadAd extends AsyncTask<ImageView, Integer, Void>
+    private class loadAdFromParse extends AsyncTask<Object, Integer, Void>
     {
         ImageView ad;
         Bitmap image;
         Advertisement tmp;
 
-        protected Void doInBackground(ImageView... arg0)
+        protected Void doInBackground(Object... arg0)
         {
             try
             {
-                ad = arg0[0];
-
-                Random generator = new Random(System.currentTimeMillis());
-                tmp = ads.get(generator.nextInt(ads.size()));
-
-                while(ad.getTag().equals(tmp.ad_url))
-                {
-                    tmp = ads.get(generator.nextInt(ads.size()));
-                }
+                ad = (ImageView) arg0[0];
+                tmp = (Advertisement) arg0[1];
 
                 ad.setTag(tmp.ad_url);
                 URL url = new URL(tmp.image_url);
@@ -199,6 +224,71 @@ public class AdvertFragment extends Fragment
                 connection.connect();
                 InputStream input = connection.getInputStream();
                 image = BitmapFactory.decodeStream(input);
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void v)
+        {
+            if(image != null)
+            {
+                clear.setAnimationListener(new Animation.AnimationListener()
+                {
+                    public void onAnimationRepeat(Animation animation) {}
+                    public void onAnimationStart(Animation animation)
+                    {
+
+                    }
+                    public void onAnimationEnd(Animation animation)
+                    {
+                        ad.setImageBitmap(image);
+                        ad.startAnimation(load);
+                    }
+                });
+                ad.startAnimation(clear);
+                ad.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        if(tmp.ad_url != null && !tmp.ad_url.isEmpty())
+                        {
+                            try
+                            {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(Uri.parse(tmp.ad_url));
+                                startActivity(intent);
+                            }
+                            catch(ActivityNotFoundException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+            }
+        }
+    }
+
+    private class loadAd extends AsyncTask<Object, Integer, Void>
+    {
+        ImageView ad;
+        Bitmap image;
+        File f;
+        Advertisement tmp;
+
+        protected Void doInBackground(Object... arg0)
+        {
+            try
+            {
+                ad = (ImageView) arg0[0];
+                f = (File) arg0[1];
+                tmp = (Advertisement) arg0[2];
+                image = BitmapFactory.decodeStream(new FileInputStream(f));
             }
             catch(Exception e)
             {
