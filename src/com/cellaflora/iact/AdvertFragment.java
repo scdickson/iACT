@@ -41,6 +41,11 @@ public class AdvertFragment extends Fragment
     public AdvertTimer adt = null;
     Animation clear, load;
 
+    public AdvertFragment()
+    {
+
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.advert_fragment, container, false);

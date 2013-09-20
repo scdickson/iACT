@@ -4,14 +4,19 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebSettings;
+import android.view.Window;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 /**
  * Created by sdickson on 7/17/13.
@@ -19,20 +24,105 @@ import android.widget.ImageButton;
 
 public class WebContentView extends Activity
 {
+    private static int REFRESH_IMAGE, STOP_IMAGE;
+
     private Context context;
+    private WebView webview;
+    private String baseUrl;
+    private RelativeLayout webController;
+    private ImageView controller_back, controller_stopRefresh;
+    private boolean isLoading = true;
 
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        getWindow().requestFeature(Window.FEATURE_PROGRESS);
         setContentView(R.layout.web_content_activity);
         context = this;
+        REFRESH_IMAGE = context.getResources().getIdentifier("com.cellaflora.iact:drawable/web_refresh", null, null);
+        STOP_IMAGE = context.getResources().getIdentifier("com.cellaflora.iact:drawable/web_stop", null, null);
         Bundle arguments = getIntent().getExtras();
+        baseUrl = arguments.getString("URL");
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+        webController = (RelativeLayout) findViewById(R.id.web_controller);
+        controller_back = (ImageView) findViewById(R.id.web_controller_back);
+        controller_stopRefresh = (ImageView) findViewById(R.id.web_controller_refresh_stop);
+        webview = (WebView) findViewById(R.id.web_view);
+        webview.setWebViewClient(new WebViewClient()
+        {
+            public void onPageStarted(WebView view, String url, Bitmap favicon)
+            {
+                isLoading = true;
+                controller_stopRefresh.setImageResource(STOP_IMAGE);
+
+                if(!url.equals(baseUrl))
+                {
+                    if(webController.getVisibility() == View.GONE)
+                    {
+                        webController.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            public void onPageFinished(WebView view, String url)
+            {
+                isLoading = false;
+                controller_stopRefresh.setImageResource(REFRESH_IMAGE);
+
+                if(url.equals(baseUrl))
+                {
+                    if(webController.getVisibility() == View.VISIBLE)
+                    {
+                        webController.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+        webview.getSettings().setUseWideViewPort(true);
+        webview.getSettings().setLoadWithOverviewMode(true);
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings().setPluginsEnabled(true);
+        webview.getSettings().setBuiltInZoomControls(true);
+        webview.getSettings().setDisplayZoomControls(false);
+        webview.getSettings().setSupportZoom(true);
+        webview.setWebChromeClient(new WebChromeClient() {
+
+            public void onProgressChanged(WebView view, int progress)
+            {
+                setProgress(progress * 100);
+            }
+        });
+
+        controller_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                if(webview.canGoBack())
+                {
+                    webview.goBack();
+                }
+            }
+        });
+
+        controller_stopRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                if(isLoading)
+                {
+                    webview.stopLoading();
+                }
+                else
+                {
+                    webview.reload();
+                }
+            }
+        });
 
         ImageButton ib = (ImageButton) findViewById(R.id.toggle_button);
         ib.setOnClickListener(new View.OnClickListener() {
@@ -46,25 +136,32 @@ public class WebContentView extends Activity
                 }
             }
         });
+
+        if(savedInstanceState != null)
+        {
+            webview.restoreState(savedInstanceState);
+        }
+        else
+        {
+            if(arguments != null)
+            {
+                webview.loadUrl(baseUrl);
+            }
+        }
+    }
+
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        webview.saveState(outState);
+    }
+
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+
     }
 
     protected void onResume()
     {
         super.onResume();
-        Bundle arguments = getIntent().getExtras();
-        WebView webview = (WebView) findViewById(R.id.web_view);
-        webview.setWebViewClient(new WebViewClient());
-        webview.getSettings().setUseWideViewPort(true);
-        webview.getSettings().setLoadWithOverviewMode(true);
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.getSettings().setPluginsEnabled(true);
-        webview.getSettings().setBuiltInZoomControls(true);
-        webview.getSettings().setDisplayZoomControls(false);
-        webview.getSettings().setSupportZoom(true);
-
-        if(arguments != null)
-        {
-            webview.loadUrl(arguments.getString("URL"));
-        }
     }
 }

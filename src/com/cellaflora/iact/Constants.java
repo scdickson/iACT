@@ -6,8 +6,8 @@ package com.cellaflora.iact;
 public class Constants
 {
     //Constants for Main Activity
-    public static final String PARSE_APPLICATION_ID = "OcdeNhJmP223YS7RTjp9CU6GR9Q1leSLSdPZK1hP";
-    public static final String PARSE_CLIENT_KEY = "5c0vZKDhCoxMyJZo0ZqobQBcYwmdLddKURvsYbTb";
+    public static final String PARSE_APPLICATION_ID = "8mEnOlHBuG0fAFFKLgjVW7HiXicU9OfapLEmK720";
+    public static final String PARSE_CLIENT_KEY = "2tKeH9HPQkpgrKCYWOl7XiFddgg6xSSIomfYf3z7";
     public static final int MAX_CACHE_SIZE = 30; //In Megabytes!
     public static final int CACHE_DECREASE_AMOUNT = 15; //In Megabytes!
     public static final int SPLASH_DELAY = 2; //In seconds!

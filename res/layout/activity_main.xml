@@ -23,6 +23,7 @@
 <ImageView
     android:id="@+id/info_button"
     android:padding="5dp"
+    android:layout_margin="15dp"
     android:layout_height="40dp"
     android:layout_width="40dp"
     android:layout_alignParentLeft="true"

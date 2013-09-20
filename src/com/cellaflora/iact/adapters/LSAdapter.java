@@ -123,8 +123,7 @@ public class LSAdapter extends BaseAdapter
             {
                 try
                 {
-                    ls_image.setImageBitmap(null);
-                    new loadImage().execute(ls_image, f, tmp);
+                    ls_image.setImageBitmap(BitmapFactory.decodeStream(new FileInputStream(f)));
                 }
                 catch(Exception ex)
                 {
