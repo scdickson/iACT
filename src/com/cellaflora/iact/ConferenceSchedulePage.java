@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -40,6 +42,7 @@ public class ConferenceSchedulePage extends Fragment
 {
     View view;
     Date date;
+    public ArrayList<Event> events;
     public ArrayList<Event> content;
     ListView eventList;
     TextView noEvents;
@@ -52,6 +55,7 @@ public class ConferenceSchedulePage extends Fragment
     {
         content = new ArrayList<Event>();
         listener = new EventItemClickListener();
+        events = ConferenceSchedule.events;
         this.cs = cs;
         this.date = date;
 
@@ -86,7 +90,7 @@ public class ConferenceSchedulePage extends Fragment
         }
         else if(state == ConferenceSchedule.EVENTS_ALL)
         {
-            for(Event evt : ConferenceSchedule.events)
+            for(Event evt : events)
             {
                 if(evt.start_time.getDay() == date.getDay())
                 {
@@ -99,8 +103,7 @@ public class ConferenceSchedulePage extends Fragment
         {
             if(content.size() == 0)
             {
-                eventList.setVisibility(View.GONE);
-                noEvents.setVisibility(View.VISIBLE);
+                setNoEvents();
             }
             else
             {
@@ -128,8 +131,9 @@ public class ConferenceSchedulePage extends Fragment
     {
         super.onResume();
 
-        /*if(state == ConferenceSchedule.EVENTS_PERSONAL)
+        if(state == ConferenceSchedule.EVENTS_PERSONAL)
         {
+            content = new ArrayList<Event>();
             for(Event evt : ConferenceSchedule.mySchedule)
             {
                 if(evt.start_time.getDay() == date.getDay())
@@ -137,21 +141,11 @@ public class ConferenceSchedulePage extends Fragment
                     content.add(evt);
                 }
             }
-
-            if(eventList != null && noEvents != null)
-            {
-                adapter = new ConferenceScheduleAdapter(view.getContext(), content, this);
-                eventList.setAdapter(adapter);
-                eventList.setOnItemClickListener(listener);
-                eventList.invalidateViews();
-            }
-
-        }*/
+        }
 
         if(content.size() == 0)
         {
-            eventList.setVisibility(View.GONE);
-            noEvents.setVisibility(View.VISIBLE);
+            setNoEvents();
         }
         else
         {
@@ -189,6 +183,7 @@ public class ConferenceSchedulePage extends Fragment
             selectItem(position);
         }
     }
+
 
 
 }

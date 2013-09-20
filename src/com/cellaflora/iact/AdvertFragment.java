@@ -1,6 +1,7 @@
 package com.cellaflora.iact;
 
 import android.app.Fragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -230,9 +231,16 @@ public class AdvertFragment extends Fragment
                     {
                         if(tmp.ad_url != null && !tmp.ad_url.isEmpty())
                         {
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse(tmp.ad_url));
-                            startActivity(intent);
+                            try
+                            {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(Uri.parse(tmp.ad_url));
+                                startActivity(intent);
+                            }
+                            catch(ActivityNotFoundException e)
+                            {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });

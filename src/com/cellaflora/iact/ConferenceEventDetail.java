@@ -2,14 +2,17 @@ package com.cellaflora.iact;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cellaflora.iact.adapters.ConferenceScheduleAdapter;
 import com.cellaflora.iact.objects.Event;
+import com.cellaflora.iact.support.PersistenceManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -21,14 +24,17 @@ public class ConferenceEventDetail extends Activity
 {
     public static int SCHEDULE_ADD_IMAGE, SCHEDULE_REMOVE_IMAGE;
 
+    Context context;
     Event evt;
-    TextView txtTitle, txtTime, txtDescription, txtAction;
+    TextView txtTitle, txtTime, txtDescription, txtAction, txtSpeakers, txtLocation;
+    RelativeLayout bottomLayout;
     ImageView imgAction;
 
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conference_event_detail);
+        context = this;
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
@@ -39,7 +45,10 @@ public class ConferenceEventDetail extends Activity
         txtTime = (TextView) findViewById(R.id.schedule_detail_event_time);
         txtDescription = (TextView) findViewById(R.id.schedule_detail_event_description);
         txtAction = (TextView) findViewById(R.id.schedule_detail_event_action);
+        txtLocation = (TextView) findViewById(R.id.schedule_detail_event_location);
+        txtSpeakers = (TextView) findViewById(R.id.schedule_detail_event_speakers);
         imgAction = (ImageView) findViewById(R.id.schedule_detail_event_action_image);
+        bottomLayout = (RelativeLayout) findViewById(R.id.schedule_event_detail_bottom_layout);
         SCHEDULE_ADD_IMAGE = getResources().getIdentifier("com.cellaflora.iact:drawable/add_cal", null, null);
         SCHEDULE_REMOVE_IMAGE = getResources().getIdentifier("com.cellaflora.iact:drawable/remove_cal", null, null);
 
@@ -67,21 +76,22 @@ public class ConferenceEventDetail extends Activity
 
             if(evt.start_time != null)
             {
-                SimpleDateFormat timeFormat = new SimpleDateFormat("h:mma", Locale.US);
+                SimpleDateFormat longFormat = new SimpleDateFormat("ccc, MMMM d, h:mm", Locale.US);
+                SimpleDateFormat shortFormat = new SimpleDateFormat("h:mm", Locale.US);
 
                 if(evt.end_time == null)
                 {
-                    txtTime.setText(timeFormat.format(evt.start_time).toLowerCase());
+                    txtTime.setText(longFormat.format(evt.start_time).toLowerCase());
                 }
                 else
                 {
                     if(evt.end_time.after(evt.start_time))
                     {
-                        txtTime.setText(timeFormat.format(evt.start_time).toLowerCase() + " - " + timeFormat.format(evt.end_time).toLowerCase());
+                        txtTime.setText(longFormat.format(evt.start_time) + " - " + shortFormat.format(evt.end_time));
                     }
                     else
                     {
-                        txtTime.setText(timeFormat.format(evt.start_time).toLowerCase());
+                        txtTime.setText(longFormat.format(evt.start_time));
                     }
                 }
             }
@@ -99,7 +109,25 @@ public class ConferenceEventDetail extends Activity
                 txtDescription.setVisibility(View.GONE);
             }
 
-            txtAction.setOnClickListener(new myScheduleListener(evt, txtAction, imgAction));
+            if(evt.location != null && !evt.location.isEmpty())
+            {
+                txtLocation.setText(evt.location);
+            }
+            else
+            {
+                txtLocation.setVisibility(View.GONE);
+            }
+
+            if(evt.speakers != null && !evt.speakers.isEmpty())
+            {
+                txtSpeakers.setText("Speakers:\n" + evt.speakers);
+            }
+            else
+            {
+                txtSpeakers.setVisibility(View.GONE);
+            }
+
+            bottomLayout.setOnClickListener(new myScheduleListener(evt, txtAction, imgAction));
             if(isInPersonalSchedule(evt))
             {
                 txtAction.setText("Remove from personal schedule");
@@ -153,6 +181,12 @@ public class ConferenceEventDetail extends Activity
                 txtAction.setText("Remove from personal schedule");
                 imgAction.setImageResource(SCHEDULE_REMOVE_IMAGE);
             }
+
+            try
+            {
+                PersistenceManager.writeObject(context, Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME, ConferenceSchedule.mySchedule);
+            }
+            catch(Exception e){}
         }
     }
 
