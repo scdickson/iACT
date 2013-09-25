@@ -56,6 +56,7 @@ public class MenuAdapter extends BaseAdapter
         {
             TextView txtMenuItemText = (TextView) itemView.findViewById(R.id.menu_item_text);
             txtMenuItemText.setText(getItem(position).toString());
+            txtMenuItemText.setTypeface(MainActivity.Futura);
             int id = -1;
 
             if(MainActivity.conference_enabled)
@@ -66,9 +67,6 @@ public class MenuAdapter extends BaseAdapter
                     itemView.startAnimation(animation);
                 }
             }
-
-            Typeface HelveticaNeue_Bold = Typeface.createFromAsset(context.getAssets(), "helveticaneue-bold.ttf");
-            txtMenuItemText.setTypeface(HelveticaNeue_Bold);
         }
         return itemView;
     }

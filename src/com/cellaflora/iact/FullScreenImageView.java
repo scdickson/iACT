@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -51,8 +52,10 @@ public class FullScreenImageView extends FragmentActivity
             fullscreenimagelayout = (RelativeLayout) findViewById(R.id.fullscreenimage_layout);
             fullscreenimage = (TouchImageView) findViewById(R.id.fullscreenimage);
             fullscreencaption = (TextView) findViewById(R.id.fullscreenimage_caption);
+            fullscreencaption.setTypeface(MainActivity.Futura);
             //fullscreencaption.setTypeface(MainActivity.myriadProRegular);
             fullscreenshare = (TextView) findViewById(R.id.fullscreenimage_share);
+            fullscreenshare.setTypeface(MainActivity.Futura);
             //fullscreenshare.setTypeface(MainActivity.myriadProSemiBold);
             fullscreenshare.setOnClickListener(new View.OnClickListener() {
                 @Override

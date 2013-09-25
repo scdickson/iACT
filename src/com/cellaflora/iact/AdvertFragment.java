@@ -145,6 +145,12 @@ public class AdvertFragment extends Fragment
         {
             while(running)
             {
+                if(ads.size() <= 0)
+                {
+                    running = false;
+                    return;
+                }
+
                 Advertisement tmp = ads.get(generator.nextInt(ads.size()));
 
                 if(currentAd != null)

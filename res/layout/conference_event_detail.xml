@@ -20,7 +20,7 @@
         android:layout_height="75dp">
 
         <RelativeLayout
-
+            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:background="@drawable/iact_nav_bar">
@@ -36,7 +36,8 @@
             android:id="@+id/schedule_detail_event_action"
             android:layout_width="wrap_content"
             android:textColor="#ffffff"
-            android:textSize="25sp"
+            android:textSize="20sp"
+            android:layout_toRightOf="@id/schedule_detail_event_action_image"
             android:layout_centerInParent="true"
             android:layout_height="wrap_content"
             />

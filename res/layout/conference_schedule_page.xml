@@ -2,7 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:background="#EDEEF2"
+              android:background="#eceef1"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -20,12 +20,12 @@
     <ListView
             android:id="@+id/conference_event_list_view"
             android:layout_height="fill_parent"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="15dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
             android:clipToPadding="false"
-            android:paddingBottom="15dp"
-            android:dividerHeight="15dp"
+            android:paddingBottom="10dp"
+            android:dividerHeight="10dp"
             android:divider="@android:color/transparent"
             android:layout_width="fill_parent"/>
 

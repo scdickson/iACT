@@ -5,27 +5,36 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/iact_background">
+              android:background="@drawable/main_background">
 
 <ListView
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:choiceMode="singleChoice"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp"
-    android:dividerHeight="15dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:dividerHeight="10dp"
     android:clipToPadding="false"
     android:divider="@android:color/transparent"
     android:id="@+id/main_menu"/>
 
 <ImageView
+    android:id="@+id/about_image"
+    android:layout_centerInParent="true"
+    android:scaleType="centerInside"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:visibility="gone"
+    android:src="@drawable/iact_logo"/>
+
+<ImageView
     android:id="@+id/info_button"
     android:padding="5dp"
     android:layout_margin="15dp"
-    android:layout_height="40dp"
-    android:layout_width="40dp"
+    android:layout_height="30dp"
+    android:layout_width="30dp"
     android:layout_alignParentLeft="true"
     android:layout_alignParentBottom="true"
     android:src="@drawable/info_button"/>

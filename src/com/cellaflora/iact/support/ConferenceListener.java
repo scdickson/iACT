@@ -76,28 +76,7 @@ public class ConferenceListener
                     msg.setData(data);
                     handler.sendMessage(msg);
 
-                    if(!conference.enabled)
-                    {
-                        try
-                        {
-                            File events = new File(Constants.CONFERENCE_EVENT_FILE_NAME);
-                            File mySchedule = new File(Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME);
 
-                            if(events.exists())
-                            {
-                                events.delete();
-                            }
-
-                            if(mySchedule.exists())
-                            {
-                                mySchedule.delete();
-                            }
-                        }
-                        catch(Exception ex)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
                 }
                 else
                 {

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -18,10 +19,16 @@ import android.widget.TextView;
 
 import com.cellaflora.iact.adapters.ConferenceMenuAdapter;
 import com.cellaflora.iact.objects.Conference;
+import com.cellaflora.iact.objects.Event;
 import com.cellaflora.iact.support.ConferenceListener;
+import com.cellaflora.iact.support.PersistenceManager;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -56,6 +63,7 @@ public class ConferenceLanding extends Activity
         actionBar.setDisplayShowCustomEnabled(true);
         context = this;
         conferenceTitle = (TextView) findViewById(R.id.conference_title);
+        conferenceTitle.setTypeface(MainActivity.Futura);
 
         ImageButton ib = (ImageButton) findViewById(R.id.toggle_button);
         ib.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +86,7 @@ public class ConferenceLanding extends Activity
         conferenceMenuItems = new ArrayList<String>();
         conference_listener = new ConferenceListener(new ConferenceHandler());
         conference_listener.getConferenceStatus();
+        //ConferenceSchedule.event_selector = ConferenceSchedule.EVENTS_ALL;
     }
 
     public void onBackPressed()
@@ -89,6 +98,11 @@ public class ConferenceLanding extends Activity
     private void selectItem(int position)
     {
         Intent intent = null;
+
+        if(conferenceMenuItems.isEmpty())
+        {
+            return;
+        }
 
         if(conferenceMenuItems.get(position).equalsIgnoreCase("Daily Schedule"))
         {
@@ -142,7 +156,7 @@ public class ConferenceLanding extends Activity
 
                 if(conference.sub_headline != null && !conference.sub_headline.isEmpty())
                 {
-                    conferenceTitle.setText(Html.fromHtml(conference.name + "<br/><font color=\"#e84d3d\">" + conference.sub_headline + "<font/>"));
+                    conferenceTitle.setText(Html.fromHtml(conference.name + "<br/><font color=\"#ac2d2d\">" + conference.sub_headline + "<font/>"));
                 }
                 else
                 {
@@ -152,6 +166,18 @@ public class ConferenceLanding extends Activity
                 if(conference.show_daily_schedule)
                 {
                     conferenceMenuItems.add("Daily Schedule");
+                }
+                else
+                {
+                    try
+                    {
+                        PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME, null);
+                        PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME, null);
+                    }
+                    catch(Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
 
                 if(conference.show_event_sponsors)

@@ -1,13 +1,17 @@
 package com.cellaflora.iact;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,14 +22,19 @@ import android.widget.TextView;
 
 import com.cellaflora.iact.adapters.MenuAdapter;
 import com.cellaflora.iact.objects.Conference;
+import com.cellaflora.iact.objects.Event;
 import com.cellaflora.iact.support.ConferenceListener;
 import com.cellaflora.iact.support.FileComparator;
+import com.cellaflora.iact.support.PersistenceManager;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,6 +43,8 @@ public class MainActivity extends Activity
 {
 
     private ListView mainMenu;
+    private RelativeLayout mainMenuLayout;
+    private ImageView  aboutImage;
     public static ImageView infoButton;
     public static ArrayList<String> menuItems;
     public static Conference conference;
@@ -41,6 +52,15 @@ public class MainActivity extends Activity
     private MenuAdapter adapter;
     public static boolean conference_enabled = false;
     private ConferenceHandler handler;
+    private Context context;
+
+    public static Typeface Futura;
+
+    final Animation imageFadeIn = new AlphaAnimation(0.0f, 1.0f);
+    final Animation menuFadeIn = new AlphaAnimation(0.0f, 1.0f);
+    final Animation menuFadeOut = new AlphaAnimation(1.0f, 0.0f);
+    final Animation imageFadeOut = new AlphaAnimation(1.0f, 0.0f);
+    boolean animationState = false;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -51,6 +71,8 @@ public class MainActivity extends Activity
         PushService.setDefaultPushCallback(this, LegislativeSummary.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
         setContentView(R.layout.activity_main);
+        Futura = Typeface.createFromAsset(getAssets(), "fonts/Futura.ttc");
+        context = this;
 
         menuItems = new ArrayList<String>();
         if(conference_enabled && conference != null && !conference.name.isEmpty())
@@ -61,7 +83,9 @@ public class MainActivity extends Activity
         menuItems.add("Calendar of Events");
         menuItems.add("IACT Legislative Hub");
         menuItems.add("Twitter");
+        mainMenuLayout = (RelativeLayout) findViewById(R.id.main_activity_layout);
         mainMenu = (ListView) findViewById(R.id.main_menu);
+        aboutImage = (ImageView) findViewById(R.id.about_image);
         adapter = new MenuAdapter(this, menuItems);
         mainMenu.setAdapter(adapter);
         MenuItemClickListener menuListener = new MenuItemClickListener();
@@ -79,7 +103,7 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                //Load info fragment
+                displayInfo();
             }
         });
 	}
@@ -109,6 +133,124 @@ public class MainActivity extends Activity
         }
 
         return size;
+    }
+
+    public void displayInfo()
+    {
+
+        menuFadeIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+                int rsc = getResources().getIdentifier("com.cellaflora.iact:drawable/main_background", null, null);
+                mainMenuLayout.setBackgroundResource(rsc);
+                mainMenu.setVisibility(View.VISIBLE);
+                aboutImage.setVisibility(View.GONE);
+                infoButton.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        imageFadeOut.setDuration(Constants.ABOUT_FADE_DELAY);
+        imageFadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                if(!animationState)
+                {
+                    int rsc = getResources().getIdentifier("com.cellaflora.iact:drawable/cella_logo", null, null);
+                    animationState = true;
+                    aboutImage.setImageResource(rsc);
+                    aboutImage.startAnimation(imageFadeIn);
+                }
+                else
+                {
+                    int rsc = getResources().getIdentifier("com.cellaflora.iact:drawable/iact_logo", null, null);
+                    animationState = false;
+                    aboutImage.setImageResource(rsc);
+                    mainMenu.startAnimation(menuFadeIn);
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+
+        imageFadeIn.setDuration(Constants.ABOUT_FADE_DELAY);
+        imageFadeIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                try
+                {
+                    Thread.sleep(Constants.ABOUT_HOLD_DELAY);
+                }
+                catch(Exception e){}
+                aboutImage.startAnimation(imageFadeOut);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+
+
+        mainMenu.setVisibility(View.GONE);
+        menuFadeOut.setDuration(Constants.ABOUT_FADE_DELAY);
+        menuFadeIn.setDuration(Constants.ABOUT_FADE_DELAY);
+
+        menuFadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+                mainMenuLayout.setBackground(null);
+                infoButton.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+
+                int rsc = getResources().getIdentifier("com.cellaflora.iact:drawable/iact_logo", null, null);
+                animationState = false;
+                aboutImage.setImageResource(rsc);
+                aboutImage.setVisibility(View.VISIBLE);
+                aboutImage.startAnimation(imageFadeIn);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        mainMenu.startAnimation(menuFadeOut);
+
+
     }
 
     protected void onDestroy()
@@ -239,6 +381,7 @@ public class MainActivity extends Activity
                 if(!conference_enabled)
                 {
                     conference_enabled = true;
+
                     menuItems = new ArrayList<String>();
                     menuItems.add(conference.name_short);
                     setupMenu();
@@ -251,6 +394,16 @@ public class MainActivity extends Activity
                     conference_enabled = false;
                     menuItems = new ArrayList<String>();
                     setupMenu();
+                }
+
+                try
+                {
+                    PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME, null);
+                    PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME, null);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
                 }
             }
         }

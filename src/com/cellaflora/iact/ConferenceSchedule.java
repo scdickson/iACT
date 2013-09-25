@@ -83,7 +83,9 @@ public class ConferenceSchedule extends FragmentActivity
         pageClickListener = new SchedulePageClickListener();
         eventSelector = (LinearLayout) findViewById(R.id.event_selector_layout);
         eventSelectorAll = (TextView) findViewById(R.id.event_selector_all);
+        eventSelectorAll.setTypeface(MainActivity.Futura);
         eventSelectorPersonal = (TextView) findViewById(R.id.event_selector_personal);
+        eventSelectorPersonal.setTypeface(MainActivity.Futura);
         iactLogo = (ImageView) findViewById(R.id.menubar_logo);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("");
@@ -235,8 +237,8 @@ public class ConferenceSchedule extends FragmentActivity
 
         if(state != null)
         {
-            pager.onRestoreInstanceState(state);
-            return;
+            //pager.onRestoreInstanceState(state);
+            //return;
         }
 
         if(events == null)
@@ -251,6 +253,11 @@ public class ConferenceSchedule extends FragmentActivity
                     try
                     {
                         mySchedule = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME);
+
+                        if(mySchedule == null)
+                        {
+                            mySchedule = new ArrayList<Event>();
+                        }
                     }
                     catch(Exception ex)
                     {
@@ -270,6 +277,11 @@ public class ConferenceSchedule extends FragmentActivity
                     try
                     {
                         mySchedule = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME);
+
+                        if(mySchedule == null)
+                        {
+                            mySchedule = new ArrayList<Event>();
+                        }
                     }
                     catch(Exception ex)
                     {
@@ -285,6 +297,11 @@ public class ConferenceSchedule extends FragmentActivity
                 try
                 {
                     mySchedule = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME);
+
+                    if(mySchedule == null)
+                    {
+                        mySchedule = new ArrayList<Event>();
+                    }
                 }
                 catch(Exception ex)
                 {

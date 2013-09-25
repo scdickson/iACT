@@ -10,7 +10,7 @@
               android:paddingBottom="15dp">
 
     <TextView
-        android:textColor="#225161"
+        android:textColor="#225162"
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:textSize="16sp"

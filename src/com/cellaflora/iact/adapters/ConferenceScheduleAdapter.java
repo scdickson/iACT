@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.cellaflora.iact.ConferenceSchedule;
 import com.cellaflora.iact.ConferenceSchedulePage;
 import com.cellaflora.iact.Constants;
+import com.cellaflora.iact.MainActivity;
 import com.cellaflora.iact.R;
 import com.cellaflora.iact.objects.Event;
 import com.cellaflora.iact.support.PersistenceManager;
@@ -81,10 +82,15 @@ public class ConferenceScheduleAdapter extends BaseAdapter
         TextView txtTitle, txtTime, txtDescription, txtAction, txtLocation;
         ImageView imgAction = (ImageView) itemView.findViewById(R.id.schedule_event_action_image);
         txtTitle = (TextView) itemView.findViewById(R.id.schedule_event_title);
+        txtTitle.setTypeface(MainActivity.Futura);
         txtTime = (TextView) itemView.findViewById(R.id.schedule_event_time);
+        txtTime.setTypeface(MainActivity.Futura);
         txtLocation = (TextView) itemView.findViewById(R.id.schedule_event_locaton);
+        txtLocation.setTypeface(MainActivity.Futura);
         txtDescription = (TextView) itemView.findViewById(R.id.schedule_event_description);
+        txtDescription.setTypeface(MainActivity.Futura);
         txtAction = (TextView) itemView.findViewById(R.id.schedule_event_action);
+        txtAction.setTypeface(MainActivity.Futura);
         Event evt = (Event) getItem(position);
 
         if(evt.title != null && !evt.title.isEmpty())

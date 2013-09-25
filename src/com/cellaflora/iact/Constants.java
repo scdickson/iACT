@@ -6,11 +6,15 @@ package com.cellaflora.iact;
 public class Constants
 {
     //Constants for Main Activity
-    public static final String PARSE_APPLICATION_ID = "8mEnOlHBuG0fAFFKLgjVW7HiXicU9OfapLEmK720";
-    public static final String PARSE_CLIENT_KEY = "2tKeH9HPQkpgrKCYWOl7XiFddgg6xSSIomfYf3z7";
+    //public static final String PARSE_APPLICATION_ID = "8mEnOlHBuG0fAFFKLgjVW7HiXicU9OfapLEmK720";
+    //public static final String PARSE_CLIENT_KEY = "2tKeH9HPQkpgrKCYWOl7XiFddgg6xSSIomfYf3z7";
+    public static final String PARSE_APPLICATION_ID = "OcdeNhJmP223YS7RTjp9CU6GR9Q1leSLSdPZK1hP";
+    public static final String PARSE_CLIENT_KEY = "5c0vZKDhCoxMyJZo0ZqobQBcYwmdLddKURvsYbTb";
     public static final int MAX_CACHE_SIZE = 30; //In Megabytes!
     public static final int CACHE_DECREASE_AMOUNT = 15; //In Megabytes!
     public static final int SPLASH_DELAY = 2; //In seconds!
+    public static final int ABOUT_FADE_DELAY = 750; //In milliseconds!
+    public static final int ABOUT_HOLD_DELAY = 2000; //In milliseconds!
 
     //Constants for Web Views
     public static final String CALENDAR_OF_EVENTS_URL = "http://www.citiesandtowns.org/IACTGoEvents/tabid/16102/Default.aspx";
@@ -20,7 +24,7 @@ public class Constants
     //Constants for Conference Schedule
     public static final String CONFERENCE_EVENT_FILE_NAME = "iact_saved_events";
     public static final String CONFERENCE_MY_SCHEDULE_FILE_NAME = "iact_saved_myschedule";
-    public static final int CONFERENCE_EVENTS_REPLACE_INTERVAL = 1;
+    public static final int CONFERENCE_EVENTS_REPLACE_INTERVAL = 60;
 
     //Constants for Banner Ad
     public static final String AD_FILE_NAME = "iact_saved_ads";

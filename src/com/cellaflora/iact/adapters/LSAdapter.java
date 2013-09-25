@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.cellaflora.iact.Constants;
 import com.cellaflora.iact.FullScreenImageView;
+import com.cellaflora.iact.MainActivity;
 import com.cellaflora.iact.objects.Post;
 import com.cellaflora.iact.R;
 
@@ -75,8 +76,11 @@ public class LSAdapter extends BaseAdapter
         ImageView ls_image = (ImageView) itemView.findViewById(R.id.ls_image);
         ImageView ls_alert = (ImageView) itemView.findViewById(R.id.ls_alert);
         TextView ls_headline = (TextView) itemView.findViewById(R.id.ls_headline);
+        ls_headline.setTypeface(MainActivity.Futura);
         TextView ls_desc = (TextView) itemView.findViewById(R.id.ls_desc);
+        ls_desc.setTypeface(MainActivity.Futura);
         TextView ls_date = (TextView) itemView.findViewById(R.id.ls_date);
+        ls_date.setTypeface(MainActivity.Futura);
 
         Post tmp = LSItems.get(position);
 
@@ -134,6 +138,7 @@ public class LSAdapter extends BaseAdapter
             {
                 new loadImageFromParse().execute(ls_image, tmp);
             }
+
         }
         else
         {
@@ -282,10 +287,10 @@ public class LSAdapter extends BaseAdapter
         {
             if(image != null)
             {
-                //final Animation in = new AlphaAnimation(0.0f, 1.0f);
-                //in.setDuration(150);
+                final Animation in = new AlphaAnimation(0.0f, 1.0f);
+                in.setDuration(150);
                 photo.setImageBitmap(image);
-                //photo.startAnimation(in);
+                photo.startAnimation(in);
                 photo.setOnClickListener(new View.OnClickListener()
                 {
                     @Override

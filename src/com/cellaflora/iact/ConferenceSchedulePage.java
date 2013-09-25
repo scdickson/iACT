@@ -124,6 +124,7 @@ public class ConferenceSchedulePage extends Fragment
         view = inflater.inflate(R.layout.conference_schedule_page, container, false);
         eventList = (ListView) view.findViewById(R.id.conference_event_list_view);
         noEvents = (TextView) view.findViewById(R.id.conference_schedule_no_events);
+        noEvents.setTypeface(MainActivity.Futura);
         return view;
     }
 

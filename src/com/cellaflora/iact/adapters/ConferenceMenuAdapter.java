@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.cellaflora.iact.MainActivity;
 import com.cellaflora.iact.R;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class ConferenceMenuAdapter extends BaseAdapter
         View itemView = inflater.inflate(R.layout.conference_list_row, parent, false);
         TextView txtMenuItem = (TextView) itemView.findViewById(R.id.conference_menu_item);
         txtMenuItem.setText(menuItems.get(position));
+        txtMenuItem.setTypeface(MainActivity.Futura);
         return itemView;
     }
 
