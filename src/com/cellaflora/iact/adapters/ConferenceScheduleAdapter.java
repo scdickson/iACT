@@ -1,11 +1,6 @@
 package com.cellaflora.iact.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +16,8 @@ import com.cellaflora.iact.R;
 import com.cellaflora.iact.objects.Event;
 import com.cellaflora.iact.support.PersistenceManager;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 /**

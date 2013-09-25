@@ -15,16 +15,12 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.cellaflora.iact.adapters.MenuAdapter;
 import com.cellaflora.iact.objects.Conference;
-import com.cellaflora.iact.objects.Event;
 import com.cellaflora.iact.support.ConferenceListener;
 import com.cellaflora.iact.support.FileComparator;
 import com.cellaflora.iact.support.PersistenceManager;
@@ -34,9 +30,6 @@ import com.parse.ParseInstallation;
 import com.parse.PushService;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

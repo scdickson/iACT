@@ -1,7 +1,6 @@
 package com.cellaflora.iact.objects;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by sdickson on 7/21/13.

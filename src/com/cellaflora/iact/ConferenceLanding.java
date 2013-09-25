@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,8 +15,6 @@ import android.os.Message;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -25,19 +22,11 @@ import android.widget.TextView;
 
 import com.cellaflora.iact.adapters.ConferenceMenuAdapter;
 import com.cellaflora.iact.objects.Conference;
-import com.cellaflora.iact.objects.Event;
 import com.cellaflora.iact.support.ConferenceListener;
 import com.cellaflora.iact.support.PersistenceManager;
 import com.parse.Parse;
-import com.parse.ParseAnalytics;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.ObjectOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Created by sdickson on 9/2/13.

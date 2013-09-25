@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.cellaflora.iact.Constants;
 import com.cellaflora.iact.objects.Conference;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.io.File;
 import java.util.List;
 
 /**

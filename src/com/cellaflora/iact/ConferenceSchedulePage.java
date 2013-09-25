@@ -1,39 +1,20 @@
 package com.cellaflora.iact;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cellaflora.iact.adapters.ConferenceScheduleAdapter;
 import com.cellaflora.iact.objects.Event;
-import com.cellaflora.iact.support.PersistenceManager;
-import com.parse.FindCallback;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
-import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
 
 /**
  * Created by sdickson on 9/4/13.

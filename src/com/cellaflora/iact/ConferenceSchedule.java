@@ -151,6 +151,8 @@ public class ConferenceSchedule extends FragmentActivity
         }
     }
 
+    /* S ♥ R*/
+
     public void loadEvents()
     {
         events = new ArrayList<Event>();
