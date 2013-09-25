@@ -22,8 +22,8 @@
             android:layout_weight="0.1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="18dp"
             android:id="@+id/conference_list_arrow"
             android:src="@drawable/ls_arrow_right"/>
 

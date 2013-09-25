@@ -19,7 +19,7 @@ public class Constants
     //Constants for Web Views
     public static final String CALENDAR_OF_EVENTS_URL = "http://www.citiesandtowns.org/IACTGoEvents/tabid/16102/Default.aspx";
     public static final String LEGISLATIVE_HUB_URL = "http://www.citiesandtowns.org/IACTGoLegislativeHub/tabid/16103/Default.aspx";
-    public static final String TWITTER_URL = "https://twitter.com/INCitiesTowns";
+    public static final String TWITTER_URL = "https://mobile.twitter.com/INCitiesTowns";
 
     //Constants for Conference Schedule
     public static final String CONFERENCE_EVENT_FILE_NAME = "iact_saved_events";

@@ -51,7 +51,7 @@ public class WebContentView extends Activity
         baseUrl = arguments.getString("URL");
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.iact_nav_bar));
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         webController = (RelativeLayout) findViewById(R.id.web_controller);

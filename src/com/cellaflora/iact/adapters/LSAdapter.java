@@ -138,6 +138,19 @@ public class LSAdapter extends BaseAdapter
                         new loadImageFromParse().execute(ls_image, tmp);
                     }
                 }
+
+                final String caption = tmp.caption;
+                final String path = f.getAbsolutePath() + "_uncompressed";
+                ls_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        Intent fullscreenimage = new Intent(context, FullScreenImageView.class);
+                        fullscreenimage.putExtra("image", path);
+                        fullscreenimage.putExtra("caption", caption);
+                        context.startActivity(fullscreenimage);
+                    }
+                });
             }
             else
             {
@@ -236,7 +249,7 @@ public class LSAdapter extends BaseAdapter
                 photo.setImageBitmap(image);
                 photo.startAnimation(in);
 
-                photo.setOnClickListener(new View.OnClickListener()
+                /*photo.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view)
@@ -246,7 +259,7 @@ public class LSAdapter extends BaseAdapter
                         fullscreenimage.putExtra("caption", post.caption);
                         context.startActivity(fullscreenimage);
                     }
-                });
+                });*/
             }
         }
     }
@@ -309,7 +322,7 @@ public class LSAdapter extends BaseAdapter
                 in.setDuration(150);
                 photo.setImageBitmap(image);
                 photo.startAnimation(in);
-                photo.setOnClickListener(new View.OnClickListener()
+                /*photo.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view)
@@ -319,7 +332,7 @@ public class LSAdapter extends BaseAdapter
                         fullscreenimage.putExtra("caption", post.caption);
                         context.startActivity(fullscreenimage);
                     }
-                });
+                });*/
             }
         }
     }

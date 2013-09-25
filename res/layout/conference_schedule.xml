@@ -13,15 +13,15 @@
         android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_marginBottom="5dp"
-        android:layout_height="wrap_content">
+        android:layout_height="40dp">
         <ImageView
             android:id="@+id/schedule_prev_day"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_margin="10dp"
             android:src="@drawable/ls_arrow_left"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_width="30dp"/>
+            android:layout_width="20dp"/>
         <TextView
             android:id="@+id/schedule_current_day"
             android:layout_centerInParent="true"
@@ -36,8 +36,8 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ls_arrow_right"
                 android:layout_alignParentRight="true"
-                android:layout_height="30dp"
-                android:layout_width="30dp"/>
+                android:layout_height="20dp"
+                android:layout_width="20dp"/>
 
         </RelativeLayout>
 

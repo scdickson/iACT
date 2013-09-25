@@ -77,7 +77,7 @@ public class ConferenceSchedule extends FragmentActivity
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.iact_nav_bar));
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         selector = new EventSelectorListener();

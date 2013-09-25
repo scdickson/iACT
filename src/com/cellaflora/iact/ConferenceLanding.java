@@ -16,6 +16,8 @@ import android.os.Message;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -63,7 +65,7 @@ public class ConferenceLanding extends Activity
         progressDialog.setMessage("Loading...");
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.iact_nav_bar));
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         context = this;
@@ -229,10 +231,14 @@ public class ConferenceLanding extends Activity
                     conferenceMenuItems.add("Maps and Directions");
                 }
 
+                //Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+                //fadeIn.setDuration(300);
                 adapter = new ConferenceMenuAdapter(context, conferenceMenuItems);
                 conferenceList = (ListView) findViewById(R.id.conference_list_view);
                 conferenceList.setAdapter(adapter);
                 conferenceList.setOnItemClickListener(new MenuItemClickListener());
+                //conferenceList.startAnimation(fadeIn);
+
             }
             else
             {

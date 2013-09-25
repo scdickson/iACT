@@ -73,7 +73,7 @@ public class LegislativeSummary extends Activity
 
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.iact_nav_bar));
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
 

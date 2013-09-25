@@ -39,7 +39,7 @@ public class ConferenceEventDetail extends Activity
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.nav_bar));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.iact_nav_bar));
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         txtTitle = (TextView) findViewById(R.id.schedule_detail_event_title);
