@@ -76,7 +76,6 @@ public class ConferenceListener
                     msg.setData(data);
                     handler.sendMessage(msg);
 
-
                 }
                 else
                 {

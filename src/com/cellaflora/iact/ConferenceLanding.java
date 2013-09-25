@@ -2,6 +2,10 @@ package com.cellaflora.iact;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -54,6 +58,7 @@ public class ConferenceLanding extends Activity
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         Parse.initialize(this, Constants.PARSE_APPLICATION_ID, Constants.PARSE_CLIENT_KEY);
         progressDialog = new ProgressDialog(this);
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setTitle("");
         progressDialog.setMessage("Loading...");
         ActionBar actionBar = getActionBar();
@@ -79,14 +84,42 @@ public class ConferenceLanding extends Activity
         });
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
+    }
+
     public void onResume()
     {
         super.onResume();
         //progressDialog.show();
-        conferenceMenuItems = new ArrayList<String>();
-        conference_listener = new ConferenceListener(new ConferenceHandler());
-        conference_listener.getConferenceStatus();
-        //ConferenceSchedule.event_selector = ConferenceSchedule.EVENTS_ALL;
+        if(isOnline())
+        {
+            conferenceMenuItems = new ArrayList<String>();
+            conference_listener = new ConferenceListener(new ConferenceHandler());
+            conference_listener.getConferenceStatus();
+        }
+        else
+        {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+            alertDialogBuilder.setTitle("Alert");
+            alertDialogBuilder
+                    .setMessage("The internet connection appears to be offline. Some content may not be available until a connection is made.")
+                    .setCancelable(false)
+                    .setNegativeButton("Okay",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id)
+                        {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
     }
 
     public void onBackPressed()
@@ -171,6 +204,7 @@ public class ConferenceLanding extends Activity
                 {
                     try
                     {
+                        Log.d("fatal", "CLEAR CONF");
                         PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME, null);
                         PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME, null);
                     }

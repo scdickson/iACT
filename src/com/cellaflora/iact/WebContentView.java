@@ -2,10 +2,14 @@ package com.cellaflora.iact;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -17,6 +21,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 
 /**
  * Created by sdickson on 7/17/13.
@@ -145,9 +150,40 @@ public class WebContentView extends Activity
         {
             if(arguments != null)
             {
-                webview.loadUrl(baseUrl);
+                if(isOnline())
+                {
+                    webview.loadUrl(baseUrl);
+                }
+                else
+                {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("Alert");
+                    alertDialogBuilder
+                            .setMessage("The internet connection appears to be offline. Some content may not be available until a connection is made.")
+                            .setCancelable(false)
+                            .setNegativeButton("Okay",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id)
+                                {
+                                    dialog.cancel();
+                                    Intent intent = new Intent(context, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
             }
         }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 
     protected void onSaveInstanceState(Bundle outState)

@@ -8,6 +8,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,6 +60,7 @@ public class LegislativeSummary extends Activity
         setContentView(R.layout.legislative_summary_activity);
         context = this;
         progressDialog = new ProgressDialog(this);
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setTitle("");
         progressDialog.setMessage("Loading...");
         pdfProgress = new ProgressDialog(this);
@@ -98,6 +101,16 @@ public class LegislativeSummary extends Activity
         }
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
+    }
+
     public void onResume()
     {
         super.onResume();
@@ -123,20 +136,41 @@ public class LegislativeSummary extends Activity
                         @Override
                         public void onRefresh()
                         {
-                            loadNewsAndLegislativeData();
+                            if(isOnline())
+                            {
+                                loadNewsAndLegislativeData();
+                            }
+                            else
+                            {
+                                displayNoNetworkDialog();
+                            }
                         }
                     });
                 }
                 else
                 {
-                    progressDialog.show();
-                    loadNewsAndLegislativeData();
+                    if(isOnline())
+                    {
+                        loadNewsAndLegislativeData();
+                    }
+                    else
+                    {
+                        progressDialog.show();
+                        displayNoNetworkDialog();
+                    }
                 }
             }
             catch(Exception e)
             {
-                progressDialog.show();
-                loadNewsAndLegislativeData();
+                if(isOnline())
+                {
+                    loadNewsAndLegislativeData();
+                }
+                else
+                {
+                    progressDialog.show();
+                    displayNoNetworkDialog();
+                }
             }
 
     }
@@ -157,6 +191,23 @@ public class LegislativeSummary extends Activity
         }
 
         return fixed;
+    }
+
+    public void displayNoNetworkDialog()
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Alert");
+        alertDialogBuilder
+                .setMessage("The internet connection appears to be offline. Some content may not be available until a connection is made.")
+                .setCancelable(false)
+                .setNegativeButton("Okay",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void loadNewsAndLegislativeData()
@@ -237,8 +288,16 @@ public class LegislativeSummary extends Activity
                     File f = new File(Environment.getExternalStorageDirectory() + "/" + posts.get(position).objectId);
                     if(f == null || !f.exists())
                     {
-                        lp = new loadDocument();
-                        lp.execute(posts.get(position), TYPE_PDF);
+                        if(isOnline())
+                        {
+                            lp = new loadDocument();
+                            lp.execute(posts.get(position), TYPE_PDF);
+                        }
+                        else
+                        {
+                            displayNoNetworkDialog();
+                            return;
+                        }
                     }
                     else
                     {
@@ -288,8 +347,16 @@ public class LegislativeSummary extends Activity
                 }
                 catch(Exception e)
                 {
-                    lp = new loadDocument();
-                    lp.execute(posts.get(position), TYPE_PDF);
+                    if(isOnline())
+                    {
+                        lp = new loadDocument();
+                        lp.execute(posts.get(position), TYPE_PDF);
+                    }
+                    else
+                    {
+                        displayNoNetworkDialog();
+                        return;
+                    }
                 }
             }
             else
@@ -299,8 +366,16 @@ public class LegislativeSummary extends Activity
                     File f = new File(Environment.getExternalStorageDirectory() + "/" + posts.get(position).objectId);
                     if(f == null || !f.exists())
                     {
-                        lp = new loadDocument();
-                        lp.execute(posts.get(position), TYPE_DOC);
+                        if(isOnline())
+                        {
+                            lp = new loadDocument();
+                            lp.execute(posts.get(position), TYPE_DOC);
+                        }
+                        else
+                        {
+                            displayNoNetworkDialog();
+                            return;
+                        }
                     }
                     else
                     {
@@ -345,8 +420,16 @@ public class LegislativeSummary extends Activity
                 }
                 catch(Exception e)
                 {
-                    lp = new loadDocument();
-                    lp.execute(posts.get(position), TYPE_DOC);
+                    if(isOnline())
+                    {
+                        lp = new loadDocument();
+                        lp.execute(posts.get(position), TYPE_DOC);
+                    }
+                    else
+                    {
+                        displayNoNetworkDialog();
+                        return;
+                    }
                 }
             }
         }

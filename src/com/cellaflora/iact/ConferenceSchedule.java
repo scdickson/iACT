@@ -68,6 +68,7 @@ public class ConferenceSchedule extends FragmentActivity
     public static ArrayList<Fragment> days;
     public static int event_selector = EVENTS_ALL;
     public static int current_page = 0;
+    public static boolean saveState = false;
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -136,7 +137,18 @@ public class ConferenceSchedule extends FragmentActivity
     public void onPause()
     {
         super.onPause();
-        state = pager.onSaveInstanceState();
+
+        if(!saveState)
+        {
+            if(event_selector != EVENTS_ALL)
+            {
+                setSelector(EVENTS_ALL);
+            }
+        }
+        else
+        {
+            state = pager.onSaveInstanceState();
+        }
     }
 
     public void loadEvents()
@@ -235,14 +247,15 @@ public class ConferenceSchedule extends FragmentActivity
         eventSelectorAll.setOnClickListener(selector);
         eventSelectorPersonal.setOnClickListener(selector);
 
-        if(state != null)
+        if(saveState && state != null)
         {
-            //pager.onRestoreInstanceState(state);
-            //return;
+            saveState = false;
+            pager.onRestoreInstanceState(state);
+            return;
         }
 
-        if(events == null)
-        {
+        //if(events == null)
+        //{
             try
             {
                 File f = getFileStreamPath(Constants.CONFERENCE_EVENT_FILE_NAME);
@@ -310,7 +323,7 @@ public class ConferenceSchedule extends FragmentActivity
 
                 loadEvents();
             }
-        }
+        /*}
         else
         {
             txtPageDate.setText("Day 1, " + timeFormat.format(events.get(0).start_time));
@@ -328,7 +341,7 @@ public class ConferenceSchedule extends FragmentActivity
                     setSelector(EVENTS_PERSONAL);
                     break;
             }
-        }
+        }*/
 
 
     }

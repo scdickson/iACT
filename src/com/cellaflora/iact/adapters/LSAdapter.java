@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -131,12 +133,18 @@ public class LSAdapter extends BaseAdapter
                 }
                 catch(Exception ex)
                 {
-                    new loadImageFromParse().execute(ls_image, tmp);
+                    if(isOnline())
+                    {
+                        new loadImageFromParse().execute(ls_image, tmp);
+                    }
                 }
             }
             else
             {
-                new loadImageFromParse().execute(ls_image, tmp);
+                if(isOnline())
+                {
+                    new loadImageFromParse().execute(ls_image, tmp);
+                }
             }
 
         }
@@ -146,6 +154,16 @@ public class LSAdapter extends BaseAdapter
         }
 
         return itemView;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 
     private class loadImageFromParse extends AsyncTask<Object, Integer, Void>

@@ -170,6 +170,7 @@ public class ConferenceSchedulePage extends Fragment
 
     public void selectItem(int position)
     {
+        ConferenceSchedule.saveState = true;
         Intent intent = new Intent(view.getContext(), ConferenceEventDetail.class);
         intent.putExtra("EVENT", content.get(position));
 

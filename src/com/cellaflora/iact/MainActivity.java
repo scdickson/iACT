@@ -4,6 +4,8 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
@@ -117,8 +119,12 @@ public class MainActivity extends Activity
     public void onResume()
     {
         super.onResume();
-        conference_listener = new ConferenceListener(handler);
-        conference_listener.getConferenceStatus();
+
+        if(isOnline())
+        {
+            conference_listener = new ConferenceListener(handler);
+            conference_listener.getConferenceStatus();
+        }
         infoButton.setVisibility(View.VISIBLE);
     }
 
@@ -133,6 +139,16 @@ public class MainActivity extends Activity
         }
 
         return size;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 
     public void displayInfo()
@@ -389,21 +405,22 @@ public class MainActivity extends Activity
             }
             else
             {
-                if(conference_enabled)
-                {
-                    conference_enabled = false;
-                    menuItems = new ArrayList<String>();
-                    setupMenu();
-                }
-
                 try
                 {
+                    Log.d("fatal", "CLEAR CONF");
                     PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME, null);
                     PersistenceManager.writeObject(getApplicationContext(), Constants.CONFERENCE_MY_SCHEDULE_FILE_NAME, null);
                 }
                 catch(Exception e)
                 {
                     e.printStackTrace();
+                }
+
+                if(conference_enabled)
+                {
+                    conference_enabled = false;
+                    menuItems = new ArrayList<String>();
+                    setupMenu();
                 }
             }
         }
