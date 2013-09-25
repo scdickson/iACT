@@ -72,6 +72,7 @@ public class MainActivity extends Activity
         ParseAnalytics.trackAppOpened(getIntent());
         PushService.setDefaultPushCallback(this, LegislativeSummary.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         setContentView(R.layout.activity_main);
         Futura = Typeface.createFromAsset(getAssets(), "fonts/Futura.ttc");
         context = this;
