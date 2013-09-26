@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
@@ -73,7 +74,7 @@ public class MainActivity extends Activity
         menuItems = new ArrayList<String>();
         if(conference_enabled && conference != null && !conference.name.isEmpty())
         {
-            menuItems.add(conference.name);
+            menuItems.add(conference.name_short);
         }
         menuItems.add("News and Legislative Summary");
         menuItems.add("Calendar of Events");
@@ -185,6 +186,14 @@ public class MainActivity extends Activity
                 {
                     int rsc = getResources().getIdentifier("com.cellaflora.iact:drawable/cella_logo", null, null);
                     animationState = true;
+                    aboutImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(Constants.CELLAFLORA_IMAGE_LINK));
+                            startActivity(intent);
+                        }
+                    });
                     aboutImage.setImageResource(rsc);
                     aboutImage.startAnimation(imageFadeIn);
                 }
@@ -192,6 +201,14 @@ public class MainActivity extends Activity
                 {
                     int rsc = getResources().getIdentifier("com.cellaflora.iact:drawable/iact_logo", null, null);
                     animationState = false;
+                    aboutImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(Constants.IACT_IMAGE_LINK));
+                            startActivity(intent);
+                        }
+                    });
                     aboutImage.setImageResource(rsc);
                     mainMenu.startAnimation(menuFadeIn);
                 }
@@ -249,6 +266,14 @@ public class MainActivity extends Activity
                 int rsc = getResources().getIdentifier("com.cellaflora.iact:drawable/iact_logo", null, null);
                 animationState = false;
                 aboutImage.setImageResource(rsc);
+                aboutImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(Constants.IACT_IMAGE_LINK));
+                        startActivity(intent);
+                    }
+                });
                 aboutImage.setVisibility(View.VISIBLE);
                 aboutImage.startAnimation(imageFadeIn);
             }
@@ -388,6 +413,12 @@ public class MainActivity extends Activity
 
             if(conference != null && conference.enabled && !conference.name.isEmpty())
             {
+                try
+                {
+                    conference = (Conference) PersistenceManager.readObject(context, Constants.SAVED_CONFERENCE_FLAGS);
+                }
+                catch(Exception e){}
+
                 if(!conference_enabled)
                 {
                     conference_enabled = true;

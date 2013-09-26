@@ -6,12 +6,16 @@
                 android:orientation="horizontal"
                 android:background="@drawable/rectangle_shape">
     <ImageView
-            android:layout_height="56dp"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:src="@drawable/alert"
             android:visibility="gone"
-            android:layout_width="56dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="50dp"
             android:id="@+id/ls_alert"/>
+
+
 
     <LinearLayout
         android:layout_gravity="center"
@@ -64,14 +68,6 @@
             android:id="@+id/ls_desc"/>
     </LinearLayout>
 
-    <ImageView
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="10dp"
-            android:layout_height="18dp"
-            android:src="@drawable/ls_arrow_right"/>
 
 
 </RelativeLayout>

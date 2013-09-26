@@ -11,8 +11,11 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -32,8 +35,10 @@ public class WebContentView extends Activity
     private Context context;
     private WebView webview;
     private String baseUrl;
+    private boolean firstLoad = true;
     private RelativeLayout webController;
     private ImageView controller_back, controller_stopRefresh;
+    private Animation slideIn, slideOut;
     private boolean isLoading = true;
 
     protected void onCreate(Bundle savedInstanceState)
@@ -43,6 +48,8 @@ public class WebContentView extends Activity
         getWindow().requestFeature(Window.FEATURE_PROGRESS);
         setContentView(R.layout.web_content_activity);
         context = this;
+        slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_left);
+        slideOut = AnimationUtils.loadAnimation(this, R.anim.slide_right);
         REFRESH_IMAGE = context.getResources().getIdentifier("com.cellaflora.iact:drawable/web_refresh", null, null);
         STOP_IMAGE = context.getResources().getIdentifier("com.cellaflora.iact:drawable/web_stop", null, null);
         Bundle arguments = getIntent().getExtras();
@@ -63,11 +70,12 @@ public class WebContentView extends Activity
                 isLoading = true;
                 controller_stopRefresh.setImageResource(STOP_IMAGE);
 
-                if(!url.equals(baseUrl))
+                if(!url.equals(baseUrl) && !firstLoad)
                 {
                     if(webController.getVisibility() == View.GONE)
                     {
                         webController.setVisibility(View.VISIBLE);
+                        //webController.startAnimation(slideIn);
                     }
                 }
             }
@@ -77,11 +85,18 @@ public class WebContentView extends Activity
                 isLoading = false;
                 controller_stopRefresh.setImageResource(REFRESH_IMAGE);
 
+                if(firstLoad)
+                {
+                    firstLoad = false;
+                    baseUrl = url;
+                }
+
                 if(url.equals(baseUrl))
                 {
                     if(webController.getVisibility() == View.VISIBLE)
                     {
                         webController.setVisibility(View.GONE);
+                        //webController.startAnimation(slideOut);
                     }
                 }
             }
@@ -119,6 +134,7 @@ public class WebContentView extends Activity
                 if(isLoading)
                 {
                     webview.stopLoading();
+                    controller_stopRefresh.setImageResource(REFRESH_IMAGE);
                 }
                 else
                 {
@@ -163,8 +179,9 @@ public class WebContentView extends Activity
                                 public void onClick(DialogInterface dialog,int id)
                                 {
                                     dialog.cancel();
-                                    Intent intent = new Intent(context, MainActivity.class);
-                                    startActivity(intent);
+                                    onBackPressed();
+                                    //Intent intent = new Intent(context, MainActivity.class);
+                                    //startActivity(intent);
                                 }
                             });
                     AlertDialog alertDialog = alertDialogBuilder.create();

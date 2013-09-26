@@ -44,8 +44,9 @@
 
     <fragment class="com.cellaflora.iact.AdvertFragment"
               android:id="@+id/advert_banner"
+              android:layout_centerHorizontal="true"
               android:layout_above="@id/web_bottom_layout"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
             />
 

@@ -97,7 +97,7 @@ public class ConferenceScheduleAdapter extends BaseAdapter
 
         if(evt.start_time != null)
         {
-            SimpleDateFormat timeFormat = new SimpleDateFormat("k:mm", Locale.US);
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
 
             if(evt.end_time == null)
             {

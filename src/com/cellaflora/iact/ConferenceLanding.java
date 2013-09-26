@@ -26,6 +26,7 @@ import com.cellaflora.iact.support.ConferenceListener;
 import com.cellaflora.iact.support.PersistenceManager;
 import com.parse.Parse;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -41,6 +42,7 @@ public class ConferenceLanding extends Activity
     private ConferenceListener conference_listener = null;
     private TextView conferenceTitle;
     private ProgressDialog progressDialog;
+    private ConferenceHandler handler;
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -48,6 +50,7 @@ public class ConferenceLanding extends Activity
         setContentView(R.layout.conference_landing);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         Parse.initialize(this, Constants.PARSE_APPLICATION_ID, Constants.PARSE_CLIENT_KEY);
+        handler = new ConferenceHandler();
         progressDialog = new ProgressDialog(this);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setTitle("");
@@ -92,24 +95,42 @@ public class ConferenceLanding extends Activity
         if(isOnline())
         {
             conferenceMenuItems = new ArrayList<String>();
-            conference_listener = new ConferenceListener(new ConferenceHandler());
+            conference_listener = new ConferenceListener(handler);
             conference_listener.getConferenceStatus();
         }
         else
         {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-            alertDialogBuilder.setTitle("Alert");
-            alertDialogBuilder
-                    .setMessage("The internet connection appears to be offline. Some content may not be available until a connection is made.")
-                    .setCancelable(false)
-                    .setNegativeButton("Okay",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id)
-                        {
-                            dialog.cancel();
-                        }
-                    });
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+            conferenceMenuItems = new ArrayList<String>();
+
+            try
+            {
+                File f = new File(getFilesDir(), Constants.SAVED_CONFERENCE_FLAGS);
+                if(f.exists())
+                {
+                    conference = (Conference) PersistenceManager.readObject(context, Constants.SAVED_CONFERENCE_FLAGS);
+                    Message msg = new Message();
+                    Bundle data = new Bundle();
+                    data.putSerializable("CONFERENCE_DATA", conference);
+                    msg.setData(data);
+                    handler.sendMessage(msg);
+                }
+            }
+            catch(Exception e)
+            {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setTitle("Alert");
+                alertDialogBuilder
+                        .setMessage("The internet connection appears to be offline. Some content may not be available until a connection is made.")
+                        .setCancelable(false)
+                        .setNegativeButton("Okay",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id)
+                            {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
         }
     }
 
@@ -177,7 +198,14 @@ public class ConferenceLanding extends Activity
 
             if(conference != null && conference.enabled && !conference.name.isEmpty())
             {
-
+                try
+                {
+                    PersistenceManager.writeObject(context, Constants.SAVED_CONFERENCE_FLAGS, conference);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
                 if(conference.sub_headline != null && !conference.sub_headline.isEmpty())
                 {
                     conferenceTitle.setText(Html.fromHtml(conference.name + "<br/><font color=\"#ac2d2d\">" + conference.sub_headline + "<font/>"));

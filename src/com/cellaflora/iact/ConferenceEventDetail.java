@@ -83,8 +83,8 @@ public class ConferenceEventDetail extends Activity
 
             if(evt.start_time != null)
             {
-                SimpleDateFormat longFormat = new SimpleDateFormat("ccc, MMMM d, h:mm", Locale.US);
-                SimpleDateFormat shortFormat = new SimpleDateFormat("h:mm", Locale.US);
+                SimpleDateFormat longFormat = new SimpleDateFormat("ccc, MMMM d, h:mm a", Locale.US);
+                SimpleDateFormat shortFormat = new SimpleDateFormat("h:mm a", Locale.US);
 
                 if(evt.end_time == null)
                 {

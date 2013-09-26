@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -240,6 +242,15 @@ public class ConferenceSchedule extends FragmentActivity
         return days;
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
+    }
 
     public void onResume()
     {
@@ -261,7 +272,7 @@ public class ConferenceSchedule extends FragmentActivity
             try
             {
                 File f = getFileStreamPath(Constants.CONFERENCE_EVENT_FILE_NAME);
-                if((f.lastModified() + (Constants.CONFERENCE_EVENTS_REPLACE_INTERVAL * 60 * 1000)) >= System.currentTimeMillis())
+                if((f.lastModified() + (Constants.CONFERENCE_EVENTS_REPLACE_INTERVAL * 60 * 1000)) >= System.currentTimeMillis() || !isOnline())
                 {
                     events = (ArrayList<Event>) PersistenceManager.readObject(getApplicationContext(), Constants.CONFERENCE_EVENT_FILE_NAME);
 

@@ -9,9 +9,10 @@
 
     <fragment class="com.cellaflora.iact.AdvertFragment"
               android:id="@+id/advert_banner"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
+              android:layout_centerHorizontal="true"
               android:layout_alignParentBottom="true"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
             />
 
     <com.cellaflora.iact.support.PullToRefreshListView

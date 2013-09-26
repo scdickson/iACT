@@ -143,6 +143,7 @@ public class LegislativeSummary extends Activity
                             else
                             {
                                 displayNoNetworkDialog();
+                                lsList.onRefreshComplete();
                             }
                         }
                     });

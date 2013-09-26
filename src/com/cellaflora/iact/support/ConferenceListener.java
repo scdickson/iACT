@@ -67,7 +67,6 @@ public class ConferenceListener
                         }
                     }
 
-
                     Message msg = new Message();
                     Bundle data = new Bundle();
                     data.putSerializable("CONFERENCE_DATA", conference);
