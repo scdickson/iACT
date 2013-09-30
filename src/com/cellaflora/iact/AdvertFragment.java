@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,7 +124,7 @@ public class AdvertFragment extends Fragment
 
     public void displayAds()
     {
-        AdvertTimer adt = new AdvertTimer((ImageView) getActivity().findViewById(R.id.ad));
+        AdvertTimer adt = new AdvertTimer((ImageView) view.findViewById(R.id.ad));
         adt.start();
     }
 
@@ -199,7 +200,6 @@ public class AdvertFragment extends Fragment
             try
             {
                 adt.running = false;
-                adt.join();
                 adt = null;
             }
             catch(Exception e)

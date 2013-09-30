@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -64,6 +65,19 @@ public class ConferenceEventDetail extends Activity
         {
             evt = (Event) intent.getSerializableExtra("EVENT");
         }
+
+        ImageButton ib = (ImageButton) findViewById(R.id.toggle_button);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(context, MainActivity.class);
+                if(intent != null)
+                {
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     public void onResume()

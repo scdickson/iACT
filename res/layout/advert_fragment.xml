@@ -5,9 +5,10 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content">
     <ImageView
+        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:scaleType="centerInside"
+        android:scaleType="fitXY"
         android:tag="-1"
         android:id="@+id/ad"/>
 

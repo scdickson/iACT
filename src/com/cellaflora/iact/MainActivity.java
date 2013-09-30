@@ -51,6 +51,7 @@ public class MainActivity extends Activity
     private Context context;
 
     public static Typeface Futura;
+    public static boolean webFirstLoad = true;
 
     final Animation imageFadeIn = new AlphaAnimation(0.0f, 1.0f);
     final Animation menuFadeIn = new AlphaAnimation(0.0f, 1.0f);

@@ -57,6 +57,7 @@ public class LegislativeSummary extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         setContentView(R.layout.legislative_summary_activity);
         context = this;
         progressDialog = new ProgressDialog(this);
@@ -394,14 +395,14 @@ public class LegislativeSummary extends Activity
                             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                             alertDialogBuilder.setTitle("No Microsoft Word Viewer Found");
                             alertDialogBuilder
-                                    .setMessage("You do not have an application that allows you to view .doc files. To view this file, please download OpenDocument Reader from the Android Market.")
+                                    .setMessage("You do not have an application that allows you to view .doc files. To view this file, please download OfficeSuite 7 free from the Android Market.")
                                     .setCancelable(false)
                                     .setPositiveButton("Download", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             try {
-                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=at.tomtasche.reader")));
+                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.mobisystems.office")));
                                             } catch (ActivityNotFoundException ex) {
-                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=at.tomtasche.reader")));
+                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.mobisystems.office")));
                                             }
                                         }
                                     })
@@ -563,18 +564,18 @@ public class LegislativeSummary extends Activity
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                         alertDialogBuilder.setTitle("No Microsoft Word Viewer Found");
                         alertDialogBuilder
-                                .setMessage("You do not have an application that allows you to view .doc files. To view this file, please download OpenDocument Reader from the Android Market.")
+                                .setMessage("You do not have an application that allows you to view .doc files. To view this file, please download OfficeSuite 7 free from the Android Market.")
                                 .setCancelable(false)
                                 .setPositiveButton("Download",new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id)
                                     {
                                         try
                                         {
-                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=at.tomtasche.reader")));
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.mobisystems.office")));
                                         }
                                         catch(ActivityNotFoundException ex)
                                         {
-                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=at.tomtasche.reader")));
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.mobisystems.office")));
                                         }
                                     }
                                 })

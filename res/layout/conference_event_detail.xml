@@ -48,6 +48,7 @@
 
     <ScrollView
         android:padding="15dp"
+        android:clipToPadding="false"
         android:layout_above="@id/schedule_event_detail_bottom_layout"
         android:background="#E0E0E0"
         android:layout_height="match_parent"

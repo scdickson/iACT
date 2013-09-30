@@ -35,7 +35,6 @@ public class WebContentView extends Activity
     private Context context;
     private WebView webview;
     private String baseUrl;
-    private boolean firstLoad = true;
     private RelativeLayout webController;
     private ImageView controller_back, controller_stopRefresh;
     private Animation slideIn, slideOut;
@@ -70,7 +69,8 @@ public class WebContentView extends Activity
                 isLoading = true;
                 controller_stopRefresh.setImageResource(STOP_IMAGE);
 
-                if(!url.equals(baseUrl) && !firstLoad)
+                //Log.d("fatal", url + ", " + baseUrl);
+                if(!url.equals(baseUrl) && !MainActivity.webFirstLoad)
                 {
                     if(webController.getVisibility() == View.GONE)
                     {
@@ -85,12 +85,13 @@ public class WebContentView extends Activity
                 isLoading = false;
                 controller_stopRefresh.setImageResource(REFRESH_IMAGE);
 
-                if(firstLoad)
+                if(MainActivity.webFirstLoad)
                 {
-                    firstLoad = false;
+                    MainActivity.webFirstLoad = false;
                     baseUrl = url;
                 }
 
+                //Log.d("fatal", url + ", " + baseUrl);
                 if(url.equals(baseUrl))
                 {
                     if(webController.getVisibility() == View.VISIBLE)
@@ -201,14 +202,15 @@ public class WebContentView extends Activity
         return false;
     }
 
+    public void onPause()
+    {
+        super.onPause();
+        MainActivity.webFirstLoad = true;
+    }
+
     protected void onSaveInstanceState(Bundle outState)
     {
         webview.saveState(outState);
-    }
-
-    public void onConfigurationChanged(Configuration newConfig)
-    {
-
     }
 
     protected void onResume()
