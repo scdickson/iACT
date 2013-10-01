@@ -2,16 +2,20 @@ package com.cellaflora.iact;
 
 import android.app.Fragment;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -26,6 +30,7 @@ import com.parse.ParseQuery;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -42,6 +47,7 @@ public class AdvertFragment extends Fragment
     public ArrayList<Advertisement> ads = new ArrayList<Advertisement>();
     public AdvertTimer adt = null;
     Animation clear, load;
+    int imageViewWidth;
 
     public AdvertFragment()
     {
@@ -53,6 +59,9 @@ public class AdvertFragment extends Fragment
         view = inflater.inflate(R.layout.advert_fragment, container, false);
         clear = AnimationUtils.loadAnimation(view.getContext(), R.anim.slide_left);
         load = AnimationUtils.loadAnimation(view.getContext(), R.anim.slide_right);
+        WindowManager wm = (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        imageViewWidth = display.getWidth();
         return view;
     }
 
@@ -128,6 +137,11 @@ public class AdvertFragment extends Fragment
         adt.start();
     }
 
+    private float getBitmapScalingFactor(Bitmap bm)
+    {
+        return ( (float) imageViewWidth / (float) bm.getWidth() );
+    }
+
     private class AdvertTimer extends Thread
     {
         ImageView adBanner;
@@ -139,6 +153,7 @@ public class AdvertFragment extends Fragment
         {
             this.adBanner = adBanner;
             generator = new Random(System.currentTimeMillis());
+
         }
 
         public void run()
@@ -229,6 +244,21 @@ public class AdvertFragment extends Fragment
                 connection.connect();
                 InputStream input = connection.getInputStream();
                 image = BitmapFactory.decodeStream(input);
+
+                if(imageViewWidth < 640)
+                {
+                    int scaleHeight = (int) (image.getHeight() * getBitmapScalingFactor(image));
+                    int scaleWidth = (int) (image.getWidth() * getBitmapScalingFactor(image));
+                    image = Bitmap.createScaledBitmap(image, scaleWidth, scaleHeight, true);
+                }
+
+                try {
+                    FileOutputStream out = new FileOutputStream(view.getContext().getFilesDir() + "/" + tmp.objectId);
+                    image.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    out.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             catch(Exception e)
             {
