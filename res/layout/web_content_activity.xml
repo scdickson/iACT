@@ -18,7 +18,7 @@
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:background="@drawable/iact_nav_bar"
-                    android:layout_height="65dp">
+                    android:layout_height="60dp">
         <ImageView
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"

@@ -69,13 +69,11 @@ public class WebContentView extends Activity
                 isLoading = true;
                 controller_stopRefresh.setImageResource(STOP_IMAGE);
 
-                //Log.d("fatal", url + ", " + baseUrl);
                 if(!url.equals(baseUrl) && !MainActivity.webFirstLoad)
                 {
                     if(webController.getVisibility() == View.GONE)
                     {
                         webController.setVisibility(View.VISIBLE);
-                        //webController.startAnimation(slideIn);
                     }
                 }
             }
@@ -90,14 +88,15 @@ public class WebContentView extends Activity
                     MainActivity.webFirstLoad = false;
                     baseUrl = url;
                 }
-
-                //Log.d("fatal", url + ", " + baseUrl);
-                if(url.equals(baseUrl))
+                else
                 {
-                    if(webController.getVisibility() == View.VISIBLE)
+                    //Log.d("fatal", url + ", " + baseUrl);
+                    if(url.equals(baseUrl) || !webview.canGoBack())
                     {
-                        webController.setVisibility(View.GONE);
-                        //webController.startAnimation(slideOut);
+                        if(webController.getVisibility() == View.VISIBLE)
+                        {
+                            webController.setVisibility(View.GONE);
+                        }
                     }
                 }
             }
@@ -202,9 +201,9 @@ public class WebContentView extends Activity
         return false;
     }
 
-    public void onPause()
+    public void onBackPressed()
     {
-        super.onPause();
+        super.onBackPressed();
         MainActivity.webFirstLoad = true;
     }
 
