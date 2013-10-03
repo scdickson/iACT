@@ -125,7 +125,7 @@ public class LegislativeSummary extends Activity
 
         if(state != null)
         {
-            Log.d("fatal", "restore");
+            //Log.d("fatal", "restore");
             lsList.onRestoreInstanceState(state);
             return;
         }
@@ -160,28 +160,28 @@ public class LegislativeSummary extends Activity
                 }
                 else
                 {
-                    Log.d("fatal", "else");
+                    //Log.d("fatal", "else");
                     if(isOnline())
                     {
+                        progressDialog.show();
                         loadNewsAndLegislativeData();
                     }
                     else
                     {
-                        progressDialog.show();
                         displayNoNetworkDialog();
                     }
                 }
             }
             catch(Exception e)
             {
-                Log.d("fatal", "catch");
+                //Log.d("fatal", "catch");
                 if(isOnline())
                 {
+                    progressDialog.show();
                     loadNewsAndLegislativeData();
                 }
                 else
                 {
-                    progressDialog.show();
                     displayNoNetworkDialog();
                 }
             }
@@ -269,7 +269,7 @@ public class LegislativeSummary extends Activity
                 }
 
 
-                Log.d("fatal", "create");
+                //Log.d("fatal", "create");
                 lsList = (RefreshListView) findViewById(R.id.lsList);
                 LSAdapter adapter = new LSAdapter(context, posts, noNews);
                 lsList.setAdapter(adapter);
@@ -290,6 +290,10 @@ public class LegislativeSummary extends Activity
                     }
                 });
                 lsList.onRefreshComplete();
+                if(progressDialog.isShowing())
+                {
+                    progressDialog.dismiss();
+                }
 
             }
         });

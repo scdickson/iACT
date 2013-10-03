@@ -37,6 +37,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by sdickson on 7/17/13.
@@ -44,10 +46,11 @@ import java.util.Random;
 public class AdvertFragment extends Fragment
 {
     View view;
-    public ArrayList<Advertisement> ads = new ArrayList<Advertisement>();
-    public AdvertTimer adt = null;
+    public ArrayList<Advertisement> ads;
     Animation clear, load;
     int imageViewWidth;
+    Timer timer;
+    ImageView adBanner;
 
     public AdvertFragment()
     {
@@ -62,13 +65,13 @@ public class AdvertFragment extends Fragment
         WindowManager wm = (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         imageViewWidth = display.getWidth();
+        adBanner = (ImageView) view.findViewById(R.id.ad);
         return view;
     }
 
     public void loadAds()
     {
-        if(adt == null)
-        {
+            ads = new ArrayList<Advertisement>();
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Advertisement");
             query.addDescendingOrder("createdAt");
             query.findInBackground(new FindCallback<ParseObject>() {
@@ -102,10 +105,65 @@ public class AdvertFragment extends Fragment
                         }
 
                         displayAds();
+
                     }
                 }
             });
         }
+
+    public void displayAds()
+    {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+
+            boolean running = true;
+            Random generator = new Random(System.currentTimeMillis());
+            Advertisement currentAd = null;
+
+            public void run()
+            {
+                    if(ads.size() <= 0)
+                    {
+                        running = false;
+                        return;
+                    }
+
+                    Advertisement tmp = ads.get(generator.nextInt(ads.size()));
+
+                    if(currentAd != null)
+                    {
+                        while(tmp.objectId.equals(currentAd.objectId))
+                        {
+                            tmp = ads.get(generator.nextInt(ads.size()));
+                        }
+                    }
+
+                    currentAd = tmp;
+
+
+                    try
+                    {
+                        File f = new File(view.getContext().getFilesDir() + "/" + tmp.objectId);
+                        if(f != null && f.exists())
+                        {
+                            new loadAd().execute(adBanner, f, tmp);
+                        }
+                        else
+                        {
+                            new loadAdFromParse().execute(adBanner, tmp);
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        new loadAdFromParse().execute(adBanner, tmp);
+                    }
+
+            }
+
+        },
+                0,
+                Constants.AD_ROTATE_FREQUENCY * 1000);
     }
 
     public void onResume()
@@ -131,98 +189,19 @@ public class AdvertFragment extends Fragment
         }
     }
 
-    public void displayAds()
-    {
-        AdvertTimer adt = new AdvertTimer((ImageView) view.findViewById(R.id.ad));
-        adt.start();
-    }
+
 
     private float getBitmapScalingFactor(Bitmap bm)
     {
         return ( (float) imageViewWidth / (float) bm.getWidth() );
     }
 
-    private class AdvertTimer extends Thread
-    {
-        ImageView adBanner;
-        boolean running = true;
-        Random generator;
-        Advertisement currentAd = null;
-
-        public AdvertTimer(ImageView adBanner)
-        {
-            this.adBanner = adBanner;
-            generator = new Random(System.currentTimeMillis());
-
-        }
-
-        public void run()
-        {
-            while(running)
-            {
-                if(ads.size() <= 0)
-                {
-                    running = false;
-                    return;
-                }
-
-                Advertisement tmp = ads.get(generator.nextInt(ads.size()));
-
-                if(currentAd != null)
-                {
-                    while(tmp.objectId.equals(currentAd.objectId))
-                    {
-                        tmp = ads.get(generator.nextInt(ads.size()));
-                    }
-                }
-
-                currentAd = tmp;
-
-
-                try
-                {
-                    File f = new File(view.getContext().getFilesDir() + "/" + tmp.objectId);
-                    if(f != null && f.exists())
-                    {
-                        new loadAd().execute(adBanner, f, tmp);
-                    }
-                    else
-                    {
-                        new loadAdFromParse().execute(adBanner, tmp);
-                    }
-                }
-                catch(Exception e)
-                {
-                    new loadAdFromParse().execute(adBanner, tmp);
-                }
-
-                try
-                {
-                    sleep(Constants.AD_ROTATE_FREQUENCY * 1000);
-                }
-                catch(Exception e){}
-            }
-        }
-
-    }
-
     public void onPause()
     {
         super.onPause();
-
-        if(adt != null)
-        {
-            try
-            {
-                adt.running = false;
-                adt = null;
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
+        timer.cancel();
     }
+
 
     private class loadAdFromParse extends AsyncTask<Object, Integer, Void>
     {
