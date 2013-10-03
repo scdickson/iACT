@@ -77,7 +77,7 @@ public class MainActivity extends Activity
         {
             menuItems.add(conference.name_short);
         }
-        menuItems.add("News and Legislative Summary");
+        menuItems.add("News & Alerts");
         menuItems.add("Calendar of Events");
         menuItems.add("IACT Legislative Hub");
         menuItems.add("Twitter");
@@ -395,7 +395,7 @@ public class MainActivity extends Activity
 
     private void setupMenu()
     {
-        menuItems.add("News and Legislative Summary");
+        menuItems.add("News & Alerts");
         menuItems.add("Calendar of Events");
         menuItems.add("IACT Legislative Hub");
         menuItems.add("Twitter");

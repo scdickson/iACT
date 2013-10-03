@@ -1,30 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:background="#EEEDF2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
-    <fragment class="com.cellaflora.iact.AdvertFragment"
-              android:id="@+id/advert_banner"
-              android:layout_centerHorizontal="true"
-              android:layout_alignParentBottom="true"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-            />
-
-    <com.cellaflora.iact.support.PullToRefreshListView
+    <com.cellaflora.iact.support.RefreshListView
+            android:layout_marginTop="5dp"
             android:clipToPadding="false"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_width="fill_parent"
-            android:padding="15dp"
+            android:padding="10dp"
+            android:layout_weight="0.9"
             android:divider="@android:color/transparent"
             android:dividerHeight="15dp"
             android:choiceMode="singleChoice"
-            android:layout_above="@id/advert_banner"
             android:id="@+id/lsList"/>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/no_news"
+        android:textSize="17sp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="No News or Alerts."
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"/>
+
+    <fragment class="com.cellaflora.iact.AdvertFragment"
+              android:id="@+id/advert_banner"
+              android:layout_gravity="center_horizontal"
+              android:layout_weight="0.1"
+              android:layout_width="wrap_content"
+              android:layout_height="0dp"
+            />
+
+</LinearLayout>
 

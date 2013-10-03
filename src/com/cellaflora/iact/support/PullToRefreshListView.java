@@ -34,10 +34,10 @@ import java.util.Date;
  */
 public class PullToRefreshListView extends ListView{
 
-    private static final float PULL_RESISTANCE                 = 1.7f;
-    private static final int   BOUNCE_ANIMATION_DURATION       = 700;
-    private static final int   BOUNCE_ANIMATION_DELAY          = 100;
-    private static final float BOUNCE_OVERSHOOT_TENSION        = 1.4f;
+    private static final float PULL_RESISTANCE                 = 2.0f;
+    private static final int   BOUNCE_ANIMATION_DURATION       = 500;
+    private static final int   BOUNCE_ANIMATION_DELAY          = 75;
+    private static final float BOUNCE_OVERSHOOT_TENSION        = 1.7f;
     private static final int   ROTATE_ARROW_ANIMATION_DURATION = 250;
 
     private static enum State{
@@ -425,6 +425,7 @@ public class PullToRefreshListView extends ListView{
             hasResetHeader = true;
         }
     }
+
 
     private class HeaderAnimationListener implements AnimationListener{
 

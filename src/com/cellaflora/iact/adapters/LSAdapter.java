@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,11 +46,13 @@ public class LSAdapter extends BaseAdapter
     Context context;
     ArrayList<Post> LSItems;
     LayoutInflater inflater;
+    TextView noNews;
 
-    public LSAdapter(Context context, ArrayList<Post> LSItems)
+    public LSAdapter(Context context, ArrayList<Post> LSItems, TextView noNews)
     {
         this.context = context;
         this.LSItems = LSItems;
+        this.noNews = noNews;
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
@@ -58,6 +61,15 @@ public class LSAdapter extends BaseAdapter
 
     public int getCount()
     {
+        if(LSItems.size() <= 0)
+        {
+            noNews.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            noNews.setVisibility(View.GONE);
+        }
+
         return LSItems.size();
     }
 

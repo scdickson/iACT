@@ -15,15 +15,20 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cellaflora.iact.adapters.LSAdapter;
 import com.cellaflora.iact.objects.Post;
 import com.cellaflora.iact.support.PersistenceManager;
+import com.cellaflora.iact.support.PullToRefreshBase;
 import com.cellaflora.iact.support.PullToRefreshListView;
+import com.cellaflora.iact.support.RefreshListView;
 import com.parse.FindCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -48,7 +53,8 @@ public class LegislativeSummary extends Activity
     public static final int TYPE_DOC = 1;
 
     private ArrayList<Post> posts = null;
-    private PullToRefreshListView lsList;
+    private RefreshListView lsList;
+    private TextView noNews;
     private ProgressDialog progressDialog, pdfProgress;
     private Context context;
     private loadDocument lp;
@@ -71,7 +77,8 @@ public class LegislativeSummary extends Activity
         pdfProgress.setMax(100);
         pdfProgress.setProgressNumberFormat(null);
         pdfProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-
+        noNews = (TextView) findViewById(R.id.no_news);
+        noNews.setTypeface(MainActivity.Futura);
         ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.titlebar);
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.iact_nav_bar));
@@ -118,6 +125,7 @@ public class LegislativeSummary extends Activity
 
         if(state != null)
         {
+            Log.d("fatal", "restore");
             lsList.onRestoreInstanceState(state);
             return;
         }
@@ -128,15 +136,14 @@ public class LegislativeSummary extends Activity
                 if((f.lastModified() + (Constants.NEWS_UPDATE_INTERVAL * 60 * 1000)) >= System.currentTimeMillis())
                 {
                     posts = (ArrayList<Post>) PersistenceManager.readObject(this, Constants.NEWS_FILE_NAME);
-                    lsList = (PullToRefreshListView) findViewById(R.id.lsList);
-                    LSAdapter adapter = new LSAdapter(this, posts);
+                    lsList = (RefreshListView) findViewById(R.id.lsList);
+                    LSAdapter adapter = new LSAdapter(this, posts, noNews);
                     lsList.setAdapter(adapter);
                     MenuItemClickListener menuListener = new MenuItemClickListener();
                     lsList.setOnItemClickListener(menuListener);
-                    lsList.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+                    lsList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
                         @Override
-                        public void onRefresh()
-                        {
+                        public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                             if(isOnline())
                             {
                                 loadNewsAndLegislativeData();
@@ -148,9 +155,12 @@ public class LegislativeSummary extends Activity
                             }
                         }
                     });
+
+
                 }
                 else
                 {
+                    Log.d("fatal", "else");
                     if(isOnline())
                     {
                         loadNewsAndLegislativeData();
@@ -164,6 +174,7 @@ public class LegislativeSummary extends Activity
             }
             catch(Exception e)
             {
+                Log.d("fatal", "catch");
                 if(isOnline())
                 {
                     loadNewsAndLegislativeData();
@@ -257,24 +268,29 @@ public class LegislativeSummary extends Activity
                     ex.printStackTrace();
                 }
 
-                lsList = (PullToRefreshListView) findViewById(R.id.lsList);
-                LSAdapter adapter = new LSAdapter(context, posts);
+
+                Log.d("fatal", "create");
+                lsList = (RefreshListView) findViewById(R.id.lsList);
+                LSAdapter adapter = new LSAdapter(context, posts, noNews);
                 lsList.setAdapter(adapter);
                 MenuItemClickListener menuListener = new MenuItemClickListener();
                 lsList.setOnItemClickListener(menuListener);
-                lsList.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+                lsList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
                     @Override
-                    public void onRefresh()
-                    {
-                        loadNewsAndLegislativeData();
+                    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                        if(isOnline())
+                        {
+                            loadNewsAndLegislativeData();
+                        }
+                        else
+                        {
+                            displayNoNetworkDialog();
+                            lsList.onRefreshComplete();
+                        }
                     }
                 });
-
                 lsList.onRefreshComplete();
-                if(progressDialog.isShowing())
-                {
-                    progressDialog.dismiss();
-                }
+
             }
         });
     }
@@ -283,6 +299,7 @@ public class LegislativeSummary extends Activity
     {
         if(posts.get(position) != null && posts.get(position).doc_url != null)
         {
+            //Log.d("fatal", posts.get(position).headline);
             if(posts.get(position).doc_url.toUpperCase().endsWith(".PDF"))
             {
                 try
@@ -442,7 +459,11 @@ public class LegislativeSummary extends Activity
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id)
         {
-            selectItem(position);
+            try
+            {
+                selectItem((position-1));
+            }
+            catch(Exception e){}
         }
     }
 
